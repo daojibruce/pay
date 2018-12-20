@@ -1,0 +1,36 @@
+<{if $no_step_price != '1' &&  ($item.step_price.0.quantity != 1 || ($item.step_price.0.quantity ==1 && $item.step_price.1.quantity > 0))}>
+<div class="summary-outbox">
+  <ul class="summary">
+    <li>
+      <div class="dt">价格</div>
+    </li>
+    <li>
+      <div class="dt">
+        <{$item.price|cur}>
+        <{if $item.show_mkt_price}>
+        <del class="old-price"><{$item.mkt_price|cur}></del>
+        <{/if}>
+      </div>
+    </li>
+  </ul>
+
+</div>
+<{/if}>
+<!--<ul class="goods-other-info">
+  <li>
+    <span>销量：<em><{$item.sold_quantity|default:'0'}></em> 件</span>
+  </li>
+  <li>
+    <span>商品评分：<em><{$shopDsrData.countDsr.tally_dsr}></em> 分</span>
+    &lt;!&ndash; <span>
+      <a href="#" class="icon icon-star"></a>
+      <a href="#" class="icon icon-star"></a>
+      <a href="#" class="icon icon-star"></a>
+      <a href="#" class="icon icon-star"></a>
+      <a href="#" class="icon icon-star disabled"></a>
+    </span> &ndash;&gt;
+  </li>
+  <li>
+    <span>商品评论：<em><{$item.rate_count|default:"0"}></em> 条</span>
+  </li>
+</ul>-->

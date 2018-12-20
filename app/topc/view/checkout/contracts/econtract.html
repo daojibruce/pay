@@ -1,0 +1,113 @@
+<div class="order-confirm-item-hd">
+	<em>电子合同信息</em>
+	<a href="javascript:void(0);" id="do_edit" style="display: none;">修改</a>
+</div>
+<div class="order-confirm-item-bd">
+	<div>
+		<div id="show_elecontract">
+		  <!--<span class="grey">提示：由卖家发起电子合同，买家确认合同</span>-->
+		</div>
+		<div id="show_elecontract2"></div>
+		<div class="">
+			<ul id="need_or_not">
+				<li class="form-row checipt">
+					<label for="" class="form-label">是否需要电子合同：</label>
+					<span class="form-act">
+						<span class="oncheck">
+							<input id="for_e_invoiceneed" type="radio" name="elecontract[need_contract]" value="1">
+						</span>
+						<label for="for_e_invoiceneed">需要</label>
+						<span class="oncheck onchecked">
+							<input id="for_e_noinvoice"  type="radio" name="elecontract[need_contract]" value="0" checked>
+						</span>
+						<label for="for_e_noinvoice">不需要</label>
+					</span>
+				</li>
+			</ul>
+		  <ul style="display:none;" id="edit_elecontract">
+			<li class="form-row">
+			  <label for="" class="form-label">合同企业名称：</label>
+			  <span class="form-act">
+				<input class="input-ln" type="text" maxlength="100"  name="elecontract[name]" id="elecontract" required minlength="2" maxlength="20" value="<{$company_name}>">
+			  </span>
+			</li>
+			<li class="form-row">
+				<label for="" style="text-align:right;" class="form-label">联系人手机号：</label>
+				<span class="form-act">
+					<input class="input-ln" type="text" maxlength="11" id="elephone" name="elecontract[tel]" value="<{$company_contactPhone}>">
+				</span>
+			</li>
+			<li class="form-row">
+			  <label for="" style="text-align:right;" class="form-label">备注：</label>
+			  <span class="form-act">
+				<span class="">电子合同是线上交易的线上凭证</span>
+			  </span>
+			</li>
+			<li class="form-row last">
+			  <span class="">
+				  <button type="button" id="save_elecontract"  class="btn btn-import"><span><span>保存电子合同信息</span></span></button>
+			  </span>
+			</li>
+		  </ul>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+var o_do_edit = $('#do_edit');
+var o_need_or_not = $('#need_or_not');
+var o_need_e = $('input[name="elecontract[need_contract]"]');
+var o_need_e_checked = $('input[name="elecontract[need_contract]"]:checked');
+var o_show_elecontract = $('#show_elecontract');
+var o_show_elecontract2 = $('#show_elecontract2');
+var o_edit_elecontract = $('#edit_elecontract');
+
+//显示隐藏 电子合同编辑与否
+var show_elecontract = function (is_show) {
+	if(is_show == 1) {
+		o_show_elecontract.show();
+		o_edit_elecontract.hide();
+		return false;
+	}
+
+	o_show_elecontract.hide();
+	o_edit_elecontract.show();
+	o_show_elecontract2.hide();
+}
+
+o_do_edit.on('click', function () {
+	o_show_elecontract2.hide();
+	o_need_or_not.show();
+	if($('input[name="elecontract[need_contract]"]:checked').val() == 1) o_edit_elecontract.show();
+});
+
+o_need_e.on('click', function (e) {
+	var o_this = $(this);
+	if(o_this.is(':checked') && o_this.val() == 1) {
+		o_edit_elecontract.show();
+		o_need_or_not.show();
+	} else {
+		show_elecontract(1);
+	}
+});
+
+$('#save_elecontract').on('click', function (e) {
+	e.preventDefault();
+	var elecontract = $('input[name="elecontract[name]"]').val();
+    var elephone = $('input[name="elecontract[tel]"]').val();
+
+	if (elecontract == '') {
+		Message.error("电子合同 企业名称 输入有误，请检查！");
+		return false;
+	}
+	var reg1 = /^1(5|3|8|4|7)\d{9}$/;
+	if(reg1.test(elephone)== false) {
+		Message.error("电子合同 联系人手机号 输入有误，请检查！");
+		return false;
+	}
+	var content = '合同企业名称：' + elecontract + ' 联系人手机号：' + elephone;
+	o_show_elecontract2.show().html(content);
+	o_show_elecontract.hide();
+	o_edit_elecontract.hide();
+	o_need_or_not.hide();
+});
+</script>

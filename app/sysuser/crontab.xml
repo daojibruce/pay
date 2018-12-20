@@ -1,0 +1,13 @@
+<cronentries>
+    <cron id="sysuser_tasks_hognbaoExpired">
+        <description>定时修改用户领取的已过期红包</description>
+        <schedule>* 1-7/1 * * *</schedule>
+        <enabled>true</enabled>
+    </cron>
+
+	<cron id="sysuser_tasks_credit">
+        <description>同步用户信用积分</description>
+        <schedule>* 23-6/1 * * *</schedule>
+        <enabled>true</enabled>
+    </cron>
+</cronentries>

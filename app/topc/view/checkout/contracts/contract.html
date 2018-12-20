@@ -1,0 +1,107 @@
+<div class="order-confirm-item-hd"><em>线下合同信息</em>
+    <a href="javascript:void(0);" class="step4-open" style="display: none;">修改</a>
+</div>
+<div class="order-confirm-item-bd">
+    <div>
+        <div class="step4-update" style="display:block;">
+          <!--<span class="grey">提示：资金会首先交付给平台，待买家确认收货后平台才会打款给卖家</span>-->
+        </div>
+        <div class="step4">
+          <ul>
+            <li class="form-row checipt">
+              <label for="" class="form-label">需要签订纸质合同：</label>
+              <span class="form-act">
+                <span class="oncheck">
+                  <input id="for_needcontract" type="radio" name="contract[need_contract]" value="1">
+                </span>
+				<label for="for_needcontract">需要</label>
+                <span class="oncheck onchecked">
+                  <input id="for_noneedcontract"  type="radio" name="contract[need_contract]" value="0" checked>
+                </span>
+                <label for="for_noneedcontract">不需要</label>
+              </span>
+            </li>
+          </ul>
+          <ul class="invoice-info1" style="display:none;">
+            <li class="form-row">
+              <label for="" class="form-label">签订合同联系人：</label>
+              <span class="form-act">
+                <input class="input-ln" type="text" maxlength="100"  name="contract[contract_person]"   id="contract" required minlength="2" maxlength="20" value="<{$company_contact}>">
+              </span>
+            </li>
+            <li class="form-row">
+              <label for="" style="text-align:right;" class="form-label">联系人手机号：</label>
+              <span class="form-act">
+                <input class="input-ln" type="text" maxlength="11" id="phone" name="contract[contract_phone]" value="<{$company_contactPhone}>">
+              </span>
+            </li>
+            <li class="form-row">
+              <label for="" style="text-align:right;" class="form-label">备注：</label>
+              <span class="form-act">
+                <span class="">请确保联系人能随时联系上，卖家会在提交订单后尽快联系联系人。</span>
+              </span>
+            </li>
+            <li class="form-row last">
+              <span class="">
+                  <button type="button" id="save_contract"  class="btn btn-import step4-close"><span><span>保存合同信息</span></span></button>
+              </span>
+            </li>
+          </ul>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+  var o_edit_elecontract = $('#edit_elecontract');
+  var o_need_e = $('input[name="contract[need_contract]"]');
+  var step4_close_obj = $('.step4-close');
+  var step4_open_obj = $('.step4-open');
+
+  var contract_step4 = {
+    el:$('.step4'),
+    update:$('.step4-update'),
+    open:function(){
+      this.el.show();
+      this.update.hide();
+      this.state = 'open';
+    },
+    close:function(){
+      var html = '联系人:'+this.el.find('#contract').val() +'&nbsp;&nbsp;&nbsp;&nbsp;联系电话:'+this.el.find('#phone').val();
+      this.el.hide();
+      this.update.html(html);
+      this.update.show();
+      this.state = 'close';
+    },
+    state:'open'
+  };
+
+  o_need_e.on('click', function (e) {
+    var o_this = $(this);
+    if(o_this.is(':checked') && o_this.val() == 1) {
+      $('.invoice-info1').show();
+    } else {
+      $('.invoice-info1').hide();
+    }
+  });
+
+  step4_open_obj.on('click', function (e) {
+    contract_step4.open();
+  });
+  step4_close_obj.on('click', function (e) {
+    var phoneReg = /^1(5|3|8|4|7)\d{9}$/;  //手机验证正则
+    var need_contract = $("input[name='contract[need_contract]']:checked").val();
+    var contract_person = $('input[name="contract[contract_person]"]').val();
+    var contract_phone = $('input[name="contract[contract_phone]"]').val();
+
+    if(need_contract == "1"){
+      if (contract_person == '') {
+        Message.error("线下合同 签订合同联系人 输入有误，请检查！");
+        return false;
+      }
+      if(!phoneReg.test(contract_phone)) {
+        Message.error("线下合同 联系人手机号 输入有误，请检查！");
+        return false;
+      }
+    }
+    contract_step4.close();
+  });
+</script>

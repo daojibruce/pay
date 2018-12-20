@@ -1,0 +1,47 @@
+<div class="membercenter-box">
+    <div class="membercenter-box-hd">
+        资金管理
+    </div>
+	<{*}>
+	<div class="membercenter-box-bd">
+        <div class="row">
+          <div class="col-lg-8 membercenter-userinfo">
+            <ul>
+              <li class="form-row">
+				<label class="form-label"></label>
+                <span class="form-act">可提现余额：<{$TotalBalance|cur}></span>
+              </li>
+              <li class="form-row">
+                <label class="form-label"></label>
+                <span class="form-act">
+                  <a href="<{url action=topc_ctl_pay_vault@rechargedetail}>" style="float:left;"><button style="background: rgb(238, 105, 17) none repeat scroll 0% 0%; border-width: 0px; padding-left: 1px; padding-right: 1px; width: 63px; height: 34px; font-size:14px; color:white;">充值</button></a>
+				  <a href="<{url action=topc_ctl_pay_vault@withdrawalsdetail}>" style="float:left;margin-left:30px;"><button style="background: rgb(238, 105, 17) none repeat scroll 0% 0%; border-width: 0px; padding-left: 1px; padding-right: 1px; width: 63px; height: 34px; font-size:14px; color:white;">提现</button></a>
+                </span>
+              </li>
+			  <li class="form-row">
+				<label class="form-label"></label>
+                <span class="form-act">绑定新的银行卡：<a href="<{url action=topc_ctl_pay_bank@bindBankCard}>">&nbsp;&nbsp;&nbsp;<button style="width:30px;height:25px;" >+</button></a></span>
+              </li>
+			</ul>
+          </div>
+        </div>
+	</div>
+	<{*}>
+    <div class="membercenter-box-bd" style="width: 60%; height: 200px; padding-left: 350px; padding-top: 50px;">
+        <div style="float:left;">
+            <span>账户余额</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span><{$TotalBalance|cur}></span>
+        </div>
+        <br />
+        <br />
+        <div style="float:left;">
+            <span>担保金额</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span><{$TotalFreezeAmount|cur}></span>
+        </div>
+        <br/><br/>
+       <!-- <a href="<{url action=topc_ctl_pay_vault@rechargedetail}>" style="float:left;"><button style="background: rgb(238, 105, 17) none repeat scroll 0% 0%; border-width: 0px; padding-left: 1px; padding-right: 1px; width: 63px; height: 34px; font-size:14px; color:white;">充值</button></a>-->
+        <a href="<{url action=topc_ctl_pay_vault@withdrawalsdetail}>" style="float:left;margin-left:30px;"><button style="background: rgb(238, 105, 17) none repeat scroll 0% 0%; border-width: 0px; padding-left: 1px; padding-right: 1px; width: 63px; height: 34px; font-size:14px; color:white;">提现</button></a>
+        <{*}><br/><br/><br/><span>已经绑定的银行卡：</span>XX行8888 8888 8888 8888<br/><br/>
+        <span>绑定新的银行卡:&nbsp;</span><a href="<{url action=topc_ctl_pay_bank@bindBankCard}>">&nbsp;&nbsp;&nbsp;<button style="width:30px;height:25px;" >+</button></a><{*}>
+    </div>
+</div>

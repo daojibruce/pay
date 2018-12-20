@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <{header app=topc}>
+  <link rel="stylesheet" href="images/swiper.min.css">
+  <link rel="stylesheet" href="images/style.css">
+  <script type="text/javascript" src="images/jquery.min.js"></script>
+  <script type="text/javascript" src="images/swiper.min.js"></script>
+</head>
+<body>
+<!-- 顶部导航 -->
+<div id="topbar" class="topbar">
+  <div class="wrap-lg clearfix">
+    <div class="topbar-left">
+      <div class="small-signin top-login">
+        <h3>您好！</h3>
+        <a class="orange" href="http://jingbo.bbctest.qjclouds.com/passport-signin.html">登录</a>
+        <a class="orange" href="http://jingbo.bbctest.qjclouds.com/passport-signoption.html">免费注册</a>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <div class="subnav">
+        <a href="" target="_blank">会员中心</a>
+        <a href="" target="_blank">商家中心</a>
+        <a href="" target="_blank">我的订单</a>
+        <a href="">手机商城</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 头部信息栏 -->
+<div id="header" class="header">
+  <div class="wrap-lg">
+      <!--logo位置-->
+      <div class="logo">
+        <a href="http://jingbo.bbctest.qjclouds.com"><img src="images/logo.png" alt=""></a>
+      </div>
+
+      <!--搜索位置-->
+      <div class="searchbox">
+        <div class="searchbar ">
+          <!--custom s whb-->
+          <form action="http://jingbo.bbctest.qjclouds.com/search.html" method="post" id="searachForm">
+            <div class="x_input_xz">
+              <input type="text" name="keyword" value="" id="keyword" class="x-input" placeholder="请输入关键字" autocomplete="off">
+            </div>
+            <a herf="javascript:void(0);" class="btn-search">搜索</a>
+          </form>
+        </div>
+        <div class="top_link">
+          <span>
+            <ul>
+              <li>
+                <a target="_blank" onclick="ajaxSearch(this)"><span style="cursor: pointer;">阀门</span></a>
+              </li>
+              <li>
+                <a target="_blank" onclick="ajaxSearch(this)"><span style="cursor: pointer;">打印机</span></a>
+              </li>
+              <li>
+                <a target="_blank" onclick="ajaxSearch(this)"><span style="cursor: pointer;">3M</span></a>
+              </li>
+            </ul>
+          </span>
+        </div>
+      </div>
+
+      <!--购物车位置-->
+      <div class="minicart gouwuche" id="minicart_<{$widget_id}>">
+        <a href="<{url action=topc_ctl_cart@index}>" class="btn btn-simple btn-lg">
+          <span>
+            <span><i class="icon-cart-a"></i>购物车<b class="up-cat-number">0</b></span>
+          </span>
+        </a>
+        <script>
+            //获取cookie，读取购物车现有商品数量
+            updateCartNumber('#minicart_<{$widget_id}> .up-cat-number');
+        </script>
+      </div>
+    </div>
+
+</div>
+
+<!-- 页面导航栏 -->
+<div id="nav" class="nav">
+  <div class="wrap-lg" style="position: relative">
+    <div class="nav-left">
+      <div id="category_handle">
+        <div class="big-cate">
+          <a href="#">全部产品</a>
+        </div>
+        <div class="category is-display" id="category_box">
+          <ul class="category-primary">
+            <li>
+              <div class="category-primary-item">
+                <i></i>
+                <a href="" target="_blank">机床刀具</a>
+              </div>
+              <div class="category-sub">
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床11</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床12</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床13</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="category-primary-item">
+                <i></i>
+                <a href="" target="_blank">3D模具</a>
+              </div>
+              <div class="category-sub">
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床21</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床22</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床23</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="category-primary-item">
+                <i></i>
+                <a href="" target="_blank">机床刀具</a>
+              </div>
+              <div class="category-sub">
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床11</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床12</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床13</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <li>
+              <div class="category-primary-item">
+                <i></i>
+                <a href="" target="_blank">3D模具</a>
+              </div>
+              <div class="category-sub">
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床21</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床22</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+                <div class="category-sub-item">
+                  <div class="category-sub-title">机床23</div>
+                  <ul>
+                    <li><a href="" target="_blank">车削加工</a></li>
+                    <li><a href="" target="_blank">铣削加工</a></li>
+                    <li><a href="" target="_blank">磨削加工</a></li>
+                    <li><a href="" target="_blank">钻削加工</a></li>
+                    <li><a href="" target="_blank">激光钣金</a></li>
+                    <li><a href="" target="_blank">机器人自动化</a></li>
+                    <li><a href="" target="_blank">测量设备</a></li>
+                    <li><a href="" target="_blank">其他</a></li>
+                  </ul>
+                </div>
+              </div>
+            </li>
+            <script>
+              //定位小图标
+              $('.category-primary > li').each(function(e){
+                  var i= -e*31;
+                  $(this).find('i').css('background-position', '0 ' + i +'px');
+              });
+              //三级导航位置
+              $('.category-primary > li').each(function(e){
+                  var n= -e*50;
+                  $(this).find('.category-sub').css('top', n);
+              });
+              //导航鼠标移动效果
+              $('.category-primary li').hover(function () {
+                  $(this).addClass("act").siblings("li").removeClass("act");
+                  $(this).children(".category-sub").addClass("show").siblings("li").children(".category-sub").removeClass("show");
+              },function () {
+                  $(".category-primary li").removeClass("act");
+                  $(".category-sub").removeClass("show");
+              });
+            </script>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="nav-main">
+      <!--custom s whb-->
+      <div class="menu">
+        <a class="on" href="" target="_blank">平台展销</a>
+        <a href="" target="_blank">服务撮合</a>
+        <a href="" target="_blank">维保</a>
+        <a href="" target="_blank">金融</a>
+        <a href="" target="_blank">企业云</a>
+        <a href="" target="_blank">行业资讯</a>
+        <a href="" target="_blank">匠人学院</a>
+        <a href="" target="_blank">一带一路</a>
+      </div>
+    </div>
+    <div class="nav-right">
+      <div class="one-ad-left-login clearfix">
+        <div class="small-signin">
+          <div class="min-user">
+            <div class="user-pic"><img src="images/user.jpg" alt=""></div>
+            <p>Hi，您好</p>
+          </div>
+          <div class="min-btn-box">
+            <a class="btn btn-import min-btn" style="margin-right: 20px;" href="http://jingbo.bbctest.qjclouds.com/passport-signin.html"><span>登录</span></a>
+            <a class="btn btn-import min-btn" href="http://jingbo.bbctest.qjclouds.com/passport-signoption.html"><span style="background-color: transparent;color: #fc8a2e;">注册</span></a>
+          </div>
+        </div>
+        <div class="min-tab">
+          <ul class="min-tab-bd clearfix">
+            <li class="min-tab-pro active"><a>平台公告</a></li>
+            <li class="min-tab-pro no-mar"><a>特色服务</a></li>
+          </ul>
+        </div>
+        <div class="min-cont">
+          <ul class="min-tab-cont show">
+            <li>
+              <a href="" target="_blank">关于清明节放假商城发货公告关于清明节放假商城发货公告</a>
+              <a href="" target="_blank">关于清明节放假商城发货公告关于清明节放假商城发货公告</a>
+              <a href="" target="_blank">关于清明节放假商城发货公告关于清明节放假商城发货公告</a>
+              <a href="" target="_blank">关于清明节放假商城发货公告关于清明节放假商城发货公告</a>
+            </li>
+          </ul>
+          <ul class="min-tab-cont">
+            <li>
+              <a href="" target="_blank">退换货政策退换货政策退换货政策</a>
+              <a href="" target="_blank">退换货政策退换货政策退换货政策退换货政策退换货政策</a>
+              <a href="" target="_blank">退换货政策退换货政策退换货政策退换货政策退换货政策退换货政策</a>
+              <a href="" target="_blank">退换货政策退换货政策</a>
+            </li>
+          </ul>
+        </div>
+        <div class="min-xy">
+          <ul class="min-xy-bd clearfix">
+            <li><img src="images/min-text01.png" alt="正品保证"><span>正品保证</span></li>
+            <li><img src="images/min-text02.png" alt="快速交付"><span>快速交付</span></li>
+            <li class="no-mar"><img src="images/min-text03.png" alt="合理价格"><span>合理价格</span></li>
+          </ul>
+        </div>
+      </div>
+      <script>
+        $(function () {
+            $("li.min-tab-pro").hover(function () {
+                var le = $(this).index();
+                $(this).addClass("active").siblings().removeClass("active");
+                $("ul.min-tab-cont").eq(le).addClass("show").siblings().removeClass("show");
+            });
+        })
+      </script>
+    </div>
+  </div>
+</div>
+
+<!--轮播图-->
+<div class="swiper-container">
+  <div class="swiper-wrapper">
+    <div class="swiper-slide">
+      <a href="" target="_blank"><img src="images/banner1.jpg" alt=""></a>
+    </div>
+    <div class="swiper-slide">
+      <a href="" target="_blank"><img src="images/banner2.jpg" alt=""></a>
+    </div>
+  </div>
+  <!-- Add Pagination -->
+  <div class="swiper-pagination"></div>
+</div>
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        spaceBetween: 30,
+        centeredSlides: true,
+        autoplay: 5000,
+        autoplayDisableOnInteraction: false
+    });
+</script>
+
+<!--主题内容-->
+<div class="main">
+  <div class="wrap-lg">
+    <div class="main-box">
+      <{widgets id="category_item_home"}>
+    </div>
+    <div class="main-box">
+      <div class="main-tit">
+        <h3>精选机床</h3>
+        <ul class="main-tab">
+          <li class="mom">
+            <h4 class="tab-tit">机床</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森精机</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">配件</h4>
+            <div class="tab-list">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森配件</h3>
+                <p>MILLTAP700</p>
+                <span>¥98765.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">刀具</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森刀具</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">量具</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森量具</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">工具</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森工具</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+        <a class="ui-more" href="" target="">更多>></a>
+      </div>
+    </div>
+    <div class="main-box">
+      <div class="main-tit">
+        <h3>精选机床</h3>
+        <ul class="main-tab">
+          <li class="mom">
+            <h4 class="tab-tit">机床</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森精机</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">配件</h4>
+            <div class="tab-list">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森配件</h3>
+                <p>MILLTAP700</p>
+                <span>¥98765.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">刀具</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森刀具</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">量具</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森量具</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">工具</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森工具</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+        <a class="ui-more" href="" target="">更多>></a>
+      </div>
+    </div>
+    <div class="main-box">
+      <div class="main-tit">
+        <h3>精选机床</h3>
+        <ul class="main-tab">
+          <li class="mom">
+            <h4 class="tab-tit">机床</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森精机</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森精机</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">配件</h4>
+            <div class="tab-list">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森配件</h3>
+                <p>MILLTAP700</p>
+                <span>¥98765.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥98765.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森配件</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">刀具</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森刀具</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森刀具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">量具</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森量具</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森量具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li>
+            <h4 class="tab-tit">工具</h4>
+            <div class="tab-list show">
+              <div class="tab-big tab-link" data-href="">
+                <div class="tab-big-pic"><img src="images/tab-big.jpg" alt=""></div>
+                <h3>德马吉森工具</h3>
+                <p>MILLTAP700</p>
+                <span>¥56789.00</span>
+                <div class="tab-go">go>></div>
+              </div>
+              <ul class="tab-sm">
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+                <li>
+                  <div class="tab-sm-pic"><img src="images/tab-sm.jpg" alt=""></div>
+                  <div class="tab-info">
+                    <h3>德马吉森工具</h3>
+                    <p>MILLTAP700</p>
+                    <span>¥56789.00</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+        <a class="ui-more" href="" target="">更多>></a>
+      </div>
+    </div>
+    <script>
+      $(function () {
+        $(".main-box").each(function (e) {
+          var t= -e*55;
+          var adc = 'c'+e;
+          $(this).find('.main-tit').css('background-position', '0 ' + t +'px');
+          $(this).find(".tab-go").addClass(adc);
+        });
+        $(".tab-tit").hover(function () {
+          $(this).parent("li").addClass("mom").siblings().removeClass("mom");
+          $(this).next(".tab-list").addClass("show").parent("li").siblings().find(".tab-list").removeClass("show");
+        });
+        $('.tab-link').click(function(){
+          if($(this).data('href')){
+            location.href= $(this).data('href');
+          }
+        });
+      })
+    </script>
+  </div>
+</div>
+
+<!--三重保障-->
+<div class="service">
+  <div class="wrap-lg">
+    <div class="service-pic"><img src="images/bz.jpg" alt=""></div>
+  </div>
+</div>
+
+<{require file="block/footer.html"}>
+</body>
+</html>

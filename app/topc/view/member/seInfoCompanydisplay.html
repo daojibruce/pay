@@ -1,0 +1,113 @@
+<div class="col-lg-13 box">
+    <div class="membercenter-box">
+        <div class="membercenter-box-hd">
+            企业信息
+        </div>
+            <div class="membercenter-box-bd">
+                <div class="row">
+                    <div class="col-lg-8 membercenter-userinfo">
+                        <ul>
+                            <li class="form-row">
+                                <label class="form-label">公司名称：</label>
+                <span class="form-act">
+                <{$userInfo.company_name}>
+                 
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >法人代表姓名：</label>
+                                <span class="form-act">
+   <{$userInfo.corporation}>
+
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >公司注册资金：</label>
+                                <span class="form-act">
+     <{$userInfo.registered_capital}>万元
+
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label  class="form-label">注册所在地：</label>
+                <span class="form-act">
+                     <{$userInfo.company_area}>
+
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label  class="form-label">注册地址：</label>
+                <span class="form-act">
+                 <{$userInfo.company_addr}>
+                </span>
+                            </li>
+
+                            <li class="form-row">
+                                <label class="form-label" >公司联系人：</label>
+                                <span class="form-act">
+                 <{$userInfo.company_contact}>
+
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >公司电话：</label>
+                                <span class="form-act">
+       <{$userInfo.company_contactPhone}>
+
+                </span>
+                            </li>
+
+                            <li class="form-row">
+                                <label class="form-label" >公司性质：</label>
+                <span class="form-act">
+                 <{$userInfo.operating_range}>
+                 
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >公司人数：</label>
+                <span class="form-act">
+                 <{$userInfo.company_num}>
+                 
+                </span>
+                            </li>
+
+
+
+                           <!-- <li class="form-row">
+                                <label class="form-label" >年营业额：</label>
+                <span class="form-act">
+               <{$userInfo.company_turnover}>
+                 
+                </span>
+                            </li>-->
+
+                            <!-- 发票信息 -->
+                            <li class="form-row">
+                                <label class="form-label">开户行名称：</label>
+                <span class="form-act">
+                <{$userInfo.invoice_bank_name}>
+                 
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label  class="form-label">开户账号：</label>
+                <span class="form-act">
+                 <{$userInfo.invoice_bank_num}>
+                </span>
+                            </li>
+
+                            <li class="form-row last">
+                                <label  class="form-label"></label>
+                <span class="form-act">
+                    <a class="btn btn-success" href="<{url action=topc_ctl_member@seInfoCompany}>"> <span><span>修改</span></span></a></span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+
+    </div>
+</div>
+

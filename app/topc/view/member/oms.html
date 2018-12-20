@@ -1,0 +1,78 @@
+<div class="col-lg-13 box">
+    <div class="membercenter-box">
+        <div class="membercenter-box-hd">
+            开通企业ERP
+        </div>
+        <form action="<{url action=oms_ctl_index@open}>" method="post" id="ajax_form">
+            <div class="membercenter-box-bd">
+                <div class="row">
+                    <div class="membercenter-userinfo">
+                        <{if $isCompanyRoles}>
+                        <ul <{if $applyInfo['status'] == '1'}>hidden<{/if}>>
+                            <li class="form-row">
+                                <label class="form-label">&nbsp;</label>
+                                <span class="form-act">
+									<input type="checkbox" class="x-checkbox" name="license" id="for_license" data-validate="onerequired" data-caution="<{t}>请选择同意<{/t}>" value="1">
+									<label for="for_license" style="color: #999999;">我已阅读并同意该协议</label>
+									<span style="float: none;color: #da251a;cursor:pointer" id="check_license">《企业ERP协议》</span>
+								</span>
+                            </li>
+                        </ul>
+                        <{/if}>
+                    </div>
+                </div>
+                <{if $isCompanyRoles and $applyInfo['status'] != '1'}>
+                <div class="text-center"><a href="javascript:void(0);" class="btn btn-import btn-lg dialog-btn-close" id="do_became_temai"><span><span>申请开通企业ERP</span></span></a></div>
+                <{/if}>
+            </div>
+        </form>
+    </div>
+    <!--注册协议弹框-->
+    <div id="dialog" style="display:none;">
+        <div class="agreement">
+            <div class="title">企业ERP开通协议</div>
+            <div><{$license}></div>
+            <div class="text-center"><a href="javascript:void(0);" class="btn btn-import btn-lg dialog-btn-close"><span><span>关闭</span></span></a></div>
+        </div>
+    </div>
+</div>
+<script>
+    //弹出企业ERP协议
+    $('#check_license').click(function (e) {
+        $('#dialog').dialog({
+            width: 890,
+            height: 500,
+            position :{ my: "center", at: "center", of: $(".signc") },
+            title:'企业ERP开通协议',
+            close: function(){
+                //document.querySelector('#for_license').checked = true;
+            }
+        });
+    });
+
+    //请阅读并同意该协议
+    $("#do_became_temai").bind("click" , function(){
+        var checked = $("#for_license").get(0).checked;
+        if(! checked){
+            Message.error("请阅读并同意该协议");
+            return false;
+        }
+
+        becomeTemai();
+    });
+
+    function becomeTemai(){
+        var postData = {'server_name':$("#id_server_name").val(),'server_cert':$("#id_server_cert").val(),'server_mobile':$("#id_server_mobile").val(),'server_desc':$("#id_server_desc").val(),'r' : Math.random()};
+        $.post('<{url action=topc_ctl_member@temaisavelicense}>' , postData ,
+            function(rs){
+                if(rs.success) {
+                    Message.success(rs.message);
+                    if(rs.redirect) location.href = rs.redirect;
+                }else if(rs.error) {
+                    Message.error(rs.message);
+                    if(rs.redirect) location.href = rs.redirect;
+                }
+            }
+        );
+    }
+</script>

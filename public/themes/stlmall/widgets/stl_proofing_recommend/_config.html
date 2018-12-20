@@ -1,0 +1,29 @@
+<div class="tableform">
+    <div class="widgetconfig">
+        <table cellspacing="0" cellpadding="0" border="0" width="100%">
+            <tbody>
+            <tr>
+                <th><{t app='b2c'}>选择推荐服务商：<{/t}></th>
+                <td>
+                    <div data-extend = "select">
+                        <{input type="object" value=$setting.provider_select object="provider" app="sysproofing" filter="enabled=1" name="provider_select" select="checkbox" multiple="true" textcol="provider_name"}>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+  $$('#goods_exshow_config .goods-selector-handle input[type=radio]').addEvent('change',function(){
+    var radio  = this;
+    if(!radio.checked)return;
+    $$('#goods_exshow_config .goods-selector [data-extend]').each(function(item){
+      if(item.get('data-extend')!=radio.value){
+        item.hide();
+      }else{
+        item.show();
+      }
+    });
+  });
+</script>

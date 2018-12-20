@@ -1,0 +1,337 @@
+<style type="text/css">
+.xn_c_zhtbl {
+    /*height: 290px;*/
+    width: 478px;
+    float: left;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.xn_c_zhtbl span {
+    display: block;
+    height: 30px;
+    width: 130px;
+    line-height: 30px;
+}
+.xn_c_zhtbl input {
+    width: 75px;
+    padding-left: 6px;
+    box-sizing: border-box;
+    display: block;
+    line-height: 24px;
+    outline: none;
+    height: 24px;
+    margin: 3px 0;
+    float: left;
+}
+.xn_c_zhtblicr span {
+    display: block;
+    height: 30px;
+    line-height: 30px;
+}
+.xn_c_zhtbl li {
+    float: left;
+    padding-right: 4px;
+}
+.xn_c_zhthide {
+    display: none;
+}
+.xn_c_zhtblirql {
+    /*padding-top: 30px;*/
+    padding-right: 6px;
+}
+.xn_c_zhtblirql, .xn_c_zhtblirqr {
+    float: left;
+}
+.xn_c_zhtblir {
+    text-align: right;
+    width: 140px;
+}
+.xn_c_zhtblic .xn_c_zhtblicrr {
+    color: #333;
+    height: 16px;
+    width: 16px;
+    margin-top: 8px;
+    border: 1px solid #333;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    line-height: 30px;
+}
+.xn_c_zhtblic em {
+    /*float: left;*/
+    margin-left: 12px;
+    margin-right: 12px;
+}
+i, em {
+    font-style: normal;
+}
+.form-control {
+    /* display: block; */
+    width: 88%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857;
+    color: #555555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    -webkit-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    -o-transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+.xz-input-w {
+    display: inline-block;
+    width: 79px;
+    padding: 0px 6px;
+    height: 24px;
+}
+.btn.btn-warning {
+    background-color: #eaaf5e;
+    border-color: #e49931;
+}
+.btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: normal;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-image: none;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 4px 8px;
+    font-size: 14px;
+    line-height: 1.42857;
+    border-radius: 4px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+</style>
+
+<div id="confirm_dialog">
+  <div class="order-confirm">
+    <div>
+    多次付款
+		<{if $trade.pay_1 != 0 && isset($trade.pay_1)}>保证金：<{$trade.pay_1|cur}> <{/if}><{if $trade.pay_2 != 0 && isset($trade.pay_2)}>  收货款：<{$trade.pay_2|cur}><{/if}>
+		<{if $trade.pay_3 != 0 && isset($trade.pay_3)}>  收货<{$trade.detail_time1}><{$trade.pay_3|cur}><{/if}>
+		<{if $trade.pay_4 != 0 && isset($trade.pay_4)}>  收货<{$trade.detail_time2}><{$trade.pay_4|cur}><{/if}>
+		<{if $trade.pay_5 != 0 && isset($trade.pay_5)}>  收货<{$trade.detail_time3}><{$trade.pay_5|cur}><{/if}>
+	</div>
+	<hr style="height:1px;border:none;border-top:1px dashed #0066CC;" />
+	<form id="payment_form" class="xn_form_box" action="<{url action=topc_ctl_member_trade@saveLongpay}>" method="post" data-validate-onsuccess="ajaxSubmit">
+	<div id="xn_c_zhtbox" class="xn_c_zhtbox"/>
+	<input type="hidden" name="shop_id" value="<{$trade.shop_id}>">
+	<input type="hidden" name="tid" value="<{$trade.tid}>">
+	<input type="hidden" name="payment" value="<{$trade.payment}>">
+                      <div class="xn_c_zhtbt">
+                        <span>总金额:</span>
+                        <span><em id='SumTotal'>￥<{$trade.payment}></em></span>
+                        <{if $longpay_info.longpay_id}>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span style="color: red;font-size: 16px;">当前申请进度:</span>
+                        <span style="color: red;font-size: 16px;"><em id='status'><{if $longpay_info.status=="WAIT_AGREE"}>等待商家处理<{elseif $longpay_info.status=="FINISHED"}>商家同意<{elseif $longpay_info.status=="CLOSED"}>商家拒绝<{/if}></em></span>
+                        <{/if}>
+                      </div>
+                      <ul class="xn_c_zhtbl">
+                        <li>
+                          <span>订单生成（保证金）</span>
+
+                          <span class="xn_c_zhtblic">
+                              <input class="x-input form-control" name='pay_1' type="text" onkeyup="CheckInputInt(this)" value="<{$pay_info.pay_1}>" readonly="true">
+                              <i>%</i><em>+</em></span>
+                            <!--<input class="x-input form-control" id="num1" name='num1' type="hidden" value="">-->
+                          <!-- <span class="xn_c_zhtblir"></span> -->
+                        </li>
+
+                        <li>
+                          <span>确认收货（收货款）</span>
+                          <span class="xn_c_zhtblic">
+                               <input class="x-input form-control" name='pay_2' type="text" onkeyup="CheckInputInt(this)" value="<{$pay_info.pay_2}>" readonly="true">
+                              <i>%</i><em class="xn_c_zhjyg"><small>+</small></em>
+                              <!--<input class="x-input form-control" id="num2" name='num2' type="hidden" value="">-->
+                          </span>
+                          <!-- <span class="xn_c_zhtblir" ></span> -->
+                        </li>
+
+                        <{if $pay_info.pay_3>0}>
+                        <li >
+                          <div class="xn_c_zhtblirql" style="width: 130px;height: 60px;">
+                            <span class="xn_c_zhtblic" style="padding-top: 30px;width: 100px;float: left;">
+                               <select id='detail_time1' name="detail_time1" class="xz-input-w form-control qh_xz223_dxlrbox" <{if $trade.times !="3"}>disabled<{/if}>>
+                                    <option value="0" <{if $pay_info.detail_time1==0}>selected = 'selected' <{/if}>>一个月</option>
+                                    <option value="1" <{if $pay_info.detail_time1==1}>selected = 'selected' <{/if}>>二个月</option>
+                                    <option value="2" <{if $pay_info.detail_time1==2}>selected = 'selected' <{/if}>>三个月</option>
+                                    <option value="3" <{if $pay_info.detail_time1==3}>selected = 'selected' <{/if}>>四个月</option>
+                                    <option value="4" <{if $pay_info.detail_time1==4}>selected = 'selected' <{/if}>>五个月</option>
+                                    <option value="5" <{if $pay_info.detail_time1==5}>selected = 'selected' <{/if}>>六个月</option>
+                                    <option value="6" <{if $pay_info.detail_time1==6}>selected = 'selected' <{/if}>>七个月</option>
+                                    <option value="7" <{if $pay_info.detail_time1==7}>selected = 'selected' <{/if}>>八个月</option>
+                                    <option value="8" <{if $pay_info.detail_time1==8}>selected = 'selected' <{/if}>>九个月</option>
+                                    <option value="9" <{if $pay_info.detail_time1==9}>selected = 'selected' <{/if}>>十个月</option>
+                                    <option value="10" <{if $pay_info.detail_time1==10}>selected = 'selected' <{/if}>>十一个月 </option>
+                                    <option value="11" <{if $pay_info.detail_time1==11}>selected = 'selected' <{/if}>>十二个月</option>
+                  	                <!-- <option value="12" selected = 'selected'>请选择</option> -->
+                                </select>
+                            </span>
+                            <span style="width: 10px;float: left;padding-top: 30px;"><em>+</em></span>
+                          </div>
+                          <div class="xn_c_zhtblirqr">
+                            <span>收货后（运行款）</span>
+                            <span class="xn_c_zhtblic">
+                				 <input class="x-input form-control" name='pay_3' type="text" onkeyup="CheckInputInt(this)" value="<{$pay_info.pay_3}>" readonly="true">
+                                <i>%</i><em class="xn_c_zhjyg"><small>+</small></em>
+                               <!-- <input class="x-input form-control" id="num3" name='num3' type="hidden" value="">-->
+                            </span>
+                          </div>
+                          <!-- <span class="xn_c_zhtblir"></span> -->
+                        </li>
+                        <{/if}>
+
+
+                        <{if $pay_info.pay_4>0}>
+                        <li>
+                          <div class="xn_c_zhtblirql" style="width: 130px;height: 60px;">
+                            <span class="xn_c_zhtblic" style="padding-top: 30px;width: 100px;float: left;">
+                              <select id='detail_time2' name="detail_time2" class="xz-input-w form-control qh_xz223_dxlrbox" <{if $trade.times >"4"}>disabled<{/if}>>
+                                  <option value="0" <{if $pay_info.detail_time2==0}>selected = 'selected' <{/if}>>一个月</option>
+                                    <option value="1" <{if $pay_info.detail_time2==1}>selected = 'selected' <{/if}>>二个月</option>
+                                    <option value="2" <{if $pay_info.detail_time2==2}>selected = 'selected' <{/if}>>三个月</option>
+                                    <option value="3" <{if $pay_info.detail_time2==3}>selected = 'selected' <{/if}>>四个月</option>
+                                    <option value="4" <{if $pay_info.detail_time2==4}>selected = 'selected' <{/if}>>五个月</option>
+                                    <option value="5" <{if $pay_info.detail_time2==5}>selected = 'selected' <{/if}>>六个月</option>
+                                    <option value="6" <{if $pay_info.detail_time2==6}>selected = 'selected' <{/if}>>七个月</option>
+                                    <option value="7" <{if $pay_info.detail_time2==7}>selected = 'selected' <{/if}>>八个月</option>
+                                    <option value="8" <{if $pay_info.detail_time2==8}>selected = 'selected' <{/if}>>九个月</option>
+                                    <option value="9" <{if $pay_info.detail_time2==9}>selected = 'selected' <{/if}>>十个月</option>
+                                    <option value="10" <{if $pay_info.detail_time2==10}>selected = 'selected' <{/if}>>十一个月 </option>
+                                    <option value="11" <{if $pay_info.detail_time2==11}>selected = 'selected' <{/if}>>十二个月</option>
+                              </select>
+                            </span>
+                            <span style="width: 10px;float: left;padding-top: 30px;"><em>+</em></span>
+                          </div>
+                          <div class="xn_c_zhtblirqr">
+                            <span>收货后（质保金）</span>
+                            <span class="xn_c_zhtblic">
+                                 <input class="x-input form-control" name='pay_4' type="text" onkeyup="CheckInputInt(this)" value="<{$pay_info.pay_4}>" readonly="true">
+                                 <i>%</i><em class="xn_c_zhjyg"><small>+</small></em>
+                            </span>
+                             <!-- <input class="x-input form-control" id="num4" name='num4' type="hidden" value="">-->
+                          </div>
+                          <!-- <span class="xn_c_zhtblir"></span> -->
+                        </li>
+                        <{/if}>
+
+                        <{if $pay_info.pay_5>0}>
+                        <li>
+                          <div class="xn_c_zhtblirql" style="width: 130px;height: 60px;">
+                            <span class="xn_c_zhtblic" style="padding-top: 30px;width: 100px;float: left;">
+                              <select id='detail_time3' name="detail_time3" class="xz-input-w form-control qh_xz223_dxlrbox" <{if $trade.times >"5"}>disabled<{/if}>>
+                                  <option value="0" <{if $pay_info.detail_time3==0}>selected = 'selected' <{/if}>>一个月</option>
+                                    <option value="1" <{if $pay_info.detail_time3==1}>selected = 'selected' <{/if}>>二个月</option>
+                                    <option value="2" <{if $pay_info.detail_time3==2}>selected = 'selected' <{/if}>>三个月</option>
+                                    <option value="3" <{if $pay_info.detail_time3==3}>selected = 'selected' <{/if}>>四个月</option>
+                                    <option value="4" <{if $pay_info.detail_time3==4}>selected = 'selected' <{/if}>>五个月</option>
+                                    <option value="5" <{if $pay_info.detail_time3==5}>selected = 'selected' <{/if}>>六个月</option>
+                                    <option value="6" <{if $pay_info.detail_time3==6}>selected = 'selected' <{/if}>>七个月</option>
+                                    <option value="7" <{if $pay_info.detail_time3==7}>selected = 'selected' <{/if}>>八个月</option>
+                                    <option value="8" <{if $pay_info.detail_time3==8}>selected = 'selected' <{/if}>>九个月</option>
+                                    <option value="9" <{if $pay_info.detail_time3==9}>selected = 'selected' <{/if}>>十个月</option>
+                                    <option value="10" <{if $pay_info.detail_time3==10}>selected = 'selected' <{/if}>>十一个月 </option>
+                                    <option value="11" <{if $pay_info.detail_time3==11}>selected = 'selected' <{/if}>>十二个月</option>
+                              </select>
+                            </span>
+                            <span style="width: 10px;float: left;padding-top: 30px;"><em>+</em></span>
+                          </div>
+                          <div class="xn_c_zhtblirqr">
+                            <span>收货后</span>
+                            <span class="xn_c_zhtblic"><input class="x-input form-control" name='pay_5' type="text" onkeyup="CheckInputInt(this)" value="<{$pay_info.pay_5}>" readonly="true">
+                                 <i>%</i></span>
+                             <!-- <input class="x-input form-control" id="num5" name='num5' type="hidden" value="">-->
+                            <!-- <span class="xn_c_zhtblir"></span> -->
+                        </li>
+                        <{/if}>
+                      </ul>
+                      <ul class="xn_c_zhtbl" style="margin-bottom: 10px;margin-top: 10px;">
+                        <span>备注：</span>
+                      	<textarea style="box-sizing: border-box;outline: none;line-height: 24px;width: 478px;" name="memo"><{$longpay_info.memo}></textarea>
+                      </ul>
+                      
+                      <div class="xn_c_zhtbr">
+                        <span id='btn_choose' class="btn btn-warning">
+                        <button type="submit" class="btn btn-primary" id="act-delivery">提交</button>
+                        </span>
+                      </div>
+                    </div>
+                    </form>
+  </div>
+</div>
+<script>
+	function CheckInputInt(oInput){
+    var regex=/^\+?[1-9][0-9]*$/;
+    if('' != oInput.value.replace(regex,'')) {
+        oInput.value = oInput.value.match(regex) == null ? '' : oInput.value.match(regex);
+    }
+}
+
+function ajaxSubmit (e) {
+        var form = e.target;
+        e.preventDefault();
+        $.post(form.action, $(form).serialize(),function(rs){
+            $(form).find('button[type=submit]').prop('disabled', false);
+            if(rs.error){
+                $('#messagebox').message(rs.message, 'error');
+                return;
+            }
+            else if(rs.success){
+                $('#messagebox').message(rs.message, 'success');
+            }
+            if(rs.redirect){
+                location.href = rs.redirect;
+            }
+        });
+    }
+
+	/*点击提交付款方式信息按钮 edit by nie*/
+
+$(function(){
+  
+  $("#detail_time1").change(function(){
+        var num = $(this).val();
+        var nexNum = parseInt(num)+1;
+        var tempDiv = selectDiv(num);
+        $("#detail_time2").html(tempDiv);
+        var tempDiv2 = selectDiv(nexNum);
+        $("#detail_time3").html(tempDiv2);
+    });
+    $("#detail_time2").change(function(){
+        var tempDiv = selectDiv($(this).val());
+        $("#detail_time3").html(tempDiv);
+    });
+    function selectDiv(num){
+        var arr = new Array();
+        arr[0] = '一个月'; arr[1] = '二个月';
+        arr[2] = '三个月'; arr[3] = '四个月';
+        arr[4] = '五个月'; arr[5] = '六个月';
+        arr[6] = '七个月'; arr[7] = '八个月';
+        arr[8] = '九个月'; arr[9] = '十个月';
+        arr[10] = '十一个月'; arr[11] = '十二个月';
+        var div = '';
+        for(var i = parseInt(num) ; i<11;i++){
+            var tempI = parseInt(i) + 1;
+            div += '<option value="'+tempI+'">'+arr[tempI]+'</option>';
+        }
+        if(div == ''){
+            div  = '<option value="12">请选择</option>';
+        }
+        return div;
+    }
+});
+</script>

@@ -1,0 +1,78 @@
+<form role="form" method="post" action="<{url action=topshop_ctl_item@saveStepPrice}>" id="price_form">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+            &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+            设置阶梯价格
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="division" style="margin-bottom: 10px">
+            <button class="btn btn-info price-add">添加</button>
+            <input type="hidden" value="<{$sku_id}>" name="sku_id">
+        </div>
+        <div class="spec-tree">
+            <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered" id="price-table">
+                <thead>
+                <tr>
+                    <th style="width:50%;">数量(包含该数量，不可重复)</th>
+                    <th style="width:50%;">售价(元)<label  data-toggle="tooltip" data-placement="top" title="多规格时，标准价要介于SKU最低和价最高价之间；无规格时就是真实售价"><i class="fa fa-question-circle text-aqua"></i></label></th>
+                    <th style="width:50%;">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <{foreach from=$data item=item key=key}>
+                <tr>
+                    <td>
+                        <div class="form-group">
+                            <input type="number" name="data[<{$key}>][quantity]" value="<{$item.quantity}>" class="form-control price" data-validate-numeric="true" required>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <input type="number" name="data[<{$key}>][price]" value="<{$item.price}>" class="form-control price" data-validate-numeric="true" required>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="form-group">
+                            <button class="btn btn-danger price-delete">删除</button>
+                        </div>
+                    </td>
+                </tr>
+                <{/foreach}>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default price_close" data-dismiss="modal">关闭
+        </button>
+        <button type="button" class="btn btn-primary price-submit">
+            提交更改
+        </button>
+    </div>
+</form>
+<script>
+    $('.price-add').on('click', function () {
+        var i = new Date().getTime();
+        var tmp = '<tr><td><div class="form-group"> <input type="number" name="data['+i+'][quantity]" value="" class="form-control price" data-validate-numeric="true" required> </div> </td> <td> <div class="form-group"> <input type="number" name="data['+i+'][price]" value="" class="form-control price" data-validate-numeric="true" required> </div> </td> <td> <div class="form-group"> <button class="btn btn-danger price-delete">删除</button> </div> </td> </tr>';
+        $('#price-table').find('tbody').append(tmp);
+    });
+
+    $('#price-table').on('click', '.price-delete', function () {
+        $(this).parents('tr').remove();
+    });
+
+    $('.price-submit').on('click', function () {
+        var form = $('#price_form');
+        $.post(form.attr('action'), form.serialize(), function (re) {
+            //console.log(re);
+            if (re.error_flag) {
+                alert(re.message);
+            } else {
+                $('.price_close').trigger('click');
+            }
+        })
+    });
+</script>

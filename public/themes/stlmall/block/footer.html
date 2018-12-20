@@ -1,0 +1,98 @@
+<!--右侧导航-->
+<div class="right-nav">
+  <div class="fix-cart">
+    <div class="go-cart" id="login_cart" style="height: 100px;">
+      <a href="<{url action=topc_ctl_cart@index}>" target="_blank">
+        <img src="../images/index_cart_fix.png" alt="">
+      </a>
+    </div>
+    <div class="go-cart" id="member_cart">
+      <a href="<{url action=topc_ctl_cart@index}>" target="_blank">
+        <img src="../images/index_cart_fix.png" alt="">
+        <span data-type="1" class="up-cat-number">0</span>
+      </a>
+    </div>
+      <script>
+          //获取cookie，读取购物车现有商品数量
+          updateCartNumber('#member_cart .up-cat-number');
+      </script>
+    <div class="index-fav">
+      <div class="index-fav-pic">
+        <a href="" target="_blank"><img src="../images/index_favourite.png" alt=""></a>
+      </div>
+    </div>
+    <div class="index-ewm">
+      <a href="javascript:void(0);" target="_blank"><img src="../images/index_fix_erweima.png" alt=""></a>
+      <div class="ewm-show"><img src="../images/ewm.png" alt=""></div>
+    </div>
+  </div>
+  <{widgets id="thirdparty"}>
+  <div class="fix-bot">
+    <div class="go-top">
+      <a href="javascript:void(0);" target="_blank"><img src="../images/top.png" alt=""></a>
+    </div>
+    <div class="go-dc">
+      <a href="" target="_blank"><img src="../images/yonghufankui.png" alt=""></a>
+    </div>
+  </div>
+  <script>
+    $(function () {
+        $(".go-top").on("click",function () {
+            $("body,html").animate({scrollTop:0},800);
+        });
+    })
+  </script>
+  <script>
+      var name = decodeURIComponent($.cookie('UNAME') || '');
+      if(name){
+          $("#uname_cart").html(name);
+          $("#member_cart").css('display','');
+          $("#login_cart").css('display','none');
+      }
+      else{
+          $("#login_cart").css('display','');
+          $("#member_cart").css('display','none');
+      }
+  </script>
+</div>
+<!--5个小图标-->
+<{widgets id="stl_service"}>
+<!-- 帮助中心 -->
+<div class="helpinfo">
+    <div class="wrap-lg">
+      <div class="feature-items clearfix">
+        <div class="feature-item"><{widgets id="feature1"}></div>
+        <div class="feature-item"><{widgets id="feature2"}></div>
+        <div class="feature-item"><{widgets id="feature3"}></div>
+        <div class="feature-item"><{widgets id="feature4"}></div>
+        <div class="feature-item"><{widgets id="feature5"}></div>
+      </div>
+      <div class="index-ewm clearfix">
+        <{widgets id="stl_barcode"}>
+      </div>
+      <div class="index-tel clearfix">
+        <h3>仕泰隆服务热线</h3>
+        <p>0512-5513-5150</p>
+      </div>
+    </div>
+</div>
+
+<!-- 底部导航与版权 -->
+<div id="footer" class="footer">
+  <div class="wrap-lg">
+     <{widgets id="footerlinks"}>
+    <{footer app=topc}>
+  </div>
+  <div>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bbbbc98903bd71bd2c3ccc925dcd6ccf";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+  </div>
+</div>
+<!--<{widgets id="fb"}>-->

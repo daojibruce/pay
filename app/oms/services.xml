@@ -1,0 +1,7 @@
+<services>
+
+	<service id="desktop_finder.oms_mdl_api_log">
+        <class>oms_finder_api_log</class>
+    </service>
+
+</services>

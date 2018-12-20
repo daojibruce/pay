@@ -1,0 +1,129 @@
+<!--主屏内容-->
+<div class="seaview">
+	<div class="wrap-lg">
+		<div class="md-bg" style="background-image: url(images/ptzx-banner.jpg)">
+			<div class="md-btn-box">
+				<a href="/temai/" class="md-btn">我要展销</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!--主体内容-->
+<div id="main" class="main index">
+	<div class="wrap-lg">
+		<div class="md-floor">
+			<div class="md-new-list">
+				<div class="md-tit">
+					<h3>最新发布</h3>
+				</div>
+				<div class="md-main">
+					<table cellpadding="0" cellspacing="0">
+						<thead>
+							<tr>
+								<td>类别</td>
+								<td>名称</td>
+								<td>规格</td>
+								<td>发布数量</td>
+								<td>可售数量</td>
+								<td>开始时间</td>
+								<td>价格</td>
+							</tr>
+						</thead>
+						<{if $top50Week}>
+						<tbody>
+							<{foreach from=$top50Week item=temai}>
+							<tr>
+								<td><{$temai.cat_name}></td>
+								<td><a href=""><{$temai.title}></a></td>
+								<td><{$temai.spec_code}></td>
+								<td>10</td>
+								<td><{$temai.store_remain}></td>
+								<td>2017/4/25&nbsp;10:31</td>
+								<td>￥<{$temai.price}></td>
+							</tr>
+							<{/foreach}>
+						</tbody>
+						<{/if}>
+					</table>
+				</div>
+			</div>
+			<div class="md-new-buy">
+				<div class="md-tit">
+					<h3>最新订单</h3>
+				</div>
+				<div class="md-main">
+					<table cellpadding="0" cellspacing="0" id="md_buy">
+						<thead>
+							<tr>
+								<td>买家</td>
+								<td>采购内容</td>
+								<td>交易状态</td>
+								<td>购买时间</td>
+							</tr>
+						</thead>
+						<{if $topOrderList}>
+						<tbody id="md_scroll">
+							<{foreach from=$topOrderList item=orderDetail}>
+							<tr>
+								<td>买家1</td>
+								<td><{$orderDetail.title}></td>
+								<td><{$orderDetail.status|tmOrderStatus}></td>
+								<td><{$orderDetail.modified_time|@date:'H:i:s'}></td>
+							</tr>
+							<{/foreach}>
+						</tbody>
+						<{/if}>
+					</table>
+					<script type="text/javascript">
+						function autoScroll(obj, scrol){
+							$(obj).find(scrol).animate({
+								marginTop : "-30px"
+							},500,function(){
+								$(this).css({marginTop : "0px"}).find("tr:first").appendTo(this);
+							});
+						};
+						$(document).ready(function () {
+							var time = setInterval('autoScroll("#md_buy", "#md_scroll")',2500);
+							$("#tm_scroll tr").hover(function () {
+								clearInterval(time);}, function () {
+								time = setInterval('autoScroll("#md_buy", "#md_scroll")',2500)
+							});
+						});
+					</script>
+				</div>
+			</div>
+		</div>
+		<div class="md-floor">
+			<div class="md-tit">
+				<h3>最新展销</h3>
+				<a href="<{url action=topc_ctl_temai_list@index}>" class="md-more" target="_blank">更多</a>
+			</div>
+			<div class="md-main">
+				<ul>
+					<{foreach from=$temaiList item=subTemaiList key=dayStr}>
+					<{assign var=dayShow value=$dayStr|str_split:2}>
+					<li class="ptzx-list">
+						<a class="ptzx-tit" href="<{url action=topc_ctl_temai_list@index day_key=$dayStr}>" target="_blank"><{$dayShow[2]}>月<{$dayShow[3]}>号</a>
+						<dl>
+							<{foreach from=$subTemaiList item=item}>
+							<{if $item.state == 1}>
+							<dd><a href="<{url action=topc_ctl_item@index item_id=$item['item_id']}>" target="_blank"><{$item.title}></a></dd>
+							<{else}>
+							<dd class="add-gray"><{$item.cat_name}>-<{$item.title}></dd>
+							<{/if}>
+							<{/foreach}>
+						</dl>
+						<div class="ptzx-more"><a href="<{url action=topc_ctl_temai_list@index day_key=$dayStr}>" target="_blank">更多+</a></div>
+					</li>
+					<{/foreach}>
+				</ul>
+			</div>
+		</div>
+		<div class="md-floor">
+			<div class="md-ad">
+				<a href="" target="_blank"><img src="images/md-ad.jpg" alt=""></a>
+			</div>
+		</div>
+	</div>
+</div>

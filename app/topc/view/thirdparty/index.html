@@ -1,0 +1,30 @@
+<div class="fws-content">
+    <div class="fws-content-tit"><{$cat_name}></div>
+    <{if $invalid}>
+    该类型下无服务商
+    <{else}>
+    <table>
+        <thead>
+            <tr>
+                <td>服务商名称</td>
+                <td>服务商描述</td>
+                <td>服务商地址</td>
+                <td>联系人</td>
+                <td>手机号</td>
+            </tr>
+        </thead>
+        <tbody>
+        <{foreach from=$providers item=provider}>
+            <tr>
+                <td><{$provider.provider_name}></td>
+                <td><{$provider.desc}></td>
+                <td><{$provider.addr}></td>
+                <td><{$provider.contact}></td>
+                <td><{$provider.mobile}></td>
+            </tr>
+        <{/foreach}>
+        </tbody>
+    </table>
+    <{/if}>
+    <{pagers data=$pagers}>
+</div>

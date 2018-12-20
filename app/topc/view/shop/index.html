@@ -1,0 +1,44 @@
+<{include file="topc/shop/header.html"}>
+<!-- main container -->
+<div id="main" class="main" style="padding-top: 0;background-color: #f5f5f5;">
+    <div class="banner shop-banner">
+        <div class="slide">
+            <div id="slideFocus" class="slider" data-toggle="switchable">
+                <div class="slider-pic">
+                    <div class="box full-slider-box">
+                        <ul class="switchable-content">
+                            <li><img src="images/shop-banner1.jpg" alt=""></li>
+                            <li><img src="images/shop-banner2.jpg" alt=""></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="slider-switch switchable-nav">
+                    <a href="#" class="active"></a>
+                    <a href="#" class=""></a>
+                </div>
+            </div>
+            <script>
+                var autoplay = "true", effect = "scrollx";
+                $('#slideFocus').data('switchableConfig', {
+                    autoplay: autoplay,
+                    effect: effect,
+                    circle: true,
+                    events: 'click',
+                    onBeforeSwitch: function(e, toIndex) {
+                        $('.desc-list li').each(function(index, value) {
+                            if(index==toIndex){
+                                $(value).stop().animate({opacity: 1});
+                            }else{
+                                $(value).stop().animate({opacity: 0});
+                            }
+
+                        });
+                    }
+                });
+            </script>
+        </div>
+    </div>
+    <div class="wrap-lg">
+    <{include file=$file}>
+  </div>
+</div>

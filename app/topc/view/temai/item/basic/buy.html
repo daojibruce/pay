@@ -1,0 +1,149 @@
+<div class="choose">
+  <div class="dt">规格</div>
+  <ul class="chose-lists">
+    <{foreach from=$item.sku item=sku}>
+    <li class="chose-list">
+      <span class="gg-name"><{$sku.spec_info}></span>
+      <span class="gg-price"><{$sku.price}>元</span>
+      <span class="gg-lat"><{$sku.realStore}>个可售</span>
+      <div class="buy-number gg-nub">
+        <a href="javascript:void(0);" class="btn btn-add"><i class="icon icon-chevron-up"></i></a>
+        <a href="javascript:void(0);" class="btn btn-reduct"><i class="icon icon-chevron-down"></i></a>
+        <input type="hidden"  name="item[<{$sku.sku_id}>][sku_id]" value="<{$sku.sku_id}>" class="skuId">
+        <input type="hidden"  name="item[<{$sku.sku_id}>][realStore]" value="<{$item.realStore}>" class="real-store">
+        <input type="text"  name="item[<{$sku.sku_id}>][quantity]" min="0" max="<{if $activityDetail.activity_info.buy_limit}><{$activityDetail.activity_info.buy_limit}><{else}><{$sku.realStore}><{/if}>" value="0" class="action-quantity-input">
+      </div>
+    </li>
+    <{/foreach}>
+  </ul>
+  <div class="chose-more"></div>
+  <script>
+    $(function () {
+        var lis = $(".chose-list").length;
+        if ( lis > 4 ) {
+            $(".chose-more").addClass("addshow");
+            $(".chose-more").click(function () {
+                $(this).toggleClass("sq");
+                $(".chose-lists").toggleClass("heauto");
+            })
+        } else {
+            $(".chose-lists").addClass("heauto");
+        }
+    })
+  </script>
+  <!-- 包邮条件-->
+  <{if $freePostage==1}>
+  <div class=" clearfix">
+    <div class="dt">提示：</div>
+    <div class="dd">卖家承担运费</div>
+  </div>
+  <{/if}>
+
+  <div class="btn-wrap">
+    <{*}><input type="hidden" name="item[sku_id]" value="<{$item.default_sku_id}>"><{*}>
+	<input type="hidden" name="is_temai" value="1">
+    <button type="button" class="btn btn-simple btn-xl action-notify <{if $item.is_buy}> hide<{/if}>">
+      <span><span>暂不销售</span></span>
+    </button>
+    <{if $item.realStore > 0}>
+      <{if $nologin!=1}>
+        <a href="javascript:void(0)" class="btn btn-import btn-xl btn-fastbuy btn-fastbuy-withoutlogin <{if !$item.is_buy}> hide<{/if}>"><span><span>立即购买</span></span></a>
+        <{else}>
+        <button type="submit" class="btn btn-import btn-xl btn-fastbuy action-fastbuy <{if !$item.is_buy}> hide<{/if}>"><span><span>立即购买</span></span></button>
+      <{/if}>
+        <a href="<{url action=topc_ctl_cart@add}>" class="btn btn-caution btn-xl btn-addcart action-addcart <{if !$item.is_buy}> hide<{/if}>"><span><span>加入购物车</span></span></a>
+    <{/if}>
+
+    <{*if $item.valid && $item.realStore == 0*}>
+    <a href="javascript:void(0);" class="btn btn-caution btn-xl btn-addcart action-open-dialog  <{if !$item.valid || $item.realStore > 0}> hide <{/if}>">
+      <span><span>到货通知</span></span>
+    </a>
+    <!--注册协议弹框-->
+    <div id="dialog" style="display:none;">
+      <div class="agreement">
+        <div >该货品暂时缺货，请在下面输入您的邮箱地址，当我们有现货供应时，我们会发送邮件通知您！</div>
+        <div>
+          <ul>
+            <li class="form-row">
+              <label class="form-label"><em>*</em>邮箱地址：</label>
+              <span class="form-act has-figure">
+                <input type="text" name="email" id="ea" value="" placeholder="邮箱号" class="w180" >
+              </span>
+            </li>
+          </ul>
+        </div>
+        <div class="detail-dialog-btn">
+          <a href class="btn btn-simple btn-xl dialog-btn-submit"><span><span>提交</span></span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<script>
+$('.action-open-dialog').click(function (e) {
+    e.preventDefault();
+    $('#dialog').dialog({
+        width: 400,
+        height: 230,
+        title:'到货通知',
+        modal:true,
+        onShow: function(){
+          var self = this;
+          this.content.find('.dialog-btn-submit').click(function (e) {
+            var email = self.content.find('input[name=email]').val();
+            if(confirm("确定要提交吗？")){
+                var url = "<{url action=topc_ctl_memberItem@userNotifyItem}>";
+                var shopId = "<{$item.shop_id}>";
+                var item_id= "<{$item.item_id}>";
+                var sku_id = $('input[name="item[sku_id]"]').val();
+                var data = 'shop_id='+shopId+'&item_id='+item_id+'&sku_id='+sku_id+'&email='+email;
+                $.post(url,data,function(rs){
+                  if(rs.error) {
+                    Message.error(rs.message);
+                  }else{
+                    Message.success(rs.message);
+                  }
+                });
+            }
+          });
+        }
+    });
+});
+
+$('.btn-fastbuy-withoutlogin').click(function(){
+  if(spec_select.find('.on').size() < spec_size) {
+    return Message.error('请先选择完整规格。');
+  }
+  var nextUrl = '<{url action=topc_ctl_default@redirect}>';
+  var aimUrl  = '<{url action=topc_ctl_cart@add}>';
+  var signinUrl = '<{url action=topc_ctl_passport@signin}>';
+  var paramsUrl = 'mode=fastbuy&';
+  var postData = paramsUrl + $('#items_action_form').serialize();
+  nextUrl = nextUrl + '?method=post&json_response=true&url=' + aimUrl + '&' + postData;
+  window.location.href=signinUrl + '?next_page=' + escape(nextUrl);
+});
+$(function () {
+    //点击加入购物车
+    $(".btn-addcart").on("click",function () {
+        var buy_num = count_buy_num();
+        if(parseInt(buy_num) < 1) {
+            return Message.error('请先输入购买数量！');
+        }
+        var vthis = $(this);
+        vthis.addClass("disabled");
+        setTimeout(function () {
+            $(".chose-list").find("input.action-quantity-input").val(1);
+            vthis.removeClass('disabled');
+        },2000);
+    });
+
+    var count_buy_num = function () {
+        var num = 0;
+        $('.chose-list input.action-quantity-input').each(function () {
+            num += $(this).val();
+        });
+        return num;
+    }
+})
+</script>

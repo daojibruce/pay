@@ -1,0 +1,115 @@
+<div class="col-lg-13 box">
+    <div class="membercenter-box">
+        <div class="membercenter-box-hd">
+            平台展销商申请
+        </div>
+        <form action="<{url action=topc_ctl_pay_bank@saveBankInfo}>" method="post" id="ajax_form">
+            <div class="membercenter-box-bd">
+                <div class="row">
+                    <div class="membercenter-userinfo">
+                        <!--注册协议弹框-->
+                        <div class="signc">
+                            <div style="color:red;text-align: center;font-size:16px;">
+                                <{if $applyInfo['status'] == '1'}>
+                                <span>已经通过审核</span>
+                                <{elseif $applyInfo['status'] == '2'}>
+                                <span>被拒绝，原因如下：</span>
+                                <span><{$applyInfo['reson_refuse']}></span>
+                                <{elseif $applyInfo['status'] == '0' && $applyInfo['user_id']}>
+                                <span>申请已提交，预计需要1-2个工作日，请耐心等待。</span>
+                                <{/if}>
+                            </div>
+                            <{if not $isCompanyRoles}>
+                            <div style="color:red;text-align: center;font-size:16px;">
+                                您不是企业会员，不能申请平台展销，请先 <a href="<{url action='topc_ctl_passport@companysignup'}>" target="_blank">申请企业会员</a>
+                            </div>
+                            <{else}>
+                            <ul class="signul" <{if $applyInfo['status'] == '1'}>hidden<{/if}>>
+                                <li class="form-row">
+                                    <div class="signcl">
+                                        <i>*</i><span>联系人手机号：</span>
+                                    </div>
+                                    <div class="signcr">
+                                        <input type="text" name="server_mobile" id="id_server_mobile" placeholder="填写公司联系人手机号" required data-equalto="company_contact" data-caution="请填写公司联系人手机号" value="<{$applyInfo['server_mobile']}>">
+                                    </div>
+                                </li>
+                                <li  class="form-row" style="height: auto;">
+                                    <div class="signcl">
+                                        <i>*</i><span>申请原因详述：</span>
+                                    </div>
+                                    <div class="division">
+                                        <textarea class="form-control" required name="server_desc" id="id_server_desc" maxlength="300"><{$applyInfo['server_desc']}></textarea>
+                                    </div>
+                                </li>
+                            </ul>
+                            <{/if}>
+                        </div>
+                        <{if $isCompanyRoles}>
+                        <ul <{if $applyInfo['status'] == '1'}>hidden<{/if}>>
+                            <li class="form-row">
+                                <label class="form-label">&nbsp;</label>
+                                <span class="form-act">
+                        <input type="checkbox" class="x-checkbox" name="license" id="for_license" data-validate="onerequired" data-caution="<{t}>请选择同意<{/t}>" value="1">
+                        <label for="for_license" style="color: #999999;">我已阅读并同意该协议</label>
+                        <span style="float: none;color: #da251a;cursor:pointer" id="check_license">《平台展销商协议》</span>
+                    </span>
+                            </li>
+                        </ul>
+                        <{/if}>
+                    </div>
+                </div>
+                <{if $isCompanyRoles and $applyInfo['status'] != '1'}>
+                <div class="text-center"><a href="javascript:void(0);" class="btn btn-import btn-lg dialog-btn-close" id="do_became_temai"><span><span>申请成为平台展销商</span></span></a></div>
+                <{/if}>
+            </div>
+        </form>
+    </div>
+    <!--注册协议弹框-->
+    <div id="dialog" style="display:none;">
+        <div class="agreement">
+            <div class="title">平台展销商入驻协议</div>
+            <div><{$license}></div>
+            <div class="text-center"><a href="javascript:void(0);" class="btn btn-import btn-lg dialog-btn-close"><span><span>关闭</span></span></a></div>
+        </div>
+    </div>
+</div>
+<script>
+    //弹出平台展销协议
+    $('#check_license').click(function (e) {
+        $('#dialog').dialog({
+            width: 890,
+            height: 500,
+            position :{ my: "center", at: "center", of: $(".signc") },
+            title:'平台展销商入驻协议',
+            close: function(){
+                //document.querySelector('#for_license').checked = true;
+            }
+        });
+    });
+
+    //请阅读并同意该协议
+    $("#do_became_temai").bind("click" , function(){
+        var checked = $("#for_license").get(0).checked;
+        if(! checked){
+            Message.error("请阅读并同意该协议");
+            return false;
+        }
+
+        becomeTemai();
+    });
+
+    function becomeTemai(){
+        var postData = {'server_name':$("#id_server_name").val(),'server_cert':$("#id_server_cert").val(),'server_mobile':$("#id_server_mobile").val(),'server_desc':$("#id_server_desc").val(),'r' : Math.random()};
+        $.post('<{url action=topc_ctl_member@temaisavelicense}>' , postData ,
+            function(rs){
+                if(rs.success) {
+                    Message.success(rs.message);
+                    if(rs.redirect) location.href = rs.redirect;
+                }else if(rs.error) {
+                    Message.error(rs.message);
+                    if(rs.redirect) location.href = rs.redirect;
+                }
+            }
+        );
+    }
+</script>

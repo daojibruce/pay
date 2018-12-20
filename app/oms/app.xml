@@ -1,0 +1,15 @@
+<app>
+    <name>BPB与OMS数据互通服务</name>
+    <description>BPB企业级SAAS OMS</description>
+    <author>
+        <name>千匠开发团队</name>
+        <email>lijidao@qjclouds.com</email>
+        <url>http://www.qjclouds.com</url>
+    </author>
+
+    <version>1.0</version>
+    <license>qjclouds license</license>
+
+    <depends>
+    </depends>
+</app>

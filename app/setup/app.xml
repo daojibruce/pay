@@ -1,0 +1,18 @@
+<app>
+    <name>系统安装工具</name>
+    <type>core</type>
+    <description>目前只是系统安装功能，将来会接管所有需要暂停服务的升级维护工作，本模块在数据库无法连接时也可使用。</description>
+
+    <author>
+        <name>千匠网络</name>
+        <email>dev@qjclouds.com</email>
+        <url>http://www.qjclouds.com</url>
+    </author>
+
+    <version>1.0</version>
+    <license>千匠 license</license>
+
+   <depends>
+      <app>base</app>
+    </depends>
+</app>

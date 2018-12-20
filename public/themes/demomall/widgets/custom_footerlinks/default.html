@@ -1,0 +1,17 @@
+<span>友情链接：</span>
+<ul>
+	<{foreach from=$data item=sitemenu key=menukey}>
+	<{if $sitemenu.url}>
+	<li><a href="<{$sitemenu.url}>" target="_blank"><{$sitemenu.title}></a></li>
+	<{else}>
+	<li><a href="" target="_blank"><{$sitemenu.title}></a></li>
+	<{/if}>
+	<{/foreach}>
+</ul>
+<script>
+	$(function () {
+	    var len = $(".friend-link ul li").length;
+		var ww = $(".friend-link ul").width()+$(".friend-link span").width()+len;
+		$(".friend-link").css("width",ww);
+    })
+</script>

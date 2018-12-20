@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <{header app=topc}>
+  <link rel="stylesheet" href="images/index.css">
+</head>
+
+<body class="is-index">
+<{require file="block/header.html"}>
+<!-- 主内容区 -->
+<div class="seaview">
+  <div class="wrap-lg">
+    <div class="module">
+      <div class="row cover-content">
+        <div class="col-lg-3 box cover-silder-gg">
+          <{widgets id="banners"}>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="full-slider">
+    <{widgets id="main_focus"}>
+  </div>
+</div>
+<div id="main" class="main index">
+  <div class="wrap-lg">
+    <div class="mian-con">
+      <div class="main-box">
+        <{widgets id="category_item_home1"}>
+      </div>
+      <div class="main-box">
+        <{widgets id="category_item_home2"}>
+      </div>
+      <div class="main-box">
+        <{widgets id="category_item_home3"}>
+      </div>
+      <div class="main-box">
+        <{widgets id="category_item_home4"}>
+      </div>
+      <script>
+          $(function () {
+              $(".main-box").each(function (e) {
+                  var t= -e*55;
+                  var adc = 'c'+e;
+                  $(this).find('.main-tit').css('background-position', '0 ' + t +'px');
+                  $(this).find(".tab-go").addClass(adc);
+              });
+              $(".tab-tit").hover(function () {
+                  $(this).parent("li").addClass("mom").siblings().removeClass("mom");
+                  $(this).next(".tab-list").addClass("show").parent("li").siblings().find(".tab-list").removeClass("show");
+              });
+              $('.tab-link').click(function(){
+                  if($(this).data('href')){
+                      location.href= $(this).data('href');
+                  }
+              });
+          })
+      </script>
+    </div>
+    <div class="service">
+      <div class="wrap-lg">
+        <div class="service-pic"><img src="images/bz.jpg" alt=""></div>
+      </div>
+    </div>
+  </div>
+</div>
+<{require file="block/footer.html"}>
+</body>
+<script type="text/javascript">
+$(function(){
+    $("img.imglazyload").lazyload({
+        effect : "fadeIn"
+    });
+});
+</script>
+</html>

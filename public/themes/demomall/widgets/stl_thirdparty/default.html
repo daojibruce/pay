@@ -1,0 +1,22 @@
+<div class="fix-fws">
+  <div class="fix-fws-tit">
+    <a href="javascript:void(0);" target="_blank">服务商</a>
+  </div>
+  <div class="fix-fws-box">
+    <ul>
+      <{foreach from=$data.categories item=category}>
+      <li><a href="<{url action=topc_ctl_thirdparty@index cat_id=$category.cat_id}>" target="_blank"><{$category.cat_name}></a></li>
+      <{/foreach}>
+    </ul>
+    <!--<div class="fix-fws-close">X</div>-->
+  </div>
+</div>
+<script>
+    $(function () {
+        $(".fix-fws").hover(function () {
+            $(".fix-fws-box").fadeIn(500);
+        },function () {
+            $(".fix-fws-box").fadeOut(500);
+        });
+    })
+</script>

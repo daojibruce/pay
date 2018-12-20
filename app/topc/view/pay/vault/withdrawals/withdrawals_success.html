@@ -1,0 +1,292 @@
+<div class="recharge-container">
+  <div class="recharge-header clearfix">
+    <div class="recharge-title">
+      见证宝提现
+    </div>
+    <div class="recharge-steps">
+      <span class="current">1.填写充值金额</span>
+      <span class="current">2.选择支付方式</span>
+      <span class="current">3.提现成功</span>
+    </div>
+  </div>
+  <div class="recharge-content">
+    <div class="recharge-result finished">
+    <i class="icon icon-checkmark-b"></i>
+    <span>恭喜您，提现成功！快去银行账户查看一下吧~</span>
+    <a href="<{url action=topc_ctl_default@index}>" class="btn-see"><i class="icon icon-arrow-left"></i>去逛逛</a>
+    </div>
+  </div>
+</div>
+<style>
+  .recharge-header {
+    padding: 40px 0;
+  }
+  .recharge-content {
+    border: 1px solid #efefef;
+    padding: 100px 0;
+    background: #fff;
+  }
+  .recharge-content .recharge-form {
+    width: 40%;
+    margin: 0 auto;
+    font-size: 14px;
+  }
+  .recharge-content .recharge-form .txt {
+    padding-top: 10px;
+  }
+  .recharge-content .recharge-form dl {
+    clear: both;
+  }
+  .recharge-content .recharge-form dt {
+    float: left;
+    wdith: 100px;
+  }
+  .recharge-content .recharge-form dd {
+    margin-left: 100px;
+  }
+  .recharge-content .recharge-form .form-title {
+    font-size: 20px;
+    color: #666;
+  }
+  .recharge-content .recharge-form .form-group {
+    padding-top: 20px;
+  }
+  .recharge-content .recharge-form .form-action {
+    padding-top: 50px;
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+  .recharge-content .recharge-form .paytype:after {
+    content: "\0020";
+    display: block;
+    visibility: hidden;
+    clear: both;
+  }
+  .recharge-content .recharge-form .paytype li {
+    float: left;
+    margin-right: 16px;
+    border: 1px solid #efefef;
+    border-radius: 3px;
+    min-width: 210px;
+    text-align: center;
+    padding: 6px 5px;
+    line-height: 26px;
+  }
+  .recharge-content .recharge-form .paytype li input {
+    float: left;
+    margin-right: 5px;
+  }
+  .recharge-content .recharge-form .paytype li img {
+    float: left;
+  }
+  .recharge-content .recharge-form .amount-error .input-block {
+    border-color: #d9534f;
+    color: #d9534f;
+  }
+  .recharge-content .recharge-form .amount-error .dv-error {
+    display: block;
+  }
+  .recharge-content .recharge-form .dv-error {
+    display: none;
+    margin-top: 10px;
+    color: #d9534f;
+  }
+  .recharge-content .recharge-form .dv-error .icon, .recharge-content .recharge-form .dv-error [class^=icon-]:before {
+    margin-right: 5px;
+    font-size: 14px;
+  }
+  .recharge-content .recharge-form .paytype-choose-list li {
+    padding: 0;
+    width: 210px;
+    height: 68px;
+    margin-right: 25px;
+    margin-bottom: 10px;
+    background-color: #fff;
+    cursor: pointer;
+    min-width: 208px;
+  }
+  .recharge-content .recharge-form .paytype-choose-list li input, .recharge-content .recharge-form .paytype-choose-list li img {
+    margin: 0;
+    vertical-align: middle;
+    float: none;
+  }
+  .recharge-content .recharge-form .paytype-choose-list li input[type="radio"] {
+    display: none;
+  }
+  .recharge-content .recharge-form .paytype-choose-list li label {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+  }
+  .recharge-content .recharge-form .paytype-choose-list li.on {
+    border: 2px solid #e22335;
+    height: 66px;
+    width: 208px;
+  }
+  .recharge-content .recharge-form .paytype-choose-list li.on .choose-item-content {
+    width: 100%;
+  }
+  .recharge-content .recharge-form .paytype-choose-list li.on .choose-item-content i {
+    display: block;
+    position: absolute;
+    top: -8px;
+    right: 0;
+    font-size: 12px;
+    color: #fff;
+    z-index: 2;
+  }
+  .recharge-content .recharge-form .paytype-choose-list li.on .choose-item-content span {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    width: 0;
+    height: 0;
+    border-top: 25px solid #e22335;
+    border-left: 25px solid transparent;
+    z-index: 1;
+  }
+  .recharge-content .recharge-form .paytype-choose-list .choose-item-content {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+  .recharge-content .recharge-form .paytype-choose-list .choose-item-content i {
+    display: none;
+  }
+  .recharge-content .recharge-result {
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+  }
+  .recharge-content .recharge-result i {
+    display: inline-block;
+    font-size: 60px;
+    vertical-align: middle;
+    margin-right: 20px;
+  }
+  .recharge-content .recharge-result.finished i {
+    color: #45c169;
+  }
+  .recharge-content .recharge-result.finished .btn-see {
+    font-size: 12px;
+    color: #c81624;
+    margin-left: 20px;
+  }
+  .recharge-content .recharge-result.finished .btn-see i {
+    color: #c81624;
+    font-size: 14px;
+    margin-right: 5px;
+  }
+  .recharge-content .recharge-result.failed i {
+    color: #c81624;
+  }
+  .recharge-content .page-guide {
+    padding-top: 40px;
+    text-align: center;
+  }
+  .recharge-content .page-guide .btn {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+  .recharge-steps {
+    float: right;
+    text-align: right;
+  }
+  .recharge-steps span {
+    position: relative;
+    display: inline-block;
+    min-width: 140px;
+    padding: 6px 10px;
+    background: #efefef;
+    text-align: center;
+  }
+  .recharge-steps span:before {
+    position: absolute;
+    top: 0;
+    right: -19px;
+    content: " ";
+    border-style: solid;
+    border-width: 15px;
+    border-color: transparent;
+    border-right: 0;
+    border-left-color: #f8f8f8;
+    z-index: 9;
+  }
+  .recharge-steps span:after {
+    position: absolute;
+    top: 0;
+    right: -14px;
+    content: " ";
+    border-style: solid;
+    border-width: 15px;
+    border-color: transparent;
+    border-right: 0;
+    border-left-color: #efefef;
+    z-index: 10;
+  }
+  .recharge-steps span.current {
+    background: #c81624;
+    color: #fff;
+  }
+  .recharge-steps span.current:after {
+    border-left-color: #c81624;
+  }
+  .recharge-steps span:last-child:before {
+    content: none;
+  }
+  .recharge-steps span:last-child:after {
+    content: none;
+  }
+  .recharge-title {
+    float: left;
+    font-size: 24px;
+    color: #666;
+  }
+  .recharge-pay .recharge-form {
+    width: 90%;
+  }
+  .recharge-pay .recharge-form .form-action {
+    width: 30%;
+    margin: 0 auto;
+  }
+
+  .recharge-order-content {
+    padding-top: 40px;
+    color: #666;
+  }
+  .recharge-order-content .order-info {
+    padding: 0 80px;
+    margin-bottom: 100px;
+  }
+  .recharge-order-content .goods-name {
+    float: left;
+    width: 40%;
+  }
+  .recharge-order-content .goods-name span {
+    display: block;
+  }
+  .recharge-order-content .order-total {
+    float: right;
+  }
+  .recharge-order-content .order-total span {
+    color: #c81623;
+    font-size: 24px;
+  }
+  .recharge-order-content .recharge-result span {
+    position: relative;
+  }
+  .recharge-order-content .recharge-result.failed i.icon-tip {
+    color: #ffcc00;
+  }
+  .recharge-order-content .recharge-result .btn-goback {
+    font-size: 12px;
+    color: #c81624;
+  }
+  .recharge-order-content .recharge-result .btn-goback i {
+    font-size: 14px;
+    margin-right: 5px;
+  }
+
+</style>

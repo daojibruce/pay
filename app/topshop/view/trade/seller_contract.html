@@ -1,0 +1,1492 @@
+<!-- 电子合同模板 edit by nie 2016-1-18 -->
+<{if $editable}>
+    <div  class="box box-solid">
+      <form  action="<{url action=topshop_ctl_trade_detail@send_contract}>" method="post" id='form_contract' >
+        <input type='hidden' name='tid' value="<{$trade.tid}>">
+        <input type='hidden' name='user_id' value="<{$trade.user_id}>">
+        <input type='hidden' name='SumTotal' id="pay_total_hidden" value="<{$trade.payment}>">
+        <div class="box-body">
+            <h4>备注信息</h4>
+            <ul class="xn_c_zhongt">
+                <li>付款方式：</li>
+                <li><input id="xn_c_zb1" name="zhongb1" type="radio" value='0' <{if $trade.elecontract.is_part_pay == 0}>checked <{/if}>><label for="xn_c_zb1">一次性付款</label></li>
+                <li><input id="xn_c_zb2" name="zhongb1" type="radio" value='1' <{if $trade.elecontract.is_part_pay == 1}>checked <{/if}>><label for="xn_c_zb2">分次付款</label></li>
+            </ul>
+
+            <div id="xn_c_zhtbox" class="xn_c_zhtbox">
+              <div class="xn_c_zhtbt">
+                <span>总数量</span>
+                <span class="xn_c_zbtr"><{$trade.orders.0.num}></span>
+                <span>总金额</span>
+                <span><em id='pay_total_need'>￥<{$trade.payment}></em></span>
+              </div>
+              <ul class="xn_c_zhtbl">
+                <li>
+                  <span>订单生成（保证金）</span>
+
+                  <span class="xn_c_zhtblic">
+                      <input class="x-input form-control" name='pay_1' value="<{$trade.elecontract.pay_type.pay_1}>" type="text" onkeyup="CheckInputInt(this)" >
+                      <i>%</i><em>+</em></span>
+                    <!--<input class="x-input form-control" id="num1" name='num1' type="hidden" value="">-->
+                  <span class="xn_c_zhtblir"></span>
+                </li>
+
+                <li>
+                  <span>确认收货（收货款）</span>
+                  <span class="xn_c_zhtblic">
+                       <input class="x-input form-control" name='pay_2' value="<{$trade.elecontract.pay_type.pay_2}>" type="text" onkeyup="CheckInputInt(this)" >
+                      <i>%</i><em class="xn_c_zhjyg"><small>+</small></em>
+                      <!--<input class="x-input form-control" id="num2" name='num2' type="hidden" value="">-->
+                  </span>
+                  <span class="xn_c_zhtblir" ></span>
+                </li>
+
+                <li class="xn_c_zhthide">
+                  <div class="xn_c_zhtblirql">
+                    <span class="xn_c_zhtblic">
+                       <select id='detail_time1' name="detail_time1" class="xz-input-w form-control qh_xz223_dxlrbox">
+                            <option value="0">一个月</option>
+                            <option value="1">二个月</option>
+                            <option value="2">三个月</option>
+                            <option value="3">四个月</option>
+                            <option value="4">五个月</option>
+                            <option value="5">六个月</option>
+                            <option value="6">七个月</option>
+                            <option value="7">八个月</option>
+                            <option value="8">九个月</option>
+                            <option value="9">十个月</option>
+                            <option value="10">十一个月 </option>
+                            <option value="11">十二个月</option>
+                            <option value="12" selected = 'selected'>请选择</option>
+                        </select>
+                    </span>
+                    <span class="xn_c_zhtblicr"><em>+</em></span>
+                  </div>
+                  <div class="xn_c_zhtblirqr">
+                    <span>收货后（运行款）</span>
+                    <span class="xn_c_zhtblic">
+                         <input class="x-input form-control" name='pay_3' value="<{$trade.elecontract.pay_type.pay_3}>" type="text" onkeyup="CheckInputInt(this)">
+                        <i>%</i><em class="xn_c_zhjyg"><small>+</small></em>
+                       <!-- <input class="x-input form-control" id="num3" name='num3' type="hidden" value="">-->
+                    </span>
+                  </div>
+                  <span class="xn_c_zhtblir"></span>
+                </li>
+                <li class="xn_c_zhthide">
+                  <div class="xn_c_zhtblirql">
+                    <span class="xn_c_zhtblic">
+                      <select id='detail_time2' name="detail_time2" class="xz-input-w form-control qh_xz223_dxlrbox">
+                          <option value="0">一个月</option>
+                          <option value="1">二个月</option>
+                          <option value="2">三个月</option>
+                          <option value="3">四个月</option>
+                          <option value="4">五个月</option>
+                          <option value="5">六个月</option>
+                          <option value="6">七个月</option>
+                          <option value="7">八个月</option>
+                          <option value="8">九个月</option>
+                          <option value="9">十个月</option>
+                          <option value="10">十一个月 </option>
+                          <option value="11">十二个月</option>
+                      </select>
+                    </span>
+                    <span class="xn_c_zhtblicr"><em>+</em></span>
+                  </div>
+                  <div class="xn_c_zhtblirqr">
+                    <span>收货后（质保金）</span>
+                    <span class="xn_c_zhtblic">
+                         <input class="x-input form-control" name='pay_4' value="<{$trade.elecontract.pay_type.pay_4}>" type="text" onkeyup="CheckInputInt(this)">
+                         <i>%</i><em class="xn_c_zhjyg"><small>+</small></em>
+                    </span>
+                     <!-- <input class="x-input form-control" id="num4" name='num4' type="hidden" value="">-->
+                  </div>
+                  <span class="xn_c_zhtblir"></span>
+                </li>
+                <li class="xn_c_zhthide">
+                  <div class="xn_c_zhtblirql">
+                    <span class="xn_c_zhtblic">
+                      <select id='detail_time3' name="detail_time3" class="xz-input-w form-control qh_xz223_dxlrbox">
+                          <option value="0">一个月</option>
+                          <option value="1">二个月</option>
+                          <option value="2">三个月</option>
+                          <option value="3">四个月</option>
+                          <option value="4">五个月</option>
+                          <option value="5">六个月</option>
+                          <option value="6">七个月</option>
+                          <option value="7">八个月</option>
+                          <option value="8">九个月</option>
+                          <option value="9">十个月</option>
+                          <option value="10">十一个月 </option>
+                          <option value="11">十二个月</option>
+                      </select>
+                    </span>
+                    <span class="xn_c_zhtblicr"><em>+</em></span>
+                  </div>
+                  <div class="xn_c_zhtblirqr">
+                    <span>收货后</span>
+                    <span class="xn_c_zhtblic"><input class="x-input form-control" name='pay_5' value="<{$trade.elecontract.pay_type.pay_5}>" type="text" onkeyup="CheckInputInt(this)">
+                         <i>%</i></span>
+                     <!-- <input class="x-input form-control" id="num5" name='num5' type="hidden" value="">-->
+                    <span class="xn_c_zhtblir"></span>
+                  </div>
+                </li>
+              </ul>
+              <div class="xn_c_zhtbr">
+                <span id='btn_choose' class="btn btn-warning">保存</span>
+                <span id='reset_splitpay' class="btn btn-warning">重置</span>
+              </div>
+            </div>
+            <div class="xn_c_zhtb2">
+                <ul id='detail_show' style="display:none;" class="xn_c_zhongt xn_c_zhongtys">
+                    <{if $trade.elecontract.is_part_pay }>
+                    <li>分次付款：</li>
+                    <li>订单生成<{$trade.elecontract.pay_type.pay_1}> <em>%</em>（<{$trade.elecontract.pay_type.num1|cur}>）</li>
+                    <li>收货确认<{$trade.elecontract.pay_type.pay_2}> <em>%</em>（<{$trade.elecontract.pay_type.num2|cur}>）</li>
+                    <{if $trade.elecontract.pay_type.pay_3}>
+                    <li>收货<{$trade.elecontract.pay_type.detail_time1 }><em><{$trade.elecontract.pay_type.pay_3}>%</em>（<{$trade.elecontract.pay_type.num3|cur}>）</li>
+                    <{/if}>
+                    <{if $trade.elecontract.pay_type.pay_4}>
+                    <li>收货<{$trade.elecontract.pay_type.detail_time2 }><em><{$trade.elecontract.pay_type.pay_4}>%</em>（<{$trade.elecontract.pay_type.num4|cur}>）</li>
+                    <{/if}>
+                    <{if $trade.elecontract.pay_type.pay_5}>
+                    <li>收货<{$trade.elecontract.pay_type.detail_time3 }><em><{$trade.elecontract.pay_type.pay_5}>%</em>（<{$trade.elecontract.pay_type.num5|cur}>）</li>
+                    <{/if}>
+                    <{/if}></ul>
+                <ul class="xn_c_zhongt">
+                    <li>发货方式：</li>
+                    <li><input id="xn_c_zb3" name="zhongb2" type="radio" value='0' <{if $trade.elecontract.is_part_delivery == 0}>checked <{/if}>><label for="xn_c_zb3">一次发货</label></li>
+                    <li><input id="xn_c_zb4" name="zhongb2" type="radio" value='1' <{if $trade.elecontract.is_part_delivery == 1}>checked <{/if}>><label for="xn_c_zb4">分次发货（将形成多次发货单）</label></li>
+                </ul>
+                <ul class="xn_c_zhongt">
+                    <li>是否代发：</li>
+                    <li><input id="xn_c_zb5" name="zhongb3" type="radio" value='0' ><label for="xn_c_zb5">是</label></li>
+                    <li><input id="xn_c_zb6" name="zhongb3" type="radio" value='1' checked><label for="xn_c_zb6">否</label></li>
+                </ul>
+
+              <div class="text-center">
+                  <button type='button' id='detail_btn_submit' class="btn btn-warning">
+                      <{if $trade.status == 'REJECT_CONTRACT'}>修改电子合同
+                      <{else  $trade.status != 'WAIT_PLAT_CHECK_OFFLINE'}>保存修改
+                      <{/if}>
+                  </button>
+              </div>
+            </div>
+      </form>
+    </div>
+<{/if}>
+
+<!--代码开始-->
+<form style='display:none;'  action="<{url action=topshop_ctl_trade_detail@send_template}>" method="post" id='form_template' >
+  <div class="box box-solid">
+      <div class="box-body">
+        <h4>买卖合同</h4>
+
+            <input type='hidden' name='tid' value="<{$trade.tid}>">
+            <input type='hidden' name='user_id' value="<{$trade.user_id}>">
+            <div class="xn_114_contract">
+                <div class="xn_114_cont" style="height: 110px;">
+                <dl class="xn_114_cdl xn_114_cl">
+
+                  <dd><span>买受人(公司名称)：</span><i><input readonly type="text" value="<{$trade.elecontract.user_name}>" /></i></dd>
+                  <dd><span>出卖人(公司名称)：</span><i><{$company_name}></i></dd>
+
+                </dl>
+                <dl class="xn_114_cdl xn_114_cr">
+
+                  <dd><span>合同编号：</span><i><{$trade.tid}></i></dd>
+                  <dd><span class="text-red">*</span><span>签订及履行地点：</span><i><input name='signed_place' type="text" value="<{$trade.elecontract.signed_place}>" placeholder="必填" /></i></dd>
+                  <dd><span class="text-red">*</span><span>签订方式：</span><i><input name='signed_pattern' type="text" value="<{$trade.elecontract.signed_pattern}>" placeholder="必填" /></i></dd>
+                  <dd><span>&nbsp;&nbsp;签订时间：</span><i><input readonly type="text" value="<{if !empty($trade.elecontract.user_legal_agent)}><{$trade.elecontract.signed_time}><{/if}>" /></i></dd>
+                </dl>
+              </div>
+              <div class="xn_114_cont">
+                <h3>一、标的物、数量、价款及交货时间：</h3>
+                <table class="item-table need-table">
+                    <colgroup>
+                        <col class="table-col-1">
+                        <col class="table-col-2">
+                        <col class="table-col-3">
+                        <col class="table-col-4">
+                        <col class="table-col-5">
+                        <col class="table-col-6">
+                        <col class="table-col-7">
+                        <col class="table-col-8">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <td>标的物名称</td>
+                        <td>品牌</td>
+                        <td>规格型号</td>
+                        <td>单位</td>
+                        <td>数量</td>
+                        <td>单价(元)</td>
+                        <td>原价(元)</td>
+                        <td>调整单价(元)</td>
+                        <td>实际支付(元)</td>
+                        <td>交货时间</td>
+                    </tr>
+                    </thead>
+                    <tbody id="contract_content">
+                    <{foreach from=$trade.orders item=item}>
+                      <tr>
+                        <td><{$item.title}></td>
+                        <td><{$item.brand_name}></td>
+                        <td><{$item.spec_nature_info}></td>
+                        <td><{$item.unit}></td>
+                        <td><{$item.num}></td>
+                        <td><{$item.sku_price|cur}></td>
+                        <td><{$item.total_fee|cur}></td>
+                        <td id="item_adjust_<{$item.oid}>"><{$item.adjust_fee|cur}></td>
+                        <td><{$item.payment|cur}></td>
+                        <td rel="delivery_goods_time"><{$trade.delivery_goods_time}></td>
+                      </tr>
+                    <{/foreach}>
+                      <tr>
+                       <td colspan="10" class="xn_colleft" id='trade_memo'>备注：<{$trade.trade_memo}></td>
+                      </tr>
+                      <tr>
+                          <td colspan="10" class="xn_colleft" id='money_total_show'>合计金额(大写)：<{$trade.cny_payment}>
+                          (<{$trade.unfeePayment|cur}>元)
+                           <i class="xn_i_color">(总调价金额：<{$trade.total_adjust_fee|cur}>元)</i>
+                            <{if $trade.post_fee>0}>
+                              (邮费:<{$trade.post_fee|cur}>)
+                              <{/if}>
+                            </td>
+                        </td>
+                      </tr>
+                    </tbody>
+                </table>
+              </div>
+              <div class="xn_114_cont">
+                <h3>二、质量标准：</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="standard" placeholder="此项必填"><{$trade.elecontract.standard|default:$defaultEcontract.quality_standard}></textarea>
+                </div>
+              </div>
+              <div class="xn_114_cont">
+                <h3>三、出卖人对质量负责的条件及期限：</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="terms" placeholder="此项必填"><{$trade.elecontract.terms|default:$defaultEcontract.terms}></textarea>
+                </div>
+              </div>
+              <div class="xn_114_cont">
+                <h3>四、包装标准、包装物的供应与回收：</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="packing_pattern" placeholder="此项必填"><{$trade.elecontract.packing_pattern|default:$defaultEcontract.packing_pattern}></textarea>
+                </div>
+              </div>
+              <div class="xn_114_cont">
+                <h3>五、随货的必备：</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="appendix" placeholder="此项必填"><{$trade.elecontract.appendix|default:$defaultEcontract.appendix}></textarea>
+                </div>
+              </div>
+              <div class="xn_114_cont">
+                <h3>六、合理损耗标准及计算方法：</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="loss_standard" placeholder="此项必填"><{$trade.elecontract.loss_standard|default:$defaultEcontract.loss_standard}></textarea>
+                </div>
+              </div>
+              <div class="xn_114_cont">
+                <h3>七、交货方式、地点及运费承担：</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="content" placeholder="此项必填"><{$trade.elecontract.content|default:$defaultEcontract.content}></textarea>
+                </div>
+              </div>
+              <div class="xn_114_cont">
+                <h3>八、检验标准、方法及期限：</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="inspection_standard" placeholder="此项必填"><{$trade.elecontract.inspection_standard|default:$defaultEcontract.inspection_standard}></textarea>
+                </div>
+              </div>
+
+              <div class="xn_114_cont" id='balance_pattern'>
+                <h3>九、结算方式、时间：</h3>
+                <{if $editable}>
+                <ul id='balance_show'  class="xn_c_zhongt xn_c_zhongtys"></ul>
+                <{else}>
+                  <span><{if $trade.elecontract.is_part_pay == '0'}>一次付款<{else}>多次付款
+                        <{if $trade.elecontract.pay_type.pay_1 != 0 && isset($trade.elecontract.pay_type.pay_1)}>保证金：<{$trade.elecontract.pay_type.pay_1|cur}> <{/if}><{if $trade.elecontract.pay_type.pay_2 != 0 && isset($trade.elecontract.pay_type.pay_2)}>	收货款：<{$trade.elecontract.pay_type.pay_2|cur}><{/if}>
+                        <{if $trade.elecontract.pay_type.pay_3 != 0 && isset($trade.elecontract.pay_type.pay_3)}>	收货<{$trade.elecontract.pay_type.detail_time1}><{$trade.elecontract.pay_type.pay_3|cur}><{/if}>
+                        <{if $trade.elecontract.pay_type.pay_4 != 0 && isset($trade.elecontract.pay_type.pay_4)}>	收货<{$trade.elecontract.pay_type.detail_time1}><{$trade.elecontract.pay_type.pay_4|cur}><{/if}>
+                        <{if $trade.elecontract.pay_type.pay_5 != 0 && isset($trade.elecontract.pay_type.pay_5)}> 	收货<{$trade.elecontract.pay_type.detail_time1}><{$trade.elecontract.pay_type.pay_5|cur}><{/if}>
+                  <{/if}></span>
+                  <span><{if $trade.elecontract.is_part_delivery == '0'}>一次发货<{else}>分次发货（将形成多次发货单）<{/if}></span>
+                <{/if}>
+              </div>
+                <div class="xn_114_cont">
+                <h3>十、本合同解除的条件：</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="Change_release" placeholder="此项必填"><{$trade.elecontract.Change_release|default:$defaultEcontract.change_release}></textarea>
+                </div>
+              </div>
+              <div class="xn_114_cont">
+                <h3>十一、违约责任：</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="breach_responsibility" style="height:150px;" placeholder="此项必填"><{$trade.elecontract.breach_responsibility|default:$defaultEcontract.breach_responsibility}></textarea>
+                </div>
+              </div>
+              <div class="xn_114_cont">
+                <h3>十二、知识产权保护：</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="ipr" placeholder="此项必填"><{$trade.elecontract.ipr|default:$defaultEcontract.ipr}></textarea>
+                </div>
+              </div>
+              <div class="xn_114_cont">
+                <h3>十三、合同争议的解决方式：</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="disputed" placeholder="此项必填"><{$trade.elecontract.disputed|default:$defaultEcontract.disputed}></textarea>
+                </div>
+              </div>
+              <div class="xn_114_cont">
+                <h3>十四、</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="customer_service" placeholder="此项必填"><{$trade.elecontract.customer_service|default:$defaultEcontract.customer_service}></textarea>
+                </div>
+              </div>
+              <div class="xn_114_cont">
+                <h3>十五、</h3>
+                <div class="xn_114_ctexa">
+                  <textarea name="effective_condition" placeholder="此项必填"><{$trade.elecontract.effective_condition|default:$defaultEcontract.effective_condition}></textarea>
+                </div>
+              </div>
+
+                <div class="xn_114_cont" style="margin-top: 25px;">
+                <dl class="xn_114_cdl xn_114_cl">
+                  <dd><span>出卖人(公司名称)：</span><i><input value='<{if $trade.elecontract.seller_name}><{$trade.elecontract.seller_name}><{else}><{$company_name}><{/if}>' name='seller_name' type="text" readonly style="width: 200px;"></i></dd>
+                  <dd><span class="text-red">*</span><span>住所：</span><i><input name='seller_place' type="text" value="<{$trade.elecontract.seller_place}>" placeholder="必填" style="width: 275px;" /></i></dd>
+                  <dd><span class="text-red">*</span><span>法定代表人：</span><i><input name='seller_legal_agent' type="text" value="<{$trade.elecontract.seller_legal_agent}>" placeholder="必填" /></i></dd>
+                  <dd><span class="text-red">*</span><span>委托代理人：</span><i><input name='seller_entrusted_agent' type="text" value="<{$trade.elecontract.seller_entrusted_agent}>" placeholder="必填" /></i></dd>
+                  <dd><span class="text-red">*</span><span>传真：</span><i><input name='seller_fax' type="text" value="<{$trade.elecontract.seller_fax}>" placeholder="必填" />  如：010-1234567</i></dd>
+                  <dd><span class="text-red">*</span><span>电话：</span><i><input name='seller_phone' type="text" value="<{$trade.elecontract.seller_phone}>" placeholder="必填" /></i></dd>
+                </dl>
+
+                <dl class="xn_114_cdl xn_114_cr xn_114_bootdl">
+                  <dd><span>买受人(公司名称): </span><i><input readonly type="text" value="<{$trade.elecontract.user_name}>" style="width: 200px;"></i></dd>
+                  <dd><span>住所：</span><i><input readonly type="text" value="<{$trade.elecontract.user_place}>" style="width: 270px;"></i></dd>
+                  <dd><span>法定代表人：</span><i><input readonly type="text" value="<{$trade.elecontract.user_legal_agent}>"></i></dd>
+                  <dd><span>委托代理人：</span><i><input readonly type="text" value="<{$trade.elecontract.user_entrusted_agent}>"></i></dd>
+                  <dd><span>传真：</span><i><input readonly type="text" value="<{$trade.elecontract.user_fax}>"></i></dd>
+                  <dd><span>电话：</span><i><input readonly type="text" value="<{$trade.elecontract.phone}>"></i></dd>
+                </dl>
+              </div>
+            </div>
+
+           <{if $trade.status == 'WAIT_BUYER_PAY'}>
+            <div class="text-center">
+                <a id="aprint" class="btn btn-info"  href="<{url action=topshop_ctl_trade_detail@previewEcontract tid=$trade.tid}>" target="_blank" >打印电子合同</a>
+              </div>
+           <{/if}>
+
+        <div class="orderdtl-box">
+            <div class="text-center">
+            <{if $trade.status != 'WAIT_CONFIRM'}>
+              <button  type='button' id='confirm_template' class="btn btn-info"><{if $trade.status == 'REJECT_CONTRACT'}>修改<{else}>提交<{/if}>电子合同模板</button>
+            <{/if}>
+          </div>
+        </div>
+      </div>
+  </div>
+</form>
+<!-- 电子合同模板 edit by nie 2016-1-18 -->
+<{if $trade.status == 'WAIT_BUYER_PAY'}>
+    <h3>结算方式： </h3>
+    <span><{if $trade.elecontract.is_part_pay == '0'}>一次付款<{else}>多次付款
+    <{if $trade.elecontract.pay_type.pay_1 != 0 && isset($trade.elecontract.pay_type.pay_1)}>保证金：<{$trade.elecontract.pay_type.pay_1|cur}><{/if}>
+    <{if $trade.elecontract.pay_type.pay_2 != 0 && isset($trade.elecontract.pay_type.pay_2)}>收货款：<{$trade.elecontract.pay_type.pay_2|cur}><{/if}>
+    <{if $trade.elecontract.pay_type.pay_3 != 0 && isset($trade.elecontract.pay_type.pay_3)}>收货<{$trade.elecontract.pay_type.detail_time1}><{$trade.elecontract.pay_type.pay_3|cur}><{/if}>
+    <{if $trade.elecontract.pay_type.pay_4 != 0 && isset($trade.elecontract.pay_type.pay_4)}>收货<{$trade.elecontract.pay_type.detail_time1}><{$trade.elecontract.pay_type.pay_4|cur}><{/if}>
+    <{if $trade.elecontract.pay_type.pay_5 != 0 && isset($trade.elecontract.pay_type.pay_5)}>收货<{$trade.elecontract.pay_type.detail_time1}><{$trade.elecontract.pay_type.pay_5|cur}><{/if}>
+    <{/if}></span>
+    <span><{if $trade.elecontract.is_part_delivery == '0'}>一次发货<{else}>分次发货（将形成多次发货单）<{/if}></span>
+<{/if}>
+
+<!-- Modal for contract -->
+<div class="modal fade" id="showContract" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">线下合同列表</h4>
+      </div>
+         <div class="modal-body">
+           <{if $contract.contract_img}>
+                <{foreach from=$contract.contract_img item=img}>
+                     <p><a href='<{$img.url}>' target='_blank'><{$img.title}></a></p>
+                <{/foreach}>
+          <{else}>
+                暂无合同上传。
+          <{/if}>
+        </div>
+        <div class="modal-footer" style="text-align: center;">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">确定</button>
+        </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+    //修改订单信息，如果可修改
+    var save_order_base = function () {
+        var o_post_fee = $('input[name=post_fee]');
+        var o_adjust_fee = $('input[name=adjust_fee]');
+        var v_post_fee = $.trim(o_post_fee.val());
+        var v_adjust_fee = $.trim(o_adjust_fee.val());
+
+        var adjust = [];
+        $.each($('input[name="adjust[]"]'),function(i,n){
+            adjust.push(parseFloat($(this).val()));
+        });
+
+        var order = [];
+        $.each($('input[name="order[]"]'),function(i,n){
+            order.push($(this).val());
+        });
+
+        //交货时间 | 有电子合同时才有
+        var o_delivery_goods_time = $('input[name=delivery_goods_time]');
+        var v_delivery_goods_time = '';
+        if(o_delivery_goods_time.length > 0) {
+            v_delivery_goods_time = $.trim(o_delivery_goods_time.val());
+        }
+
+        var adjust_content = {
+            'tid' : '<{$trade.tid}>',
+            'total_fee' : '<{$trade.total_fee}>',
+            'post_fee' : v_post_fee,
+            'adjust_fee' : v_adjust_fee,
+            'adjust' :  adjust,
+            'order' : order,
+            'delivery_goods_time' : v_delivery_goods_time
+        };
+
+        $.post('<{url action=topshop_ctl_trade_detail@do_adjust_order}>', adjust_content, function (d) {
+            if(d.rs == 'success') {
+                $('#messagebox').message(d.msg, 'success');
+                $.post('<{url action=topshop_ctl_trade_detail@ajaxPayList}>', adjust_content, function (d) {
+                    $("#pay_info_tb").empty();
+
+                    $.each(d,function(i,n){
+                        var str = '<tr><td colspan="2">'+n.times+'</td>'+
+                                '<td>￥'+n.amount+'</td>'+
+                                '<td>'+n.pay_status+'</td>';
+                        if(n.pay_status =='已支付'){
+                            str += "<td>"+n.pay_time+"</td>";
+                        }else{
+                            str += "<td>"+n.pay_time+"</td>";
+                        }
+
+                        str += "<td>"+n.wait_pay_time+"</td>";
+
+                        if(n.type == "online"){
+                            str += '<td>线上支付</td>';
+                        }else if(n.type == "caroffline"){
+                            str += '<td>线下支付</td>';
+                        }else{
+                            str += '<td></td>';
+                        }
+                        str += "</tr>";
+                        $("#pay_info_tb").append(str);
+                    });
+                });
+
+                //刷新电子合同信息
+                $.post('<{url action=topshop_ctl_trade_detail@ajaxMoneyInfo}>', adjust_content, function (d) {
+                    var html = "";
+                    for(var i=0;i<d.orders.length;i++){
+                        html +='<tr>'+
+                            '<td>'+d.orders[i].title+'</td>'+
+                            '<td>'+d.orders[i].brand_name+'</td>'+
+                            '<td>'+d.orders[i].spec_nature_info+'</td>'+
+                            '<td>'+d.orders[i].unit+'</td>'+
+                            '<td>'+d.orders[i].num+'</td>'+
+                            '<td>'+'￥'+d.orders[i].sku_price+'</td>'+
+                            '<td>'+'￥'+d.orders[i].total_fee+'</td>'+
+                            '<td>'+'￥'+d.orders[i].adjust_fee+'</td>'+
+                            '<td>'+'￥'+d.orders[i].payment+'</td>'+
+                            '<td rel="delivery_goods_time">'+unix_to_datetime(d.delivery_goods_time)+'</td>'+
+                        '</tr>';
+                    }
+
+                   html += '<tr><td colspan="10" class="xn_colleft">备注：'+ d.trade_memo + '</td></tr>';
+
+                   html += '<tr><td colspan="10" class="xn_colleft" id="money_total_show">合计金额(大写)：'+d.cny_payment +
+                            '(￥'+d.unfeePayment+')' ;
+                    html += '<i class="xn_i_color">(总调价金额：￥'+ d.total_adjust_fee +'元)</i>' ;
+
+                    if(d.post_fee >0){
+                        html+='(邮费：￥'+d.post_fee+')';
+                    }
+                    html+='</tr>';
+                    $('#contract_content').html(html);
+                });
+            } else {
+                $('#messagebox').message(d.msg);
+            }
+        });
+    };
+
+
+
+    function unix_to_datetime(unix) {
+        var d = new Date(parseInt(unix) * 1000);
+        var date = (d.getFullYear()) + "-" +(d.getMonth() + 1) + "-" + (d.getDate());
+        return date;
+    }
+
+
+    $(function () {
+        $('#save_btn').on('click', function () {
+            if (!confirm('确定修改订单【运费】、【调价】等信息？')) return false;
+            save_order_base();
+        });
+    });
+
+	$(function () {
+        'use strict';
+        // Change this to the location of your server-side upload handler:
+        var url = '<{url action=topshop_ctl_upload_uploadDoc@index trade_id=$trade.tid}>';
+        $('#fileupload').fileupload({
+            url: url,
+            dataType: 'json',
+            done: function (e, data) {
+                $("#contract_img").val(1);
+                $.each(data.result.files, function (index, file) {
+                    $('<p/>').html(
+                            "<a href='"+file.url+"' target='_blank'>"+file.name+"</a>").appendTo('#files');
+                });
+            },
+            progressall: function (e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .progress-bar').css(
+                        'width',
+                        progress + '%'
+                );
+            }
+        }).prop('disabled', !$.support.fileInput)
+                .parent().addClass($.support.fileInput ? undefined : 'disabled');
+    });
+
+
+    //将数字转换为大写金额
+    var digitUppercase = function(n) {
+        var fraction = ['角', '分'];
+        var digit = [
+            '零', '壹', '贰', '叁', '肆',
+            '伍', '陆', '柒', '捌', '玖'
+        ];
+        var unit = [
+            ['元', '万', '亿'],
+            ['', '拾', '佰', '仟']
+        ];
+        var head = n < 0 ? '欠' : '';
+        n = Math.abs(n);
+        var s = '';
+        for (var i = 0; i < fraction.length; i++) {
+            s += (digit[Math.floor(n * 10 * Math.pow(10, i)) % 10] + fraction[i]).replace(/零./, '');
+        }
+        s = s || '整';
+        n = Math.floor(n);
+        for (var i = 0; i < unit[0].length && n > 0; i++) {
+            var p = '';
+            for (var j = 0; j < unit[1].length && n > 0; j++) {
+                p = digit[n % 10] + unit[1][j] + p;
+                n = Math.floor(n / 10);
+            }
+            s = p.replace(/(零.)*零$/, '').replace(/^$/, '零') + unit[0][i] + s;
+        }
+        return head + s.replace(/(零.)*零元/, '元')
+            .replace(/(零.)+/g, '零')
+            .replace(/^整$/, '零元整');
+    };
+    //点击查看合同后的展示效果
+    $('#showContract').on('show.bs.modal', function (event) {
+
+      });
+    //减法运算
+    function accDiv(arg1,arg2){
+      var t1=0,t2=0,r1,r2;
+      try{t1=arg1.toString().split(".")[1].length}catch(e){}
+      try{t2=arg2.toString().split(".")[1].length}catch(e){}
+      with(Math){
+        r1=Number(arg1.toString().replace(".",""))
+        r2=Number(arg2.toString().replace(".",""))
+        return (r1/r2)*pow(10,t2-t1);
+      }
+    }
+    //展示合计金额和优惠金额
+    function money_show(){
+        var total_fee = '<{$trade.total_fee}>';
+        var post_fee = $('input[name="post_fee"]').val() ? $('input[name="post_fee"]').val() : 0;
+        var adjust_fee = $('input[name="adjust_fee"]').val()?$('input[name="adjust_fee"]').val():0;
+        var sum_money = accAddmu(parseFloat(total_fee),parseFloat(adjust_fee));
+        var html = '合计：￥'+ parseFloat(sum_money).toFixed(2);
+        var chinesemoney = digitUppercase(sum_money);
+        if(adjust_fee<0){
+            html += '(已优惠：￥' + parseFloat(adjust_fee).toFixed(2) + ')';
+        }
+        //$('#order_post').html('￥'+parseFloat(post_fee).toFixed(2));
+        //$('#order_adjust').html('￥'+parseFloat(adjust_fee).toFixed(2));
+        $('#unfeePayment').html(html);
+        $('#chinesemoney').html('合计人民币金额：' + chinesemoney + '（大写）');
+    }
+
+    //验证金额
+    function CheckInputIntFloat(oInput){
+        var regex=/\d{1,}\.{0,1}\d{0,2}/;
+        if('' != oInput.value.replace(regex,'')) {
+            oInput.value = oInput.value.match(regex) == null ? '' : oInput.value.match(regex);
+        }
+    }
+
+    function CheckInputInt(oInput){
+        var regex=/^\+?[1-9][0-9]*$/;
+        // var regex=/^[1-9]\d*|0$/;
+        if('' != oInput.value.replace(regex,'')) {
+            oInput.value = oInput.value.match(regex) == null ? '' : oInput.value.match(regex);
+        }
+    }
+    function CheckPriceInputIntFloat(oInput){
+        var regex=/-?\d{1,}\.{0,1}\d{0,2}/;
+        if('' != oInput.value.replace(regex,'')) {
+            oInput.value = oInput.value.match(regex) == null ? '-' : oInput.value.match(regex);
+        }
+    }
+
+    //上传线下合同
+    $('#updatebody').hide();
+	function contract_update(obj){
+		var delivery_goods_time = $('input[name="delivery_goods_time"]').val();
+		var adjust_fee = $('input[name="adjust_fee"]').val();
+		var post_fee = $('input[name="post_fee"]').val();
+		var id= $(obj).attr('rel');
+		var tid= $(obj).attr('tid');
+		$('#tid').val(tid);
+		$('input[name="created_time"]').val('<{$trade.created_time}>');
+		$('#delivery_goods_time').val(delivery_goods_time);
+		$('#post_fee').val(post_fee);
+		$('#adjust_fee').val(adjust_fee);
+		$('#contract_id').val(id);
+		$('#updatebody').show()
+	}
+    $('#close').click(function(){
+        $('#updatebody').hide();
+    });
+
+
+    $("input[name='adjust_fee']").change(function(){
+        if($("input:radio[name='zhongb1']:checked").val() == 1){
+            $('#xn_c_zb2').trigger('click');
+        }
+    });
+
+    $("input[name='post_fee']").change(function(){
+        if($("input:radio[name='zhongb1']:checked").val() == 1){
+            $('#xn_c_zb2').trigger('click');
+        }
+    });
+
+    $('input[name="adjust[]"]').change(function(){
+        if($("input:radio[name='zhongb1']:checked").val() == 1){
+            $('#xn_c_zb2').trigger('click');
+        }
+    });
+
+	function showMoneyTotalValue(){
+        var postFee = getPostFee();
+        var priceAdjust = getPriceAdjust();
+
+		var needPayFee = getNeedPayFee();
+		if(needPayFee < 0){
+            $('#messagebox').message('调整后的应支付总价已经是负数了!');
+            return false;
+        }
+
+		//付款方式里的分次付款处动态显示金额
+        $('#pay_total_need').html('￥' + needPayFee);
+
+        //hidden 表单记录应支付总价
+        $('#pay_total_hidden').val(needPayFee);
+
+        //detail item里的商品金额
+        $("#detail_post_fee").html('￥' + postFee);
+        $("#detail_total_fee").html('￥' + needPayFee);
+
+        //合同内容总价动态显示
+        var chineseNeedPayFee = digitUppercase(needPayFee);
+        var money_show = '合计金额(大写￥)：' + chineseNeedPayFee;
+        money_show += '(￥'+ needPayFee +'元)';
+
+        if(priceAdjust){
+            money_show += '<i class="xn_i_color">(总调价金额：'+ priceAdjust +'元)</i>';
+        }
+        if(postFee){
+            money_show += '(邮费：'+ postFee +')';
+        }
+		$('#money_total_show').html(money_show);
+        
+
+		return needPayFee;
+	}
+
+    //获取运费
+    var getPostFee = function(){
+        var postFee = $('input[name="post_fee"]').val();
+		postFee =  postFee ? parseFloat(postFee) : 0;
+
+        return postFee;
+    }
+
+    //获取调价总金额
+    var getPriceAdjust = function(){
+        var priceAdjust = 0;
+        $('input[name="adjust[]"]').each(function(){
+            //调价
+            var subPriceAdjust = $(this).val();
+            subPriceAdjust = parseFloat(subPriceAdjust);
+
+            //子订单ID
+            var orderId = this.id;
+
+            //合同里的表格数值变化
+            $("#item_adjust_"+orderId).html('￥' + subPriceAdjust);
+
+            //单个商品购买数量
+            var goodsNums = $("#nums" + orderId).html();
+            goodsNums = parseFloat(goodsNums);
+
+            priceAdjust += accMul(subPriceAdjust , goodsNums);//新单价*数量
+        });
+
+        return priceAdjust;
+    }
+
+    //计算出商品总价格
+    var getGoodsPriceSum = function () {
+        var goodsPriceSum = 0;
+        $('input[name="adjust[]"]').each(function(){
+            //子订单ID
+            var orderId = this.id;
+            
+            //单个商品购买数量
+            var goodsNums = $("#nums" + orderId).html();
+            goodsNums = parseFloat(goodsNums);
+
+            //单个商品价格
+            var goodsPrice=$("#price" + orderId).html();
+            goodsPrice = parseFloat(goodsPrice.substr(1));//原单价
+
+
+            goodsPriceSum += accMul(goodsPrice , goodsNums);//新单价*数量
+        });
+
+        return goodsPriceSum;
+    }
+
+    //计算出应支付总金额
+	var getNeedPayFee = function () {
+        var postFee = getPostFee();
+        var goodsPriceSum = getGoodsPriceSum();
+        //priceAdjust值为负数则是降价，值为正数就是加价
+        var priceAdjust = getPriceAdjust();
+        //总价+运费
+        var feeTotal = priceAdjust + goodsPriceSum + postFee;
+		
+        //计算应算上优惠金额
+        //促销优惠
+        var discount = $('#trade_discount_fee').html();
+        if(typeof(discount)!= 'undefined' && discount != 0){
+            discount = parseFloat(discount.substr(2));
+            feeTotal -= discount;
+        }
+        //积分抵扣
+        var pointsFee = $('#trade_points_fee').html();
+        if(typeof(pointsFee)!= 'undefined' && pointsFee != 0){
+            pointsFee = parseFloat(pointsFee.substr(2));
+            feeTotal -= pointsFee;
+        }
+        feeTotal = feeTotal.toFixed(2); //保留2位小数
+        feeTotal = parseFloat(feeTotal);
+
+		return feeTotal;
+	};
+
+    function accAddMul(arg1,arg2,arg3,args){  //加法
+        var now =  accAdd(arg1,arg2,arg3);
+        if(args instanceof Array){
+            var max = Math.max.apply(null, args);
+            var num=0;
+            var m=Math.pow(10,2);
+            for (var i=0;i<args.length;i++)
+            {
+                try{
+                    num += m*args[i];
+                }
+                catch(e){
+                    alert(e.name + ": " + e.message);
+                }
+            }
+            return now+num/m;
+        }else{
+            return now;
+        }
+    }
+
+    function accAddmu(arg1,arg2){
+        var r1,r2,m;
+        try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0}
+        try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0}
+        m=Math.pow(10,Math.max(r1,r2))
+        return ((arg1*m+arg2*m)/m).toFixed(2);
+    }
+    function accAdd(arg1,arg2,arg3){  //加法
+        var r1,r2,r3,m;
+        try{r1=arg1.toString().split(".")[1].length}catch(e){r1=0}
+        try{r2=arg2.toString().split(".")[1].length}catch(e){r2=0}
+        try{r3=arg3.toString().split(".")[1].length}catch(e){r3=0}
+        m=Math.pow(10,Math.max(r1,r2,r3));
+        return (arg1*m+arg2*m+arg3*m)/m;
+    }
+
+    function accMul(arg1,arg2){ //乘法
+        var m=0,s1=arg1.toString(),s2=arg2.toString();
+        try{m+=s1.split(".")[1].length}catch(e){}
+        try{m+=s2.split(".")[1].length}catch(e){}
+        return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
+    }
+
+    function ajaxSubmit (e) {
+        var form = e.target;
+        e.preventDefault();
+        $.post(form.action, $(form).serialize(), function(rs) {
+            if(rs.error) {
+                $('#messagebox').message(rs.message);
+                return;
+            }
+//            if(rs.success) {
+//                $('#messagebox').message(rs.message, 'success');
+//            }
+//            if(rs.redirect) {
+//                location.href = rs.redirect;
+//            }
+        });
+    }
+
+    $('#click_get_track').click(function(e){
+        e.preventDefault()
+        $('#track-hidden').hide();
+        $('#logistics').html('加载中...');
+        $.post('<{url action=topshop_ctl_trade_detail@ajaxGetTrack}>',{'logi_no':'<{$logi.logi_no}>','corp_code':'<{$logi.corp_code}>'},function(rs){
+            if(rs.error){
+                return $('#messagebox').message(rs.message);
+            }
+            $('#logistics').html(rs);
+        });
+    });
+
+    $('#form1').submit(function(){
+        var formaction= $(this).attr('action');
+		var delivery_goods_time = $('input[name="delivery_goods_time"]').val();
+        if($('#contract_img').val()!=1)
+        {
+            $('#messagebox').message('请上传合同!');
+            return false;
+        }
+        $.post(formaction,$(this).serialize(),function(rs) {
+            {
+                if(rs.error) {
+                    $('#messagebox').message(rs.message);
+                    return;
+                }
+                if(rs.success) {
+                    $('#messagebox').message(rs.message, 'success');
+                }
+                if(rs.redirect) {
+                    $('#messagebox').message(rs.message, 'success');
+                    $('#updatebody').hide();
+					//var html = "<div class='col-xs-4'><span class='text-orange' id='seecontent'>查看合同</span></div>";
+					//$('#loadcontract').html(html);
+                    setTimeout(function(){location.href=rs.redirect;}, 800);
+                }
+            }
+        })
+        return false;
+    })
+/*点击提交付款方式信息按钮 edit by nie*/
+$(function(){
+	var status = '<{$trade.status}>';
+	var trade_from = '<{$trade.trade_from}>';
+	if('<{$trade.need_econtract}>' == '1'  && (  status != 'WAIT_SENDCONTRACT' || status != 'REJECT_CONTRACT' )){
+		$('#form_template').css('display','block');
+		$('.orderdtl-box').css('display','block');
+	}
+
+	function check(){
+		var flag = true;
+		var msg_arr1 = new Array('','住所','法定代表人','委托代理人','传真','电话');
+		// var pattern = /^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/;
+        var pattern = /^(0\d{2,3}-\d{7,8}(-\d{3,5}){0,1})$/;//验证带分机号或不带分机号的传真
+		var phonereg = /^1[3|4|5|7|8]\d{9}$/;
+		var msg_arr2 = new Array('签订地点','签订方式');
+		var msg_arr3 = new Array('','','质量标准','出卖人对质量负责的条件及期限','包装标准、包装物的供应与回收','随货的必备','合理损耗标准及计算方法', '交货时间、方式、地点、运输方式、费用负担','检验标准、方法及期限', '本合同解除的条件','违约责任', '知识产权保护', '合同争议的解决方式','售后服务','生效条件');
+		if(flag){
+			$('input[name^="signed"]').each(function(i){
+				if($(this).val() == ''){
+					$('#messagebox').message('请填写完全' + msg_arr2[i] + '的信息');
+					$(this).focus();
+					flag = false;
+					return flag;
+				}
+			});
+		}
+		if(flag){
+			$('textarea').each(function(i){
+				if($(this).val() == ''&& i>1){
+					$('#messagebox').message('请填写完全' + msg_arr3[i] + '的信息');
+					$(this).focus();
+					flag = false;
+					return flag;
+				}
+			});
+		}
+		if(flag){
+			$('input[name^="seller"]').each(function(i){
+				if($(this).val() == '' && i>0){
+					$('#messagebox').message('请填写完全' + msg_arr1[i] + '的信息');
+					$(this).focus();
+					flag = false;
+					return flag;
+				}
+				if(i == '4'){
+					if(!pattern.test($(this).val())){
+						$('#messagebox').message('请按照格式填写区号+传真号！');
+						$(this).val('');
+						$(this).focus();
+						flag = false;
+						return flag;
+					}
+				}
+				if(i == '5'){
+					if(phonereg.exec($(this).val())){
+					}else{
+						if(!pattern.test($(this).val())){
+							$('#messagebox').message('请填写正确的电话号码！');
+							$(this).val('');
+							$(this).focus();
+							flag = false;
+							return flag;
+						}
+					}
+				}
+			});
+		}
+		return flag;
+	}
+	function pay_type(){
+		var flag = true;
+		var html = '';
+		var num = getNeedPayFee();
+		var pay_arr = new Array();   //取付款次数比例
+		var pay_sum = 0;  //判断是否有满足100%
+		var pay_input = $("input[name^='pay']");
+		var time_select = $("select");
+		var time_arr = new Array();   //取付款时间
+		var lastone = 0;//记录填写框最后填写的位置
+
+		if(flag){
+			time_select.each(function(i){
+				var val = $(this).find('option:selected').text();
+				if(val == '请选择'){
+					if(i+parseInt($('.xn_c_zhthide').length) == '2'){
+						$('#messagebox').message("请选择正确时间！!");
+						flag = false;
+					}
+				}else{
+					time_arr.push(val);
+				}
+			});
+		}
+		if(flag){
+			if($('input[name="pay_1"]').val() == ''){
+				$('#messagebox').message("请填写保证金额！!");
+				$('input[name="pay_1"]').focus();
+				flag = false;
+			}
+			pay_input.each(function(i){
+				$val = $(this).val();
+				if($val!=0){
+					pay_arr.push(parseFloat($(this).val())/100);
+					pay_sum += parseFloat($(this).val());
+				}else{
+					lastone++;
+					$val = 0;
+					pay_arr.push(0);
+				}
+			});
+			for(var j=0;j<pay_arr.length;j++){
+				if(pay_arr[j] =='0'){
+					break;
+				}
+			}
+			if(j+lastone != '5'){
+				$('#messagebox').message('请填写完全前面的金额数量！');
+				flag = false;
+				return flag;
+			}
+		}
+		if(flag){
+			if(pay_sum != 100){
+				$('#messagebox').message('请保证所付款数与总金额一致！');
+				return false;
+			}
+
+            html += '<li>分次付款：</li>';
+            var total = 0;
+            if(pay_arr[0]!==0){
+                html += '<li>订单生成 <em>' + (pay_arr[0]*100).toFixed(2) + '%</em>（￥'+ (pay_arr[0]*num).toFixed(2) + '）</li>';
+                //$('#num1').val((pay_arr[0]*num).toFixed(2));
+                total += Number((pay_arr[0]*num).toFixed(2));
+
+            }
+            if(pay_arr[1]!==0){
+                if(pay_arr.length == 2){
+                    html += '<li>收货确认 <em>' + (pay_arr[1]*100).toFixed(2)  + '%</em>（￥'+ (num-total).toFixed(2) + '）</li>';
+                    //$('#num2').val((pay_arr[1]*num).toFixed(2));
+                    total += Number((pay_arr[1]*num).toFixed(2));
+                }else{
+                    html += '<li>收货确认 <em>' + (pay_arr[1]*100).toFixed(2)  + '%</em>（￥'+ (pay_arr[1]*num).toFixed(2) + '）</li>';
+                    //$('#num2').val((pay_arr[1]*num).toFixed(2));
+                    total += Number((pay_arr[1]*num).toFixed(2));
+                }
+            }
+            if(pay_arr[2]!==0){
+                if(!pay_arr[3]){
+                    html += '<li>收货' + time_arr[0] + '<em>' + (pay_arr[2]*100).toFixed(2)  + '%</em>（￥'+ (num-total).toFixed(2)+'）</li>';
+                   // $('#num3').val((pay_arr[2]*num).toFixed(2));
+                    total += Number((pay_arr[2]*num).toFixed(2));
+                }else{
+                    html += '<li>收货' + time_arr[0] + '<em>' + (pay_arr[2]*100).toFixed(2)  + '%</em>（￥'+ (pay_arr[2]*num).toFixed(2) +'）</li>';
+                    //$('#num3').val((pay_arr[2]*num).toFixed(2));
+                    total += Number((pay_arr[2]*num).toFixed(2));
+                }
+
+            }
+            if(pay_arr[3]!==0){
+                if(!pay_arr[4]){
+                    html += '<li>收货' + time_arr[1] + '<em>' + (pay_arr[3]*100).toFixed(2)  + '%</em>（￥'+ (num-total).toFixed(2)+'）</li>';
+                    //$('#num4').val((pay_arr[3]*num).toFixed(2));
+                    total += Number((pay_arr[3]*num).toFixed(2));
+                }else{
+                    html += '<li>收货' + time_arr[1] + '<em>' + (pay_arr[3]*100).toFixed(2)  + '%</em>（￥'+  (pay_arr[3]*num).toFixed(2) +'）</li>';
+                    //$('#num4').val((pay_arr[3]*num).toFixed(2));
+                    total += Number((pay_arr[3]*num).toFixed(2));
+                }
+
+            }
+            if(pay_arr[4]!==0){
+                html += '<li>收货' + time_arr[2] + '<em>' + (pay_arr[4]*100).toFixed(2)  + '%</em>（￥'+ (num-total).toFixed(2)+'）</li>';
+                //$('#num5').val((pay_arr[4]*num).toFixed(2));
+            }
+			$('#detail_show').html(html);
+
+
+			$('#detail_show').css('display','block');
+		}
+
+        return flag;
+	}
+
+	function pay_balance(){
+		var html = '';
+		var num = showMoneyTotalValue();
+		var pay_arr = new Array();   //取付款次数比例
+		var pay_input = $("input[name^='pay']");
+		var time_select = $("select");
+		var time_arr = new Array();   //取付款时间
+		var radio_input = $('input[name^="zhongb"]').filter(':checked');
+		var radio_arr = new Array();
+		radio_input.each(function(){
+			radio_arr.push($(this)[0].value);
+		});
+		if(radio_arr[0] == '0'){
+			html += '<li>一次性付款 </li>';
+		}else{
+			time_select.each(function(){
+				var val = $(this).find('option:selected').text();
+				time_arr.push(val);
+			});
+			pay_input.each(function(){
+				var $val = $(this).val();
+				if($val){
+					pay_arr.push(parseFloat($(this).val())/100);
+				}else{
+					$val = 0;
+					pay_arr.push(0);
+				}
+			});
+            html += '<li>分次付款：</li>';
+            var total = 0;
+            if(pay_arr[0]!==0){
+                html += '<li>订单生成 <em>' + (pay_arr[0]*100).toFixed(2) + '%</em>（￥'+ (pay_arr[0]*num).toFixed(2) + '）</li>';
+               // $('#num1').val((pay_arr[0]*num).toFixed(2));
+                total += Number((pay_arr[0]*num).toFixed(2));
+
+            }
+            if(pay_arr[1]!==0){
+                if(pay_arr.length == 2){
+                    html += '<li>收货确认 <em>' + (pay_arr[1]*100).toFixed(2)  + '%</em>（￥'+ (num-total).toFixed(2) + '）</li>';
+                   //$('#num2').val((pay_arr[1]*num).toFixed(2));
+                    total += Number((pay_arr[1]*num).toFixed(2));
+                }else{
+                    html += '<li>收货确认 <em>' + (pay_arr[1]*100).toFixed(2)  + '%</em>（￥'+ (pay_arr[1]*num).toFixed(2) + '）</li>';
+                   // $('#num2').val((pay_arr[1]*num).toFixed(2));
+                    total += Number((pay_arr[1]*num).toFixed(2));
+                }
+            }
+            if(pay_arr[2]!==0){
+                if(pay_arr.length == 2){
+                    html += '<li>收货' + time_arr[0] + '<em>' + (pay_arr[2]*100).toFixed(2)  + '%</em>（￥'+ (num-total).toFixed(2)+'）</li>';
+                   // $('#num3').val((pay_arr[2]*num).toFixed(2));
+                    total += Number((pay_arr[2]*num).toFixed(2));
+                }else{
+                    html += '<li>收货' + time_arr[0] + '<em>' + (pay_arr[2]*100).toFixed(2)  + '%</em>（￥'+ (pay_arr[2]*num).toFixed(2) +'）</li>';
+                    //$('#num3').val((pay_arr[2]*num).toFixed(2));
+                    total += Number((pay_arr[2]*num).toFixed(2));
+                }
+
+            }
+            if(pay_arr[3]!==0){
+                if(pay_arr.length == 3){
+                    html += '<li>收货' + time_arr[1] + '<em>' + (pay_arr[3]*100).toFixed(2)  + '%</em>（￥'+ (num-total).toFixed(2)+'）</li>';
+                   // $('#num4').val((pay_arr[3]*num).toFixed(2));
+                    total += Number((pay_arr[3]*num).toFixed(2));
+                }else{
+                    html += '<li>收货' + time_arr[1] + '<em>' + (pay_arr[3]*100).toFixed(2)  + '%</em>（￥'+  (pay_arr[3]*num).toFixed(2) +'）</li>';
+                   // $('#num4').val((pay_arr[3]*num).toFixed(2));
+                    total += Number((pay_arr[3]*num).toFixed(2));
+                }
+
+            }
+            if(pay_arr[4]!==0){
+                html += '<li>收货' + time_arr[2] + '<em>' + (pay_arr[4]*100).toFixed(2)  + '%</em>（￥'+ (num-total).toFixed(2)+'）</li>';
+                //$('#num5').val((pay_arr[4]*num).toFixed(2));
+            }
+		}
+		if(radio_arr[1] == '0'){
+			html += '<li>一次发货  </li>';
+		}else{
+			html += '<li>分次发货（将形成多次发货单）</li>';
+		}
+		$('#balance_show').html(html);
+	}
+
+	$('#btn_choose').click(function(){
+		if(pay_type())
+		$("#xn_c_zhtbox").slideUp();
+	})
+
+	$("#xn_c_zb1").click(function(){
+		$("#xn_c_zhtbox").slideUp();
+		$('#detail_show').css('display','none');
+	})
+	$("#xn_c_zb2").click(function(){
+		var num = getNeedPayFee();
+		if(num < 1) {
+			$('#messagebox').message('付款总金额小于1元不足以分期付款！');
+			$('#xn_c_zb1').click();
+			return false;
+		}
+
+		$("#xn_c_zhtbox").slideDown();
+	})
+
+	//保存备注 付款、发货信息
+	$('#detail_btn_submit').click(function(){
+        var judge_contract = '<{$trade.contract_id}>';
+        var isload_contract = '<{$trade.update_status}>';
+        var formaction= $('#form_contract').attr('action');
+
+        var delivery_goods_time = $('input[name="delivery_goods_time"]').val();
+        var post_fee = $('input[name="post_fee"]').val();
+        var adjust_fee = $('input[name="adjust_fee"]').val();
+        var discount = $('#discount_fee').data('discount')-0;
+        var data = '';
+
+        var adjust = [];
+        $.each($('input[name="adjust[]"]'),function(i,n){
+            adjust.push( parseFloat($(this).val()) );
+        });
+        var order = [];
+         $.each($('input[name="order[]"]'),function(i,n){
+            order.push($(this).val());
+        });
+
+        if(delivery_goods_time){
+            data += '&delivery_goods_time=' + delivery_goods_time;
+        }
+        if(post_fee){
+            data +='&post_fee=' + post_fee;
+        }
+        if(adjust_fee){
+            data +='&adjust_fee=' + adjust_fee;
+        }
+
+        if(discount){
+            data +='&discount=' + discount;
+        }
+
+        if(adjust){
+           data +='&adjust=' + adjust;
+        }
+        if(order){
+           data +='&order=' + order;
+        }
+
+        data += '&created_time=' + '<{$trade.created_time}>'+'&total_fee=' + '<{$trade.total_fee}>';
+
+        if($('input[name="delivery_goods_time"]').val() == ''){
+            $('#messagebox').message("请填写交货时间！!");
+            return false;
+        }
+        if(post_fee == '' && $('input[name="post_fee"]').length>0){
+            $('input[name="post_fee"]').focus();
+            $('#messagebox').message("请填写运费金额！!");
+            return false;
+        }
+
+        if(judge_contract != '0'){
+            if($("#contract_img").val() == 0){
+                $('#messagebox').message('请上传合同!');
+                return false;
+             }
+        }
+
+        //此时插入处理下卖家的备注信息
+        $("#trade_form").trigger('submit');
+
+        //手工调价金额不能小于商品总额
+		save_order_base();
+        if($('#xn_c_zb1').val() == '0'){
+            //$(this).attr({"disabled":"true"});
+            $.post(formaction,$('#form_contract').serialize()+data,function(rs){
+                if(rs.error) {
+                $('#messagebox').message(rs.message);
+                    //setTimeout(function(){ $('#detail_btn_submit').removeAttr("disabled");}, 800);//将按钮可用
+                    return;
+                 }
+                if(rs.success) {
+                    pay_balance();
+
+                    money_show();
+
+                    $('#form_template').css('display','block');//标记
+                    if($('input[name="delivery_goods_time"]').length>1){
+                         $("td[rel='delivery_goods_time']").text($('input[name="delivery_goods_time"]').val());
+                    }
+                    //$('#detail_item_post_fee').html($('#order_post').html());
+                    //$('input[name="delivery_goods_time"]').unbind().removeAttr('data-provide').attr("type","text");
+                    //setTimeout(function(){location.href = rs.redirect;}, 800);//刷新页面
+                }
+            });
+            return false;
+        }else if(pay_type()){
+           // $(this).attr({"disabled":"true"});
+            $.post(formaction,$('#form_contract').serialize()+data,function(rs){
+            if(rs.error) {
+                $('#messagebox').message(rs.message);
+               // setTimeout(function(){ $('#detail_btn_submit').removeAttr("disabled");}, 800);//将按钮可用
+                return;
+              }
+            if(rs.success) {
+                pay_balance();
+                //var post_fee = parseInt($('input[name="post_fee"]').val());
+                //var html = '';
+                //if(!isNaN(post_fee)){
+                //	$('#post_fee').html('￥'+ post_fee.toFixed(2));
+                //}
+                money_show();
+                ///$('#form_contract').css('display','none');
+                $('#form_template').css('display','block');//标记
+                if($('input[name="delivery_goods_time"]').length>1){
+                $("td[rel='delivery_goods_time']").text($('input[name="delivery_goods_time"]').val());
+            }
+            //$('#detail_item_post_fee').html($('#order_post').html());
+            //$('input[name="delivery_goods_time"]').unbind().removeAttr('data-provide').attr("type","text");
+            //setTimeout(function(){location.href = rs.redirect;}, 800);//刷新页面
+        }
+        });
+            return false;
+        }
+    });
+
+	$('#confirm_template').click(function(){
+		var formaction= $('#form_template').attr('action');
+		var data = $('#form_template').serialize();
+		if(check()){
+			$.post(formaction,$('#form_template').serialize(),function(rs){
+				if(rs.success){
+					$('#messagebox').message(rs.message,'success');
+					setTimeout(function(){location.href = rs.redirect;}, 800);//刷新页面
+				}
+			});
+		}
+	});
+
+    });
+
+    /*点击提交付款方式信息按钮 edit by nie*/
+    $(function(){
+    $(".xn_c_zhjyg").click(function() {
+	var flag = true;
+	$('input[name^="pay"]').each(function(i){
+		if($(this).val() == '' && i<2){
+			if(i == 0){
+				$('#messagebox').message('请填写完保证金！');
+				$(this).focus();
+				flag = false;
+			}
+			else{
+				$('#messagebox').message('请填写完收货款！');
+				$(this).focus();
+				flag = false;
+			}
+		}
+		return flag;
+	});
+	if(flag == true){
+		if($('.xn_c_zhthide').length == '2'){
+			if($('#detail_time1 option:selected').text() == '请选择'){
+				$('#messagebox').message('请先选择收货时间！');
+				flag = false;
+			}else if($('#detail_time1 option:selected').text() == '十二个月'){
+				$('#messagebox').message('您选择的收货时间是一年，不能再选择了！');
+				flag = false;
+			}
+		}
+		if($('.xn_c_zhthide').length == '1'){
+			if($('#detail_time2 option:selected').text() == '请选择'){
+				$('#messagebox').message('请先选择收货时间！');
+				flag = false;
+			}else if($('#detail_time2 option:selected').text() == '十二个月'){
+				$('#messagebox').message('您选择的收货时间是一年，不能再选择了！');
+				flag = false;
+			}
+		}
+		if($('.xn_c_zhthide').length == '0'){
+			if($('#detail_time3 option:selected').text() == '请选择'){
+				$('#messagebox').message('请先选择收货时间！');
+				flag = false;
+			}
+		}
+		if($(this).prev().prev()[0].value == ''){
+			$('#messagebox').message('请填写完收货金额！');
+			$(this).prev().prev().focus();
+			flag = false;
+		}
+	}
+
+	if(flag){
+        //计算现有比例之和
+        var i = $(this).parents("li").index()+1 , per = 0;
+        $('.xn_c_zhtbl>li:lt('+i+')').find('input[name^=pay]').each(function(index){
+            per+=$(this).val()-0;
+        });
+        if(per >100){
+            $('#messagebox').message('比例之和超过100%了！');
+            return ;
+        }
+        if(per ==100){
+            $('#messagebox').message('已经100%了，不能再分配比例了！');
+            return ;
+        }
+		$(this).parents("li").next().removeAttr("class").find('input[name^=pay]').val(100-per).focus();;
+		$(this).addClass('xn_c_zhtblicrr').removeClass("xn_c_zhjyg");
+	}
+  });
+
+  //重置按钮
+  $('#reset_splitpay').click(function(){
+      //重置input
+     $("#xn_c_zhtbox").find(":input").not(":button,:submit,:reset,:hidden").val("").removeAttr("selected");
+     $('[name=detail_time1]').val('12');
+     //隐藏后面的li
+     $('.xn_c_zhtbl>li:gt(1)').addClass('xn_c_zhthide');
+     //重置后面的小加号
+      var $em = $('.xn_c_zhtbl>li:gt(0):lt(3)').find('em');
+      if($em.is('.xn_c_zhtblicrr')){
+          $em.addClass('xn_c_zhjyg').removeClass('xn_c_zhtblicrr');
+      }
+  });
+
+  $("#detail_time1").change(function(){
+        var num = $(this).val();
+        var nexNum = parseInt(num)+1;
+        var tempDiv = selectDiv(num);
+        $("#detail_time2").html(tempDiv);
+        var tempDiv2 = selectDiv(nexNum);
+        $("#detail_time3").html(tempDiv2);
+    });
+    $("#detail_time2").change(function(){
+        var tempDiv = selectDiv($(this).val());
+        $("#detail_time3").html(tempDiv);
+    });
+    function selectDiv(num){
+        var arr = new Array();
+        arr[0] = '一个月'; arr[1] = '二个月';
+        arr[2] = '三个月'; arr[3] = '四个月';
+        arr[4] = '五个月'; arr[5] = '六个月';
+        arr[6] = '七个月'; arr[7] = '八个月';
+        arr[8] = '九个月'; arr[9] = '十个月';
+        arr[10] = '十一个月'; arr[11] = '十二个月';
+        var div = '';
+        for(var i = parseInt(num) ; i<11;i++){
+            var tempI = parseInt(i) + 1;
+            div += '<option value="'+tempI+'">'+arr[tempI]+'</option>';
+        }
+        if(div == ''){
+            div  = '<option value="12">请选择</option>';
+        }
+        return div;
+    }
+});
+
+Number.prototype.toFixed=function (d) {
+    var s=this+"";
+    if(!d)d=0;
+    if(s.indexOf(".")==-1)s+=".";
+    s+=new Array(d+1).join("0");
+    if(new RegExp("^(-|\\+)?(\\d+(\\.\\d{0,"+(d+1)+"})?)\\d*$").test(s)){
+        var s="0"+RegExp.$2,pm=RegExp.$1,a=RegExp.$3.length,b=true;
+        if(a==d+2){
+            a=s.match(/\d/g);
+            if(parseInt(a[a.length-1])>4){
+                for(var i=a.length-2;i>=0;i--){
+                    a[i]=parseInt(a[i])+1;
+                    if(a[i]==10){
+                        a[i]=0;
+                        b=i!=1;
+                    }else break;
+                }
+            }
+            s=a.join("").replace(new RegExp("(\\d+)(\\d{"+d+"})\\d$"),"$1.$2");
+
+        }if(b)s=s.substr(1);
+        return (pm+s).replace(/\.$/,"");
+    }return this+"";
+
+};
+
+$('#print_econtract').click(function(){
+    // alert(123);
+    $('#aprint').click();
+});
+
+if($("input[name='zhongb1']:checked").val() == 1){
+    $('#detail_show').css('display','block');
+}
+
+<{if $trade.elecontract.is_part_pay == 1}>
+$("#xn_c_zhtbox").slideDown();
+<{/if}>
+</script>
+</div>

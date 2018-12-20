@@ -1,0 +1,22 @@
+<div id="goods_exshow_config" class="tableform">
+  <div class="division">
+    <div class="division goods-selector">
+      <div data-extend = "select" <{if $setting.selector=="filter"}>style="display:none;"<{/if}>>
+        <{input type="object" value=$setting.brand_select object="brand" app="syscategory" obj_filter="abc=1" name="brand_select" select="checkbox" multiple="true" textcol="brand_name"}>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $$('#goods_exshow_config .goods-selector-handle input[type=radio]').addEvent('change',function(){
+    var radio  = this;
+    if(!radio.checked)return;
+    $$('#goods_exshow_config .goods-selector [data-extend]').each(function(item){
+      if(item.get('data-extend')!=radio.value){
+        item.hide();
+      }else{
+        item.show();
+      }
+    });
+  });
+</script>

@@ -1,0 +1,229 @@
+<!--主内容-->
+<div id="main" class="main index">
+	<div class="membercenter-box">
+		<div class="membercenter-box-hd">
+			<div class="membercenter-box-left clear">
+				您好，<em><{if $userInfo.username}><{$userInfo.username}><{elseif $userInfo.login_account}><{$userInfo.login_account}><{elseif $userInfo.mobile}><{$userInfo.mobile}><{elseif $userInfo.email}><{$userInfo.email}><{/if}></em>,欢迎进入会员中心！
+				<em style="margin-left: 15px;">上次登录时间：<{$userInfo.lasttime}></em><!-- <a href="<{url action=topc_ctl_member@seInfoSet}>">详细信息</a> -->
+				<em id='ip' style="margin-left: 15px;"></em><em style="margin-left: 15px;" id="location"></em>
+			</div>
+		</div>
+	</div>
+	<div class="mem-top">
+		<div class="user-icon"><a href="<{url action=topc_ctl_member@seInfoSet}>"><img src="images/user.jpg" alt=""></a></div>
+		<div class="mem-info">
+			<div class="user-info">
+				<ul class="user-list">
+					<li class="user-li"><{if $userInfo.username}><{$userInfo.username}><{elseif $userInfo.login_account}><{$userInfo.login_account}><{elseif $userInfo.mobile}><{$userInfo.mobile}><{elseif $userInfo.email}><{$userInfo.email}><{/if}></li>
+					<li class="user-li">会员类型：<{if $isCompany}><span class="orange">企业会员</span><{else}>个人会员<{/if}></li>
+					<li class="user-li">注册时间：<{$userInfo.regtime|date:'Y-m-d H:i:s'}></li>
+					<li class="user-li">会员号：<{$userInfo.user_no}></li>
+					<li class="user-li">我的总积分：<{$credit.total}></li>
+					<!--<li class="user-li">登录次数：300</li>-->
+				</ul>
+			</div>
+		</div>
+		<div class="membercenter-box-right clear">
+			<{if $isCheckin}>
+			<{if !$checkin_status}>
+			<a href="javascript:void(0);" class="btn btn-import checkin" title="签到获得积分" data-pointnum="<{$checkinPointNum}>">
+				<span><span>每日签到</span></span>
+				<a href="javascript:void(0);" class="btn btn-simple checkedin" style="display:none;"><span><span>已签到</span></span></a>
+			</a>
+			<{else}>
+			<a href="javascript:void(0);" class="btn btn-simple checkedin"><span><span>已签到</span></span></a>
+			<{/if}>
+
+			<{/if}>
+		</div>
+	</div>
+	<!--我的积分-->
+	<div class="mem-floor">
+		<div class="mem-floor-tit">我的积分</div>
+		<ul>
+			<li>
+				<div class="men-t">总分</div>
+				<div class="men-m">
+					<div class="men-number"><{$credit.total}></div>
+					<!--<a class="men-link" target="_blank">增加分数</a>-->
+				</div>
+			</li>
+			<li>
+				<div class="men-t">基础得分</div>
+				<div class="men-m">
+					<div class="men-number"><{$credit.base}></div>
+					<!--<a class="men-link" target="_blank">增加分数</a>-->
+				</div>
+			</li>
+			<li>
+				<div class="men-t">商城频道</div>
+				<div class="men-m">
+					<dl class="men-list">激励积分 :<span><{$credit.seller_ex}></span></dl>
+					<dl class="men-list">交易积分 :<span><{$credit.seller_trade}></span></dl>
+					<dl class="men-list">评价积分 :<span><{$credit.seller_credit}></span></dl>
+				</div>
+			</li>
+			<li>
+				<div class="men-t">平台展销</div>
+				<div class="men-m">
+					<dl class="men-list">激励积分 :<span><{$credit.temai_ex}></span></dl>
+					<dl class="men-list">交易积分 :<span><{$credit.temai_trade}></span></dl>
+					<dl class="men-list">评价积分 :<span><{$credit.temai_credit}></span></dl>
+				</div>
+			</li>
+			<li>
+				<div class="men-t">服务撮合</div>
+				<div class="men-m">
+					<dl class="men-list">激励积分 :<span><{$credit.proofing_ex}></span></dl>
+					<dl class="men-list">交易积分 :<span><{$credit.proofing_trade}></span></dl>
+					<dl class="men-list">评价积分 :<span><{$credit.proofing_credit}></span></dl>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!--企业钱包-->
+	<div class="mem-floor">
+		<div class="mem-floor-tit">企业钱包</div>
+		<ul>
+			<{*}>
+			<li>
+				<div class="men-t">预存款</div>
+				<div class="men-m">
+					<div class="men-number">2.0</div>
+					<a class="men-link" target="_blank">查询明细</a>
+				</div>
+			</li>
+			<{*}>
+			<li>
+				<div class="men-t">千匠宝</div>
+				<div class="men-m">
+					<dl class="men-list men-nn">敬请期待！</dl>
+					<dl class="men-list">账户余额 :<span>0</span></dl>
+					<dl class="men-list">
+						<a href="javascript:alert('敬请期待！');" class="men-go" target="_blank">管理银行卡</a>
+					</dl>
+				</div>
+			</li>
+			<!--<li>
+				<div class="men-t">金融</div>
+				<div class="men-m">
+					<dl class="men-list men-nn">敬请期待！</dl>
+					<dl class="men-list"></dl>
+					<dl class="men-list">
+						<a href="javascript:alert('敬请期待！');" class="men-go" target="_blank">查看金融产品</a>
+					</dl>
+				</div>
+			</li>-->
+		</ul>
+	</div>
+	<!--我的见证宝-->
+	<div class="mem-floor">
+		<div class="mem-floor-tit">千匠宝</div>
+		<ul>
+			<li>
+				<div class="men-t">我的银行卡</div>
+				<div class="men-m">
+					<dl class="men-list men-nn">我的银行卡</dl>
+					<dl class="men-list"></dl>
+					<dl class="men-list">
+						<a href="" class="men-go" target="_blank">管理银行卡</a>
+					</dl>
+				</div>
+			</li>
+			<li>
+				<div class="men-t">安全中心</div>
+				<div class="men-m">
+					<dl class="men-list men-nn">安全中心</dl>
+					<dl class="men-list"></dl>
+					<dl class="men-list">
+						<a href="" class="men-go" target="_blank">管理支付密码</a>
+					</dl>
+				</div>
+			</li>
+			<li>
+				<div class="men-t">千匠宝订单</div>
+				<div class="men-m">
+					<dl class="men-list men-nn">千匠宝订单</dl>
+					<dl class="men-list">
+						<a href="">发起千匠宝交易</a>
+					</dl>
+					<dl class="men-list">
+						<a href="">查看我的历史订单</a>
+					</dl>
+				</div>
+			</li>
+			<li>
+				<div class="men-t">广发电子钱包</div>
+				<div class="men-m">
+					<dl class="men-list men-nn">广发电子钱包</dl>
+					<dl class="men-list"></dl>
+					<dl class="men-list">
+						<a href="" class="men-go" target="_blank">开通</a>
+					</dl>
+					<!--<dl class="men-list men-nn">广发电子钱包</dl>
+					<dl class="men-list">余额：0 </dl>
+					<dl class="men-list">
+						<a href="">查看交易明细</a>
+					</dl>-->
+				</div>
+			</li>
+			<li>
+				<div class="men-t">恒丰企业支付</div>
+				<div class="men-m">
+					<dl class="men-list men-nn">恒丰企业支付</dl>
+					<dl class="men-list"></dl>
+					<dl class="men-list">
+						<a href="" class="men-go" target="_blank">开通</a>
+					</dl>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!--我的应用-->
+	<div class="mem-floor">
+		<div class="mem-floor-tit">我的应用</div>
+		<ul class="my">
+			<{if $userRole}>
+			<{foreach item=role from=$userRole key=key}>
+			<li class="my-ap">
+				<a href="<{$role.url}>" target="_blank"><div class="my-ap-icon"><img src="images/ap<{$role.ico}>.png" alt=""></div></a>
+				<div class="ap-nam"><{if $key == '普通会员'}>商城<{else}><{$key}><{/if}></div>
+			</li>
+			<{/foreach}>
+			<{else}>
+			<li class="my-ap">
+				您还未开通相关应用 <a href="#app">>>立即开通</a>
+			</li>
+			<{/if}>
+		</ul>
+	</div>
+	<{if $notUserRole}>
+	<!--未开通的应用-->
+	<div class="mem-floor" id="app">
+		<div class="mem-floor-tit">未开通的应用</div>
+		<ul class="my">
+			<{foreach item=role from=$notUserRole key=key}>
+			<li class="my-ap">
+				<a href="<{$role.url}>" target="_blank"><div class="my-ap-icon"><img src="images/ap0<{$role.ico}>.png" alt=""></div></a>
+				<div class="ap-nam"><{if $key == '普通会员'}>商城<{else}>
+					<{if $key=='服务撮合'}>
+					服务撮合
+					<{else}>
+					<{$key}>
+					<{/if}>
+					<{/if}></div>
+			</li>
+			<{/foreach}>
+		</ul>
+	</div>
+	<{/if}>
+</div>
+<script>
+    $(document).ready(function(){
+        var url = 'http://chaxun.1616.net/s.php?type=ip&output=json&callback=?&_='+Math.random();
+        $.getJSON(url, function(data){
+            $('#ip').html('IP:'+data.Ip);
+            $('#location').html('地区:'+data.Isp);
+        });
+    });
+</script>

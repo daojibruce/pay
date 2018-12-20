@@ -1,0 +1,55 @@
+<!-- common styles -->
+<!--<{css app="topshop" src="theme.css"}>-->
+<{css app="topshop" src="font-awesome.css"}>
+<{css app="topshop" src="ionicons.css"}>
+<!-- plugins -->
+<{css app="topshop" src="bootstrap-validator.css"}>
+<{css app="topshop" src="bootstrap-daterangepicker.css"}>
+<{css app="topshop" src="bootstrap-datepicker.css"}>
+<{css app="topshop" src="bootstrap-datetimepicker.css"}>
+<{css app="topshop" src="editor/summernote.css"}>
+<{css src="bootstrap-daterangepicker.css" app='topshop'}>
+<{css src="bootstrap-datepicker.css" app='topshop'}>
+<{css src="bootstrap-datetimepicker.css" app='topshop'}>
+<{script app="topshop" src="lib/jquery.js"}>
+<{script app="topshop" src="lib/bootstrap.js"}>
+<!-- plugins -->
+<{script app="topshop" src="lib/bootstrap-modal.js"}>
+<{script app="topshop" src="lib/bootstrap-validator.js"}>
+<{script app="topshop" src="lib/moment.js"}>
+<{script app="topshop" src="lib/daterangepicker.js"}>
+<{script app="topshop" src="lib/datepicker2.js"}>
+<{script app="topshop" src="lib/bootstrap-datetimepicker.js"}>
+<{script app="topshop" src="lib/jquery.flot.js"}>
+<{script app="topshop" src="lib/jquery.flot.time.js"}>
+<!-- editor -->
+<{script app="topshop" src="lib/editor/summernote.js"}>
+<{script app="topshop" src="lib/editor/summernote-zh-CN.js"}>
+<!-- main scripts -->
+<{script app="topshop" src="tools.js"}>
+<{script app="topshop" src="imageupload.js"}>
+<{script app="topshop" src="goodschoose.js"}>
+<{script app="topshop" src="app.js"}>
+<{script app="topshop" src="dragging.js"}>
+<!-- main container -->
+<div class="row member-container">
+    <div class="col-lg-3 box member-container-left">
+        <div ><a href="<{url action=topc_ctl_member_proofing@index}>"  class="member-home-btn">服务撮合服务商</a> </div>
+        <div class="side-nav">
+            <{foreach from=$cpmenu item=menus}>
+            <div class="side-nav-item">
+                <div class="side-nav-title"><{$menus.label}></div>
+                <ul class="side-nav-list">
+                    <{foreach from=$menus.items item=items}>
+                    <li <{if $action == $items.action}> class="on"<{/if}>><a href="<{url action=$items.action}>"><{$items.label}></a></li>
+                    <{/foreach}>
+                </ul>
+            </div>
+            <{/foreach}>
+        </div>
+    </div>
+    <div class="col-lg-13 box member-container-right">
+        <{include file=$_PAGE_}>
+    </div>
+</div>
+<div class="alert alert-error message in" role="alert" id="messagebox" style="position: fixed;"></div>

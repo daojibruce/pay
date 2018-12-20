@@ -1,0 +1,157 @@
+
+<div class="col-lg-13 box">
+    <div class="membercenter-box">
+        <div class="membercenter-box-hd">
+            企业信息
+        </div>
+        <form action="<{url action=topc_ctl_member@saveInfoCompany}>" id="ajax_form" method="post">
+            <div class="membercenter-box-bd">
+                <div class="row">
+                    <div class="col-lg-8 membercenter-userinfo">
+                        <ul>
+                            <li class="form-row">
+                                <label class="form-label">公司名称：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[company_name]" value="<{$userInfo.company_name}>" required onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;" maxlength="20">
+                  
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label  class="form-label">公司所在地：</label>
+                <span class="form-act">
+                  <div id="area" class="mod-bottom" data-validate="area"></div>
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label  class="form-label">详细地址：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[addr]" value="<{$userInfo.company_addr}>" required  onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;"  maxlength="50">
+                
+                </span>
+                            </li>
+
+                            <li class="form-row">
+                                <label class="form-label" >公司经营范围：</label>
+                <span class="form-act">
+                  <!--<input class="input-ln" type="text" name="user[operating_range]" value="<{$userInfo.operating_range}>" required  onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;"  maxlength="50">-->
+                      <select name="user[operating_range]" class="cqxz_221_qyacrform5">
+                          <option value="0">-请选择-</option>
+                          <option <{if $userInfo.operating_range=='国有企业' }> selected<{/if}> value="国有企业">国有企业</option>
+                          <option <{if $userInfo.operating_range=='集体企业' }> selected<{/if}> value="集体企业">集体企业 </option>
+                          <option <{if $userInfo.operating_range=='联营企业' }> selected<{/if}> value="联营企业">联营企业</option>
+                          <option <{if $userInfo.operating_range=='股份合作制企业' }> selected<{/if}> value="股份合作制企业">股份合作制企业</option>
+                          <option <{if $userInfo.operating_range=='私营企业' }> selected<{/if}> value="私营企业">私营企业</option>
+                          <option <{if $userInfo.operating_range=='个体户' }> selected<{/if}> value="个体户">个体户</option>
+                      </select>
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >公司人数：</label>
+                <span class="form-act">
+                  <!--<input class="input-ln" type="text" name="user[company_num]" value="<{$userInfo.company_num}>" data-validate="natural" maxlength="10">-->
+
+                    <select name="user[company_num]" class="cqxz_221_qyacrform4"  id="select_ids" >
+                        <option value="0">-请选择-</option>
+                        <option <{if $userInfo.company_num=='1-49' }> selected<{/if}> value="1-49">1-49</option>
+                        <option <{if $userInfo.company_num=='50-99' }> selected<{/if}>  value="50-99">50-99</option>
+                        <option <{if $userInfo.company_num=='100-499' }> selected<{/if}>  value="100-499">100-499</option>
+                        <option <{if $userInfo.company_num=='500-999' }> selected<{/if}>  value="500-999">500-999</option>
+                        <option <{if $userInfo.company_num=='1000以上' }> selected<{/if}>  value="1000以上">1000以上</option>
+                    </select>
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >公司注册资金：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[company_registered]" value="<{$userInfo.company_registered}>" data-validate="natural" maxlength="20">
+                  
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >年营业额：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[company_turnover]" value="<{$userInfo.company_turnover}>"  data-validate="natural" maxlength="10">
+                  
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >公司联系人：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[company_contact]" value="<{$userInfo.company_contact}>"  data-validate="" maxlength="10">
+                  
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >联系人手机号：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[company_contactPhone]" value="<{$userInfo.company_contactPhone}>"  data-validate="natural" maxlength="11">
+                  
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >法人代表姓名：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[def_addr]" value="<{$userInfo.def_addr}>" required onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;"  maxlength="10" >
+                    
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >公司电话：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[company_phone]" value="<{$userInfo.company_phone}>"  data-validate="tel"  maxlength="11">
+                  <span class="help-block"></span>
+                </span>
+                            </li>
+
+                            <!-- 发票信息 -->
+                            <li class="form-row">
+                                <label class="form-label">开户行名称：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[invoice_bank_name]" value="<{$userInfo.invoice_bank_name}>" onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;" maxlength="20">
+                  
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >开户账号：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[invoice_bank_num]" value="<{$userInfo.invoice_bank_num}>"  data-validate="" maxlength="20">
+                  
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label  class="form-label">开户地址：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[invoice_addr]" value="<{$userInfo.invoice_addr}>"  onKeypress="javascript:if(event.keyCode == 32)event.returnValue = false;"  maxlength="50">
+                
+                </span>
+                            </li>
+                            <li class="form-row">
+                                <label class="form-label" >开户电话：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="user[invoice_mobile]" value="<{$userInfo.invoice_mobile}>"  data-validate="tel"  maxlength="20">
+                  <span class="help-block"></span>
+                </span>
+                            </li>
+
+
+                            <li class="form-row last">
+                                <label  class="form-label"></label>
+                <span class="form-act">
+                    <button type="submit" class="btn btn-success" rel="_request"><span><span>保存</span></span></button>
+                </span>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $('#area').multiSelect({
+        dataUrl: '<{$env.base_url}>/app/ectools/statics/scripts/area.json',
+        initData: '<{$userInfo.region_id}>'
+    });
+</script>

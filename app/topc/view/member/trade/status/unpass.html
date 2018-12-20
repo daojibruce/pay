@@ -1,0 +1,40 @@
+<div class="status-bar2 status-bar2-large">
+<{if $trade.trade_from != 'purchase' || $trade.trade_from != 'erp'}>
+  <div class="first on">
+    <div class="bg"><span class="number">1</span></div>
+    <div class="txt">等待商家提<br/>交电子合同</div>
+  </div>
+  
+    <div class="on">
+    <div class="bg"><span class="number">2</span></div>
+    <div class="txt">等待买家<br/>确认合同</div>
+  </div>
+  
+    <div class="on">
+    <div class="bg"><span class="number">3</span></div>
+    <div class="txt">订单已生成<br/>等待您付款</div>
+	</div>
+  
+  <div class="last on">
+    <div class="bg"><span class="number">4</span></div>
+    <div class="txt">订单取消</div>
+  </div>
+ <{else}>
+  
+    <div class="first on">
+    <div class="bg"><span class="number">1</span></div>
+    <div class="txt">等待审核</div>
+	</div>
+  
+  <div class="last on">
+    <div class="bg"><span class="number">2</span></div>
+    <div class="txt">审核不通过</div>
+  </div>
+ <{/if}>
+</div>
+<div class="orderdtl-box">
+  <span class="orderdtl-hd">订单不通过原因：</span>
+    <{$trade.cancel_reason}>
+</div>
+
+

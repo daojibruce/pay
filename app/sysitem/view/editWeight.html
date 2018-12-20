@@ -1,0 +1,37 @@
+<form id="dlycorpForm" class="tableform" method="POST" action="?app=sysitem&ctl=admin_item&act=saveWeight" >
+    <input type="hidden" name="item_id" value="<{$item.item_id}>">
+    <div class="division">
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <th><label><{t}>商品名称:<{/t}></label></th>
+                <td><{$item.title}></td>
+            </tr>
+            <tr>
+                <th><em class="red">*</em><label><{t}>权重(数字越大越靠前):<{/t}></label></th>
+                <td><{input type="text" vtype="required" name="order_weight" class="x-input" value=$item.order_weight maxlength="10" size="10"}></td>
+            </tr>
+        </table>
+    </div>
+    <div class="table-action">
+        <button class="btn btn-primary" type="submit"><span><span><{t}>保存<{/t}></span></span></button>
+    </div>
+</form>
+
+<script>
+    $('dlycorpForm').store('target',{
+        onComplete:function(rs){
+            if(!rs) return;
+            rs = JSON.decode(rs);
+            if(rs.success){
+                if(window.finderGroup) window.finderGroup['<{$env.get.finder_id}>'].refresh();
+                if($('dlycorpForm').getParent('.dialog')){
+                    var Dlg = $('dlycorpForm').getParent('.dialog').retrieve('instance');
+                    if(Dlg.update){
+                        Dlg.update.retrieve('instance').initContent();
+                    }
+                    Dlg.close();
+                }
+            }
+        }
+    });
+</script>

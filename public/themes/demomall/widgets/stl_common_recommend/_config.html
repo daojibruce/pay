@@ -1,0 +1,34 @@
+<div id="goods_exshow_config" class="tableform">
+  <div class="division">
+    <p>
+      <label>板块名称：</label>
+      <{input type="text" name="texttag" vtype="required" value=$setting.texttag}>
+    </p>
+  </div>
+  <div class="division">
+    <p>
+      <label>模块排序（同一页面相同模块排序不能相同）：</label>
+      <{input type="text" name="orderId" vtype="required" value=$setting.orderId}>
+    </p>
+  </div>
+  <div class="division">
+    <div class="division goods-selector">
+      <div data-extend = "select" <{if $setting.selector=="filter"}>style="display:none;"<{/if}>>
+        <{input type="object" value=$setting.item_select object="item" app="sysitem" filter="use_platform|noequal=2" name="item_select" select="checkbox" multiple="true" textcol="title"}>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  $$('#goods_exshow_config .goods-selector-handle input[type=radio]').addEvent('change',function(){
+    var radio  = this;
+    if(!radio.checked)return;
+    $$('#goods_exshow_config .goods-selector [data-extend]').each(function(item){
+      if(item.get('data-extend')!=radio.value){
+        item.hide();
+      }else{
+        item.show();
+      }
+    });
+  });
+</script>

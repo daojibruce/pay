@@ -1,0 +1,466 @@
+<{script app='topc' src="YMDClass.js"}>
+<div class="col-lg-13 box">
+    <div class="membercenter-box section">
+        <div class="membercenter-box-hd stl-proofing">
+            <div class="stl-prooaddr">交货地点： <{$offer.addr}></div>
+            <div class="stl-prootime">报价时限： <{$offer.start_time|date:'Y-m-d'}>&nbsp;至&nbsp;<{$offer.end_time|date:'Y-m-d'}></div>
+            <div class="stl-prooname">联系信息： <{$offer.user_name}>&nbsp;&nbsp;</div>
+        </div>
+
+        <div class="membercenter-box-bd" style="padding-left: 0;padding-right: 0;">
+            <table class="proofing-table stl-proo">
+                <thead>
+                <td>名称</td>
+                <td>数量</td>
+                <td>单位</td>
+                <td>材质</td>
+                <td>服务撮合服务类型</td>
+                <td>需求补充描述</td>
+                <td>图纸</td>
+                <td>期望交货日期</td>
+                <td>付款方式</td>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><{$offer.sample_name}></td>
+                        <td><{$offer.quantity}></td>
+                        <td><{$offer.unit}></td>
+                        <td><{$offer.material}></td>
+                        <td><{$offer.cat_name}></td>
+                        <td><{$offer.desc}></td>
+                        <td><a href="<{url action=topc_ctl_member_proofing@downloadDrawing sample_id=$offer.sample_id}>" target="_blank">查看图纸</a></td>
+                        <td><{$offer.delivery|date:'Y-m-d'}></td>
+                        <td><{$offer.ptype}></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <form action="<{url action=topc_ctl_member_proofing@addOffer}>" method="post" class="stl-proo-form">
+                <input type="hidden" value="<{$offer.sample_id}>" name="sample_id">
+                <input type="hidden" value="<{$offer.offer_id}>" name="offer_id">
+                <ul>
+                    <li class="form-row">
+                        <label class="form-label">汇总服务撮合产品总价：</label>
+                        <span class="form-act has-figure">
+                            <input class="has-figure input-block sample-fee" type="text" name="sample_fee" value="<{$offer.sample_fee}>">
+                        </span>
+                    </li>
+                    <li class="form-row">
+                        <label class="form-label">运费：</label>
+                        <span class="form-act has-figure">
+                            <input class="has-figure input-block post-fee" type="text" name="post_fee" value="<{$offer.post_fee}>">
+                        </span>
+                    </li>
+                    <li class="form-row">
+                        <label class="form-label">预计交货日期：</label>
+                        <span class="form-act has-figure">
+                            <div style="width: 350px;">
+                            <select name="year"></select>
+                            <select name="month"></select>
+                            <select name="day"></select>
+                        </div>
+                        </span>
+                    </li>
+                    <li class="form-row">
+                        <label  class="form-label">总金额：</label>
+                        <span class="form-act checipt total-fee">
+                            ￥<{$offer.total_fee}>
+                        </span>
+                    </li>
+                    <li class="form-row">
+                        <label class="form-label">发货方式：</label>
+                        <span class="form-act checipt">
+                            <span class="oncheck  <{if !$offer.post_type}>onchecked<{/if}>">
+                              <input  type="radio" name="post_type" value="0" <{if !$offer.post_type}>checked<{/if}>>
+                            </span>
+                            <label >一次性</label>
+                            <span class="oncheck <{if $offer.post_type}>onchecked<{/if}>">
+                              <input type="radio" name="post_type" value="1" <{if $offer.post_type}>checked<{/if}>>
+                            </span>
+                            <label >分批</label>
+                        </span>
+                    </li>
+                    <li class="form-row">
+                        <label  class="form-label">要求付款方式：</label>
+                        <span class="form-act checipt">
+                            <span class="oncheck <{if !$offer.pay_type}>onchecked<{/if}>">
+                              <input  type="radio" name="pay_type" value="0" <{if !$offer.pay_type}>ohecked<{/if}> class="once-radio">
+                            </span>
+                            <label >一次性</label>
+                            <span class="oncheck <{if $offer.pay_type}>onchecked<{/if}>">
+                              <input type="radio" name="pay_type" value="1" class="period-radio" <{if $offer.pay_type}>checked<{/if}>>
+                            </span>
+                            <label >分期</label>
+                        </span>
+                    </li>
+
+                    <!--分期付款-->
+                    <{if $offer.pay_type=='1'}>
+                    <li class="form-row period-fee">
+                        <div>
+                            <div class="stl-off">
+                                <div class="stl-off-tit">订单生成（保证金）</div>
+                                <input type="number" class="order-percent" name="params[fee_create]" value="<{$offer.params.fee_create}>"><span>%</span>
+                            </div>
+                            <div class="stl-add">+</div>
+                            <div class="stl-off">
+                                <div class="stl-off-tit">确认收货（收货款）</div>
+                                <input type="number"  class="order-percent" name="params[fee_confirm]" value="<{$offer.params.fee_confirm}>"><span>%</span>
+                            </div>
+                            <div class="stl-add">+</div>
+                        </div>
+                        <!--第一段-->
+                        <{if $offer.params.time1}>
+                        <div>
+                            <div class="stl-off" style="width: 250px;">
+                                <div class="stl-off-tit">收货后（运行款）</div>
+                                <div>
+                                    <select  name="params[time1]">
+                                        <option value="1" <{if $offer.params.time1 == 1}>selected<{/if}>>1个月</option>
+                                        <option value="2" <{if $offer.params.time1 == 2}>selected<{/if}>>2个月</option>
+                                        <option value="3" <{if $offer.params.time1 == 3}>selected<{/if}>>3个月</option>
+                                        <option value="4" <{if $offer.params.time1 == 4}>selected<{/if}>>4个月</option>
+                                        <option value="5" <{if $offer.params.time1 == 5}>selected<{/if}>>5个月</option>
+                                        <option value="6" <{if $offer.params.time1 == 6}>selected<{/if}>>6个月</option>
+                                        <option value="7" <{if $offer.params.time1 == 7}>selected<{/if}>>7个月</option>
+                                        <option value="8" <{if $offer.params.time1 == 8}>selected<{/if}>>8个月</option>
+                                        <option value="9" <{if $offer.params.time1 == 9}>selected<{/if}>>9个月</option>
+                                        <option value="10" <{if $offer.params.time1 == 10}>selected<{/if}>>10个月</option>
+                                        <option value="11" <{if $offer.params.time1 == 11}>selected<{/if}>>11个月</option>
+                                        <option value="12" <{if $offer.params.time1 == 12}>selected<{/if}>>12个月</option>
+                                    </select>
+                                    <input type="number" class="order-percent"  name="params[fee_1]" value="<{$offer.params.fee_1}>"><span>%</span>
+                                </div>
+                            </div>
+                            <div class="stl-add">+</div>
+                        </div>
+                        <{else}>
+                        <div style="display:none;">
+                            <div class="stl-off" style="width: 250px;">
+                                <div class="stl-off-tit">收货后（运行款）</div>
+                                <div>
+                                    <select  name="params[time1]">
+                                        <option value="1">1个月</option>
+                                        <option value="2">2个月</option>
+                                        <option value="3">3个月</option>
+                                        <option value="4">4个月</option>
+                                        <option value="5">5个月</option>
+                                        <option value="6">6个月</option>
+                                        <option value="7">7个月</option>
+                                        <option value="8">8个月</option>
+                                        <option value="9">9个月</option>
+                                        <option value="10">10个月</option>
+                                        <option value="11">11个月</option>
+                                        <option value="12">12个月</option>
+                                    </select>
+                                    <input type="number" class="order-percent"  name="params[fee_1]"><span>%</span>
+                                </div>
+                            </div>
+                            <div class="stl-add">+</div>
+                        </div>
+                     <{/if}>
+                        <!--第二段-->
+                        <{if $offer.params.time2}>
+                        <div>
+                            <div class="stl-off" style="width: 250px;">
+                                <div class="stl-off-tit">收货后（运行款）</div>
+                                <div>
+                                    <select  name="params[time2]">
+                                        <option value="1" <{if $offer.params.time2 == 1}>selected<{/if}>>1个月</option>
+                                        <option value="2" <{if $offer.params.time2 == 2}>selected<{/if}>>2个月</option>
+                                        <option value="3" <{if $offer.params.time2 == 3}>selected<{/if}>>3个月</option>
+                                        <option value="4" <{if $offer.params.time2 == 4}>selected<{/if}>>4个月</option>
+                                        <option value="5" <{if $offer.params.time2 == 5}>selected<{/if}>>5个月</option>
+                                        <option value="6" <{if $offer.params.time2 == 6}>selected<{/if}>>6个月</option>
+                                        <option value="7" <{if $offer.params.time2 == 7}>selected<{/if}>>7个月</option>
+                                        <option value="8" <{if $offer.params.time2 == 8}>selected<{/if}>>8个月</option>
+                                        <option value="9" <{if $offer.params.time2 == 9}>selected<{/if}>>9个月</option>
+                                        <option value="10" <{if $offer.params.time2 == 10}>selected<{/if}>>10个月</option>
+                                        <option value="11" <{if $offer.params.time2 == 11}>selected<{/if}>>11个月</option>
+                                        <option value="12" <{if $offer.params.time2 == 12}>selected<{/if}>>12个月</option>
+                                    </select>
+                                    <input type="number" class="order-percent"  name="params[fee_2]" value="<{$offer.params.fee_2}>"><span>%</span>
+                                </div>
+                            </div>
+                            <div class="stl-add">+</div>
+                        </div>
+                        <{else}>
+                        <div style="display:none;">
+                            <div class="stl-off" style="width: 250px;">
+                                <div class="stl-off-tit">收货后（质保金）</div>
+                                <div>
+                                    <select  name="params[time2]">
+                                        <option value="1">1个月</option>
+                                        <option value="2">2个月</option>
+                                        <option value="3">3个月</option>
+                                        <option value="4">4个月</option>
+                                        <option value="5">5个月</option>
+                                        <option value="6">6个月</option>
+                                        <option value="7">7个月</option>
+                                        <option value="8">8个月</option>
+                                        <option value="9">9个月</option>
+                                        <option value="10">10个月</option>
+                                        <option value="11">11个月</option>
+                                        <option value="12">12个月</option>
+                                    </select>
+                                    <input type="number" class="order-percent"  name="params[fee_2]"><span>%</span>
+                                </div>
+                            </div>
+                            <div class="stl-add">+</div>
+                        </div>
+                        <{/if}>
+
+                        <!--第二段-->
+                        <{if $offer.params.time3}>
+                        <div>
+                            <div class="stl-off" style="width: 250px;">
+                                <div class="stl-off-tit">收货后（运行款）</div>
+                                <div>
+                                    <select  name="params[time3]">
+                                        <option value="1" <{if $offer.params.time3 == 1}>selected<{/if}>>1个月</option>
+                                        <option value="2" <{if $offer.params.time3 == 2}>selected<{/if}>>2个月</option>
+                                        <option value="3" <{if $offer.params.time3 == 3}>selected<{/if}>>3个月</option>
+                                        <option value="4" <{if $offer.params.time3 == 4}>selected<{/if}>>4个月</option>
+                                        <option value="5" <{if $offer.params.time3 == 5}>selected<{/if}>>5个月</option>
+                                        <option value="6" <{if $offer.params.time3 == 6}>selected<{/if}>>6个月</option>
+                                        <option value="7" <{if $offer.params.time3 == 7}>selected<{/if}>>7个月</option>
+                                        <option value="8" <{if $offer.params.time3 == 8}>selected<{/if}>>8个月</option>
+                                        <option value="9" <{if $offer.params.time3 == 9}>selected<{/if}>>9个月</option>
+                                        <option value="10" <{if $offer.params.time3 == 10}>selected<{/if}>>10个月</option>
+                                        <option value="11" <{if $offer.params.time3 == 11}>selected<{/if}>>11个月</option>
+                                        <option value="12" <{if $offer.params.time3 == 12}>selected<{/if}>>12个月</option>
+                                    </select>
+                                    <input type="number" class="order-percent"  name="params[fee_3]" value="<{$offer.params.fee_3}>"><span>%</span>
+                                </div>
+                            </div>
+                            <div class="stl-add">+</div>
+                        </div>
+                        <{else}>
+                        <div style="display:none;">
+                            <div class="stl-off" style="width: 250px;">
+                                <div class="stl-off-tit">收货后</div>
+                                <div>
+                                    <select  name="params[time3]">
+                                        <option value="1">1个月</option>
+                                        <option value="2">2个月</option>
+                                        <option value="3">3个月</option>
+                                        <option value="4">4个月</option>
+                                        <option value="5">5个月</option>
+                                        <option value="6">6个月</option>
+                                        <option value="7">7个月</option>
+                                        <option value="8">8个月</option>
+                                        <option value="9">9个月</option>
+                                        <option value="10">10个月</option>
+                                        <option value="11">11个月</option>
+                                        <option value="12">12个月</option>
+                                    </select>
+                                    <input type="number" class="order-percent"  name="params[fee_3]"><span>%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <{/if}>
+                        <div class="stl-off stl-reset" style="width: 60px;margin-left: 15px;">
+                            <button>重置</button>
+                        </div>
+                    </li>
+                    <{/if}>
+
+                    <li class="form-row">
+                        <span class="form-act" style="display: block;margin: 50px 0 0 350px;">
+                            <button type="submit" class="btn stl-btn-tj" id="submit_offer"><span><span>提交报价</span></span></button>
+                        </span>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+</div>
+
+<li class="form-row period-fee" style="display:none;">
+    <div>
+        <div class="stl-off">
+            <div class="stl-off-tit">订单生成（保证金）</div>
+            <input type="number" class="order-percent" name="params[fee_create]" value="30"><span>%</span>
+        </div>
+        <div class="stl-add">+</div>
+        <div class="stl-off">
+            <div class="stl-off-tit">确认收货（收货款）</div>
+            <input type="number"  class="order-percent" name="params[fee_confirm]" value="70"><span>%</span>
+        </div>
+        <div class="stl-add">+</div>
+    </div>
+    <div style="display:none;">
+        <div class="stl-off" style="width: 250px;">
+            <div class="stl-off-tit">收货后（运行款）</div>
+            <div>
+                <select  name="params[time1]">
+                    <option value="1">1个月</option>
+                    <option value="2">2个月</option>
+                    <option value="3">3个月</option>
+                    <option value="4">4个月</option>
+                    <option value="5">5个月</option>
+                    <option value="6">6个月</option>
+                    <option value="7">7个月</option>
+                    <option value="8">8个月</option>
+                    <option value="9">9个月</option>
+                    <option value="10">10个月</option>
+                    <option value="11">11个月</option>
+                    <option value="12">12个月</option>
+                </select>
+                <input type="number" class="order-percent"  name="params[fee_1]"><span>%</span>
+            </div>
+        </div>
+        <div class="stl-add">+</div>
+    </div>
+
+    <div style="display:none;">
+        <div class="stl-off" style="width: 250px;">
+            <div class="stl-off-tit">收货后（质保金）</div>
+            <div>
+                <select  name="params[time2]">
+                    <option value="1">1个月</option>
+                    <option value="2">2个月</option>
+                    <option value="3">3个月</option>
+                    <option value="4">4个月</option>
+                    <option value="5">5个月</option>
+                    <option value="6">6个月</option>
+                    <option value="7">7个月</option>
+                    <option value="8">8个月</option>
+                    <option value="9">9个月</option>
+                    <option value="10">10个月</option>
+                    <option value="11">11个月</option>
+                    <option value="12">12个月</option>
+                </select>
+                <input type="number" class="order-percent"  name="params[fee_2]"><span>%</span>
+            </div>
+        </div>
+        <div class="stl-add">+</div>
+    </div>
+    <div style="display:none;">
+        <div class="stl-off" style="width: 250px;">
+            <div class="stl-off-tit">收货后</div>
+            <div>
+                <select  name="params[time3]">
+                    <option value="1">1个月</option>
+                    <option value="2">2个月</option>
+                    <option value="3">3个月</option>
+                    <option value="4">4个月</option>
+                    <option value="5">5个月</option>
+                    <option value="6">6个月</option>
+                    <option value="7">7个月</option>
+                    <option value="8">8个月</option>
+                    <option value="9">9个月</option>
+                    <option value="10">10个月</option>
+                    <option value="11">11个月</option>
+                    <option value="12">12个月</option>
+                </select>
+                <input type="number" class="order-percent"  name="params[fee_3]"><span>%</span>
+            </div>
+        </div>
+    </div>
+    <div class="stl-off stl-reset" style="width: 60px;margin-left: 15px;">
+        <button>重置</button>
+    </div>
+</li>
+<script>
+    $(function () {
+        new YMDselect('year','month','day','<{$offer.offer_delivery|date:"Y"}>','<{$offer.offer_delivery|date:"m"}>','<{$offer.offer_delivery|date:"d"}>');
+
+
+        $(".oncheck").on("click",function () {
+            $(this).addClass("onchecked").siblings().removeClass("onchecked");
+        });
+
+        $('.once-radio').on('click', function () {
+            $('.stl-proo-form').find('.period-fee').remove();
+        });
+
+        $('.period-radio').on('click', function () {
+            var period = $('.period-fee').clone();
+            $(this).parents('li').after(period);
+            $('.stl-proo-form').find('.period-fee').show();
+        });
+        $('.sample-fee').on('change', function(){
+            var fee = $(this).val();
+            if (isNaN(fee) || Number(fee) < 0) {
+                Message.error('请输入不小于0的整数');
+                $(this).val(0);
+            }
+            countFee();
+        });
+        $('.post-fee').on('change', function(){
+            var fee = $(this).val();
+            if (isNaN(fee) || Number(fee) < 0) {
+                Message.error('请输入不小于0的整数');
+                $(this).val(0);
+            }
+            countFee();
+        });
+
+        //计算总价
+        function countFee()
+        {
+            var sample_fee = $('.sample-fee').val();
+            var post_fee = $('.post-fee').val();
+            var total_fee = Number(sample_fee) + Number(post_fee);
+            $('.total-fee').html('￥'+total_fee);
+        }
+
+        //计算总百分比
+        function getPercent()
+        {
+            var total = 0;
+            $('.stl-proo-form').find('.order-percent').each(function(){
+                total += Number($(this).val());
+            });
+            return total;
+        }
+
+        $('body').on('click', '.stl-add',function(){
+            total = getPercent();
+            if (total >= 100) {
+                Message.error('已分配100%金额！');
+            } else {
+                $(this).parent().next().show();
+                $(this).parent().next().find('.order-percent').val(100-total);
+            }
+        }).on('click','.stl-reset',function (e) {
+            var form = $('.stl-proo-form');
+            form.find('.period-fee').remove();
+            var period = $('.period-fee').clone();
+            $('.period-radio').parents('li').after(period);
+            form.find('.period-fee').show();
+            return false;
+        }).on('change', '.order-percent',function(){
+            if (Number($(this).val()) <=0 || Number($(this).val()) > 100) {
+                Message.error('请输入1-100的正整数！');
+                $(this).val('');
+            }
+            total = getPercent();
+            if (total > 100) {
+                Message.error('金额不能超过100%');
+                $(this).val('');
+            }
+        });
+
+        $('#submit_offer').on('click', function(e){
+            var form = $('.stl-proo-form');
+            var url = form.attr('action');
+            $.post(url, form.serialize(), function(re) {
+                if (re.status == 'error') {
+                    Message.error(re.message);
+                    if (re.url) {
+                        setTimeout('',1000);
+                        location.href = re.url;
+                    }
+                } else {
+                    Message.success('提交成功');
+                    setTimeout('',1000);
+                    location.href = re.url;
+                }
+            });
+            return false;
+        });
+
+    });
+</script>

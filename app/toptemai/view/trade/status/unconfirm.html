@@ -1,0 +1,67 @@
+<div class="panel-heading">
+	<{if $trade.pay_type == "online"}>
+  <div class="text-center">
+    <ul class="step-bar">
+      <li class="on">
+        <div class="state">请提交电子合同</div>
+        <div class="time"></div>
+        <i class="glyphicon glyphicon-chevron-right"></i>
+      </li>
+      <li class="on">
+        <div class="state">等待买家确认合同</div>
+        <div class="time"></div>
+        <i class="glyphicon glyphicon-chevron-right"></i>
+      </li>
+      <li class="state">
+        <div class="state">已下单，待付款</div>
+        <i class="glyphicon glyphicon-chevron-right"></i>
+      </li>	  
+      <li>
+        <div class="state">已支付，待发货(线上支付)</div>
+        <i class="glyphicon glyphicon-chevron-right"></i>
+      </li>
+      <li>
+        <div class="state">已发货，待收货</div>
+        <i class="glyphicon glyphicon-chevron-right"></i>
+      </li>
+      <li>
+        <div class="state">已完成</div>
+      </li>
+    </ul>
+  </div>
+   <{elseif $trade.pay_type == "caroffline"}>
+  <div class="text-center">
+        <ul class="step-bar">
+            <li class="on">
+                <div class="state">请提交电子合同</div>
+                <div class="time"></div>
+                <i class="glyphicon glyphicon-chevron-right"></i>
+            </li>
+            <li class="on">
+                <div class="state">等待买家确认合同</div>
+                <div class="time"></div>
+                <i class="glyphicon glyphicon-chevron-right"></i>
+            </li>
+			<li>
+                <div class="state">等待买家付款</div>
+                <div class="time"></div>
+                <i class="glyphicon glyphicon-chevron-right"></i>
+            </li>
+            <li class="state">
+                <div class="state">待发货(线下打款)</div>
+                <div class="time"></div>
+                <i class="glyphicon glyphicon-chevron-right"></i>
+            </li>
+            <li>
+                <div class="state">已发货，待收货</div>
+                <div class="time"></div>
+                <i class="glyphicon glyphicon-chevron-right"></i>
+            </li>
+            <li >
+                <div class="state">已完成</div>
+                <div class="time"></div>
+            </li>
+        </ul>
+    </div>
+  <{/if}>
+</div>

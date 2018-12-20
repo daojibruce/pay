@@ -1,0 +1,7 @@
+<cronentries>
+  <cron id="sysshop_tasks_closeDemoShop">
+    <description>自动关闭店铺</description>
+    <schedule>* 4 * * *</schedule>
+    <enabled>false</enabled>
+  </cron>
+</cronentries>

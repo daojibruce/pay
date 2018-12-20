@@ -1,0 +1,125 @@
+    <div style="padding: .7rem 1rem;" class="contract">
+        <!--bug-->
+        <div class="item-border">
+           <div id="show_elecontract">
+               <p class="contact-tit">是否需要电子合同？<span class="grey">(提示：由卖家发起电子合同，买家确认合同)</span></p>
+           </div>
+           <div id="show_elecontract2"></div>
+           <div class="">
+               <ul id="need_or_not">
+                   <li class="form-row">
+                       <label for="" class="form-label"></label>
+                <span class="form-act">
+                    <label for="for_e_invoiceneed">
+                        <input id="for_e_invoiceneed" type="radio" name="elecontract[need_contract]" value="1" style="width:18px;"> 需要
+                    </label>
+                    <label for="for_e_noinvoice">
+                        <input id="for_e_noinvoice"  type="radio" name="elecontract[need_contract]" value="0" checked style="width:18px;"> 不需要
+                    </label>
+                </span>
+                   </li>
+               </ul>
+               <ul style="display:none;" id="edit_elecontract">
+                   <li class="form-row">
+                       <label for="" class="form-label">合同企业名称：</label>
+          <span class="form-act">
+            <input class="input-ln" type="text" maxlength="100"  name="elecontract[name]" id="elecontract" minlength="2" maxlength="20" value="" style="border:1px solid #ccc;">
+          </span>
+                   </li>
+                   <li class="form-row" style="margin-top:5px;">
+                       <label for="" style="text-align:right;" class="form-label">联系人手机号：</label>
+            <span class="form-act">
+                <input class="input-ln" type="text" maxlength="11" id="elephone" name="elecontract[tel]" value=""  style="border:1px solid #ccc;">
+            </span>
+                   </li>
+                   <li class="form-row">
+                       <label for="" style="text-align:right;" class="form-label">备注：</label>
+          <span class="form-act">
+            <span class="">电子合同是线上交易的线上凭证</span>
+          </span>
+                   </li>
+                   <li class="form-row last">
+                  <span class="">
+                      <button type="button" id="save_elecontract"  class="btn btn-success"><span><span>保存电子合同信息</span></span></button>
+                  </span>
+                   </li>
+               </ul>
+           </div>
+       </div>
+    
+   <div class="delivery fold lt_fold" style="margin-top: 0.5rem;">
+       <span class="icon" style="font-size: 0.9rem;">是否需要线下合同&nbsp;&nbsp;&nbsp;</span>
+       <div class="r">
+           <input id="for_contracted" class="contracts lt_invoiceneeds" type="radio" name="need_contract" value="1">
+           <label for="for_contracted">需要</label>
+           <input id="for_contract" type="radio"  class="contracts lt_invoiceneeds" name="need_contract" value="0" checked="">
+           <label for="for_contract">不需要</label>
+       </div>
+   </div>
+   <div style="height: 7.5em;display:none;" class="contract lt_contract" id="contractinfo" >
+       <div>
+           <div class="lt_contacts xn_tit">签订合同联系人：
+               <input class="input-ln form-control" type="text" maxlength="100" name="contractact" id="contract" minlength="2">
+           </div>
+           <div class="lt_contacts1 xn_tit" style="margin-top: 5px;">联系人手机号：
+               <input class="input-ln form-control" type="text" maxlength="100" id="phone" name="phone" />
+           </div>
+       </div>
+   </div>
+   <div class="cleraFix"></div>
+   </div>
+   <script type="text/javascript">
+    //是否需要电子合同
+    $('input[name="elecontract[need_contract]"]').on('click', function (e) {
+        var o_this = $(this);
+        var elecontractInput = o_this.parent().parent().parent().parent().next();
+        if(o_this.is(':checked') && o_this.val() == 1) {
+            elecontractInput.show();
+        } else {
+            elecontractInput.hide();
+        }
+    });
+
+    //是否需要纸质合同
+    $('.contracts').click(function () {
+        if($(this).val()==1)
+        {
+            $(this).parent().parent().next().show();
+
+        }else{
+            $(this).parent().parent().next().hide();
+        }
+    })
+
+    $('#save_elecontract').on('click', function (e) {
+        e.preventDefault();
+        var needContract = $('input[name="elecontract\[need_contract\]"]:checked');
+        if('0' == needContract.val()){
+            return false;
+        }
+
+        var elecontract = $('input[name="elecontract[name]"]').val();
+        var elephone = $('input[name="elecontract[tel]"]').val();
+
+        if (elecontract == '') {
+            alert("电子合同 企业名称 输入有误，请检查！");
+            return false;
+        }
+        var reg1 = /^1(5|3|8|4|7)\d{9}$/;
+        if(reg1.test(elephone)== false) {
+            alert("电子合同 联系人手机号 输入有误，请检查！");
+            return false;
+        }
+
+        var contractactInputVal = $('input[name="contractact"]').val();
+        var phoneInputVal = $('input[name="phone"]').val();
+        if (contractactInputVal == '') {
+            alert("线下合同 合同联系人 输入有误，请检查！");
+            return false;
+        }
+        if(reg1.test(phoneInputVal)== false) {
+            alert("线下合同 联系人手机号 输入有误，请检查！");
+            return false;
+        }
+    });
+   </script>

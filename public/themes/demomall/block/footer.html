@@ -1,0 +1,113 @@
+<!--右侧导航-->
+<div class="toolbar">
+  <div class="toolbar-top">
+    <a href="<{url action=topc_ctl_cart@index}>">
+      <div class="toolbar-cart">
+        <i>购物车</i>
+      </div>
+    </a>
+    <a href="">
+      <div class="toolbar-fav"></div>
+      <div class="toolbar-txt">我的收藏</div>
+    </a>
+    <a href="javascript:void(0);">
+      <div class="toolbar-ewm">
+        <div class="show-qrcode"><img src="images/ewm.jpg" alt=""></div>
+      </div>
+    </a>
+  </div>
+  <div class="toolbar-bot">
+    <a href="">
+      <div class="toolbar-notice"></div>
+      <div class="toolbar-txt">用户反馈</div>
+    </a>
+    <a href="javascript:void(0);">
+      <div class="toolbar-gotop"></div>
+      <div class="toolbar-txt">回到顶部</div>
+    </a>
+  </div>
+  <script>
+      $(function () {
+          //鼠标滑动显示文字
+          $(".toolbar a").hover(function () {
+              $(this).find(".toolbar-txt").stop().animate({
+                  "opacity":1,
+                  "right":38
+              },300);
+              $(this).find(".toolbar-txt").css("display","block");
+          },function () {
+              $(this).find(".toolbar-txt").stop().animate({
+                  "opacity":0,
+                  "right":60
+              },300,function () {
+                  $(this).css("display","none");
+              });
+          });
+          //鼠标滑动显示二维码
+          $(".toolbar-ewm").hover(function () {
+              $(".show-qrcode").stop().animate({"opacity":1},300);
+              $(".show-qrcode").css("display","block");
+          },function () {
+              $(".show-qrcode").stop().animate({"opacity":0},300,function () {
+                  $(this).css("display","none");
+              });
+          });
+          //回到顶部
+          $(window).scroll(function(){
+              if ($(window).scrollTop()>100){
+                  $(".toolbar-gotop").fadeIn(300);
+              }
+              else {
+                  $(".toolbar-gotop").fadeOut(300);
+              }
+          });
+          $(".toolbar-gotop").on("click",function () {
+              $("body,html").animate({scrollTop:0},300);
+              $(this).next(".toolbar-txt").css("display","none");
+              return false;
+          })
+      })
+  </script>
+</div>
+
+<!-- 底部导航与版权等 -->
+<div id="footer" class="footer">
+  <!--5个小图标-->
+  <{widgets id="stl_service"}>
+  <div class="wrap-lg">
+      <!-- 帮助中心 -->
+      <div class="helpinfo">
+          <div class="feature-items clearfix">
+              <div class="feature-item"><{widgets id="feature1"}></div>
+              <div class="feature-item"><{widgets id="feature2"}></div>
+              <div class="feature-item"><{widgets id="feature3"}></div>
+              <div class="feature-item"><{widgets id="feature4"}></div>
+              <div class="feature-item"><{widgets id="feature5"}></div>
+          </div>
+          <div class="index-ewm clearfix">
+              <{widgets id="stl_barcode"}>
+          </div>
+          <div class="index-tel clearfix">
+              <h3>平台服务热线</h3>
+              <p>400-990-3366</p>
+          </div>
+      </div>
+      <div class="friend-link">
+          <{widgets id="footerlinks"}>
+      </div>
+
+    <{footer app=topc}>
+  </div>
+  <div>
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bbbbc98903bd71bd2c3ccc925dcd6ccf";
+      var s = document.getElementsByTagName("script")[0]; 
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
+  </div>
+</div>
+<!--<{widgets id="fb"}>-->

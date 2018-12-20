@@ -1,0 +1,408 @@
+<style>
+  .signcl {
+    width: 180px;
+    line-height: 58px;
+    float: left;
+    text-align: right;
+    padding-right: 20px;
+    font-size: 16px;
+  }
+  .signcr {
+    width: 130px;
+    height: 110px;
+    float: left;
+  }
+</style>
+<form  action="<{url action=toptemai_ctl_temai@storeItem}>" method="post" class="form-horizontal clearfix" data-validate-onsuccess="ajaxSubmit" role="form">
+  <{if $temai_edit}>
+  <input type="hidden" name="temai_id" value="<{$temai_id}>">
+  <input type="hidden" name="temai_item_id" value="<{$temai_item_id}>">
+  <div class="selected-goods-list" id="selected-goods-list-id">
+    <script type="text/javascript">
+      $(document).ready(function () {
+        var choiceGoodsUrl = '<{url action=toptemai_ctl_selector_item@formatSelectedGoodsRow}>';
+        var item_id = '<{$temai_item_id}>';
+        $.post(choiceGoodsUrl , {'item_id' : item_id} , function (rs) {
+          $("#selected-goods-list-id").html(rs);
+        });
+      });
+    </script>
+  </div>
+  <{else}>
+  <div class="panel panel-default select-goods-panel">
+    <div class="panel-heading">
+      选择适用商品
+    </div>
+    <div class="panel-body">
+      <button class="btn btn-md btn-block btn-danger select-goods" data-remote="<{url action=toptemai_ctl_selector_item@loadSelectGoodsModal}>" data-item_sku=<{$item_sku|json_encode}> data-item_id="" data-textcol="title,price,brand_id" data-target="#goods_modal" data-fetchgoods="<{url action=toptemai_ctl_selector_item@formatSelectedGoodsRow}>">选择商品</button>
+      <div class="selected-goods-list">
+
+      </div>
+    </div>
+  </div>
+  <{/if}>
+
+  <div class="panel-body">
+      <div class="signcl">
+        <i>*</i><span>平台展销协议加盖公章附件：</span>
+      </div>
+    <div class="signcr">
+      <div class="images-uploader">
+        <div class="handle action-upload">
+          <input type="file" multiple="multiple" name="agreement[]"
+                 data-size="<{$env.config.image.uploadedFileMaxSize}>" data-max="2"
+                 data-remote="<{url action=toputil_ctl_file@uploadFile from=user type=temai}>">
+          <span class="qh_xz220_dxqbg"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="panel-body">
+    <div class="signcl">
+      <i>*</i><span>授权证明：</span>
+    </div>
+    <div class="signcr">
+      <div class="images-uploader">
+        <div class="handle action-upload">
+          <input type="file" multiple="multiple" name="certificate[]"
+                 data-size="<{$env.config.image.uploadedFileMaxSize}>" data-max="2"
+                 data-remote="<{url action=toputil_ctl_file@uploadFile from=user type=temai}>">
+          <span class="qh_xz223_dxqbg"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="panel-body">
+    <div class="signcl">
+      <i>*</i><span>销售证明附件：</span>
+
+    </div>
+    <div class="signcr" style="width: 520px;">
+      <div class="images-uploader">
+        <div class="handle action-upload">
+          <input type="file" multiple="multiple" name="pricecerti[]"
+                 data-size="<{$env.config.image.uploadedFileMaxSize}>" data-max="2"
+                 data-remote="<{url action=toputil_ctl_file@uploadFile from=user type=temai}>">
+          <span class="qh_xz226_dxqbg"></span>
+        </div>
+      </div>
+      <div style="margin-top: 15px">温馨提示：</div>
+      <div>&nbsp;&nbsp;1、此证明可是工厂售卖证明、代理授权证明、近三个月内销售发票、采购发票、公司出具的销售证明等</div>
+      <div>&nbsp;&nbsp;2、平台展销价格标准：平台展销价格应低于原售价50%</div>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary btn-lg btn-block action-save">保存</button>
+    </div>
+    <div class="col-md-2">
+      <a href="<{url action="toptemai_ctl_temai@itemList"}>"><button type="button" class="btn btn-default btn-lg btn-block action-cancel">取消</button></a>
+    </div>
+    <div class="col-md-4">
+
+    </div>
+  </div>
+</form>
+<script>
+  //start of 处理图片上传功能
+  (function($) {
+    $.fn.AjaxFileUpload = function(options) {
+      var defaults = {
+                url:        'upload.php',
+                /*size:       null,
+                 type:       null,
+                 limit:      0,*/
+                onChange:   function(filename, container) {},
+                onSubmit:   function(filename, container) {},
+                onComplete: function(response, container) {}
+              },
+              settings = $.extend({}, defaults, options),
+              randomId = (function() {
+                var id = 0;
+                return function() {
+                  return '_AjaxFileUpload' + id++;
+                };
+              })();
+
+      return this.each(function() {
+        var $this = $(this);
+        $this.on('change', 'input[type=file]', function(e) {
+          var size = $(this).data('size') || settings.size,
+                  url = $(this).data('remote') || settings.url,
+          // type = $(this).attr('accept') || settings.type,
+                  limit = $(this).data('max') || settings.limit;
+          onChange(e, $this, url, size, limit);
+        });
+      });
+
+      function onChange(e, container, url, size, limit) {
+        var $element = $(e.target);
+        if (limit) {
+          var length = container.find('.img-thumbnail:not(.action-upload)').length,
+                  filelen;
+          if($element[0].multiple && $element[0].files) {
+            filelen = $element[0].files.length;
+          }
+          else {
+            filelen = 1;
+          }
+          if(length + filelen > limit) {
+            alert('超出限制，最多上传' + limit + '张。');
+            return false;
+          }
+        }
+        var id       = $element.attr('id'),
+                $clone   = $element.removeAttr('id').clone().attr('id', id),//.AjaxFileUpload(options),
+                filename = $element.val().replace(/.*(\/|\\)/, ''),
+                iframe   = createIframe(),
+                form     = createForm(iframe, url, size, limit);
+
+        // We append a clone since the original input will be destroyed
+        $clone.insertBefore($element);
+
+        settings.onChange.call($clone[0], filename, container);
+
+        iframe.on('load', {element: $clone, form: form, container: container}, onComplete);
+
+        form.append($element).on('submit', {element: $clone, iframe: iframe, filename: filename, container: container}, onSubmit).submit();
+      }
+
+      function onSubmit(e) {
+        // e.stopPropagation();
+        var data = settings.onSubmit.call(e.data.element, e.data.filename, e.data.container);
+
+        // If false cancel the submission
+        if (data === false) {
+          // Remove the temporary form and iframe
+          $(e.target).remove();
+          e.data.iframe.remove();
+          return false;
+        } else {
+          // Else, append additional inputs
+          for (var variable in data) {
+            $('<input type="hidden" name="' + variable + '" value="' + data[variable] + '">')
+                    .appendTo(e.target);
+          }
+        }
+      }
+
+      function onComplete (e) {
+        var $iframe  = $(e.target),
+                doc      = ($iframe[0].contentWindow || $iframe[0].contentDocument).document,
+                response = $.trim($(doc.body).text());
+
+        if (response) {
+          response = JSON.parse(response);
+        } else {
+          response = {};
+        }
+
+        settings.onComplete.call(e.data.element, response, e.data.container);
+
+        // Remove the temporary form and iframe
+        e.data.form.remove();
+        $iframe.remove();
+      }
+
+      function createIframe() {
+        var id = randomId();
+
+        return $('<iframe src="javascript:false;" width="0" height="0" frameborder="0" name="' + id + '" id="' + id + '" style="display: none;" />').appendTo('body');
+      }
+
+      function createForm(iframe, url, size, limit) {
+        return $('<form method="post" action="' + url + '" enctype="multipart/form-data" encoding="multipart/form-data" target="' + iframe[0].name + '" />')
+                .hide()
+                .append('<input type="hidden" name="MAX_FILE_SIZE" value="' + (size || '') + '">')
+                .append('<input type="hidden" name="FILE_LIMIT" value="' + (limit || '') + '">')
+                // .append('<input type="hidden" name="ACCEPT_FILE_TYPE" value="' + (type || '') + '">')
+                .appendTo('body');
+      }
+    };
+  })(jQuery);
+
+  $(function () {
+    var uploader = $('.images-uploader');
+    uploader.AjaxFileUpload({
+      onComplete: function(rs, container) {
+        if (rs.error) {
+          return alert(rs.message);
+        }
+        var data = $.makeArray(rs.data);
+        var name = container.find('input[type=file]').attr('name');
+        $.each(data, function () {
+          container.find('.action-upload').before('<div class="handle img-thumbnail"><i class="icon-close-b action-remove"></i><a href="' + this.url + '" target="_blank">'+ this.url +'</a><input type="hidden" name="' + name + '" value="' + this.url + '"></div>');
+        });
+        container.on('click', '.action-remove', function (e) {
+          $(this).parent().remove();
+        });
+        container.on('mouseover', '.img-thumbnail', function (e) {
+          $(this).find('.action-remove').show();
+        });
+        container.on('mouseout', '.img-thumbnail', function (e) {
+          $(this).find('.action-remove').hide();
+        });
+      }
+    });
+  })//end of 处理图片上传功能
+
+  var optionA = '<div class="wholesale-rule-discount"><div class="wholesale-row"><span>消费满 <input type="text" size="5" name="full[]"> 元，减 <input type="text" size="5" name="minus[]"> 元</span><a class="del-btn" href="javascript:void(0);">删除</a></div></div>';
+  //添加和删除批发规则
+  $('.rule-dom').find('.wholesale-rule-discount').eq(0).find('.del-btn').remove();
+  $('#addWholesaleRule').click(function(){
+    var ruleDom = $('.rule-dom').find('.wholesale-rule-discount');
+    if(ruleDom.length < 5){
+      $('.rule-dom').append(optionA);
+    }else{
+      $('#messagebox').message('最多添加5条规则!')
+    }
+  });
+
+  $('.rule-dom').on('click','.del-btn',function(){
+    $(this).parents('.wholesale-rule-discount').remove();
+  });
+
+  $('.reservation').daterangepicker({
+    "timePicker": true,
+    "opens": "right",
+    "timePicker24Hour": true,
+    "timePickerIncrement": 1,
+    "locale": {
+      "format": "YYYY/MM/DD HH:mm"
+    }
+  });
+
+  function ajaxSubmit (e) {
+    var form = e.target;
+    e.preventDefault();
+    $.post(form.action, $(form).serialize(), function(rs) {
+      if(rs.error) {
+        $('#messagebox').message(rs.message);
+        return;
+      }
+      if(rs.success) {
+        $('#messagebox').message(rs.message, 'success');
+      }
+      if(rs.redirect) {
+        location.href = rs.redirect;
+      }
+    });
+  }
+
+  var list = $('#op_items_list');
+  var added = $('#op_items_added');
+  var jsonData = '<{$notEndItem}>';
+  var addedItems;
+  if(jsonData == ''){
+    addedItems = []
+  }else{
+    addedItems = JSON.parse(jsonData);
+  }
+  //var addedItems = JSON.stringify('<{$notEndItem}>') || [];
+
+  $('.action-checkall').change(function(e) {
+    checkAll(this, $(this).parents('.item-filter-table').find('.action-checkitem'));
+  });
+  $('.action-add-item').click(function(e) {
+    e.preventDefault();
+    var items = list.find('.action-checkitem:checked');
+    var pros = added.find('.items');
+    if(pros.length ==0){
+      added.empty();
+    }
+    items.filter(function (i) {
+      if(addedItems.indexOf(this.value) < 0) {
+        addedItems.push(this.value);
+        return true;
+      }
+      $(this).parents('.item-filter-row').remove();
+      return false;
+    })
+            .prop('checked', false)
+            .parents('.item-filter-row').find('.action-checkitem').css('display','none')
+            .parents('.item-filter-row').append('<div class="item-check del"><a class="item-del" href="#">删除</a></div>').appendTo(added);
+
+    if(!list.children().length) {
+      list.parents('.item-filter-table').find('.action-checkall').prop('checked', false);
+    }
+  });
+  added.on('click','.item-del',function(e){
+    e.preventDefault();
+    var delVal = $(this).parents('.item-filter-row').find('.action-checkitem').val();
+    $(this)
+            .parents('.item-filter-row').find('.action-checkitem').css('display','inline-block')
+            .parents('.item-filter-row').appendTo(list)
+            .find('.del').remove();
+    var emptyDom = '<div class="item-filter-row"><div align="center">暂未添加商品</div></div>'
+    var pros = added.find('.items');
+    if(pros.length ==0){
+      added.append(emptyDom);
+    }
+    for (var i = 0; i < addedItems.length; i++) {
+      if(delVal == addedItems[i]){
+        addedItems.splice(i);
+      }
+    };
+  });
+  $('.action-delete-item').click(function(e) {
+    e.preventDefault();
+    added.find('.action-checkitem:checked')
+            .filter(function (i, el) {
+              addedItems.splice(addedItems.indexOf(el.value), 1);
+              var checkbox = list.find('.action-checkitem');
+              var result = true;
+              checkbox.length && checkbox.each(function() {
+                if(this.value == el.value) {
+                  $(el).parents('.item-filter-row').remove();
+                  result = false;
+                }
+              });
+              return result;
+            })
+            .prop('checked', false)
+            .parents('.item-filter-row').appendTo(list);
+
+    if(!added.children().length) {
+      added.parents('.item-filter-table').find('.action-checkall').prop('checked', false);
+    }
+  });
+
+  $('.conditions label').click(function() {
+    var cidx = $(this).index();
+    $('.condition-view>div').hide().eq(cidx).show();
+    if($(this).hasClass('all')){
+      $('.action-add-item').hide();
+      $('.result').hide();
+    }else{
+      $('.action-add-item').show();
+      $('.result').show();
+    }
+  });
+  $('.action-save').click(function(e) {
+    added.find('.action-checkitem').prop('checked', true);
+  });
+
+  //适用会员全选
+  $('.grade-all').on('change', function() {
+    checkAll($(this), $('.grade-item'));
+  });
+  $('.grade-item').on('change', function() {
+    var checked = $('.grade-item').filter(function(){
+      var tmp = $(this);
+      if(tmp.prop('checked')){
+        return this;
+      }
+    });
+    if(checked.length == $('.grade-item').length){
+      $('.grade-all').prop('checked',true);
+    }else{
+      $('.grade-all').prop('checked',false);
+    }
+  });
+</script>

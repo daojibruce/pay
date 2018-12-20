@@ -1,0 +1,195 @@
+<div class="status-bar2 status-bar2-large">
+<{if $trade.trade_from != 'purchase' && $trade.trade_from != 'erp'}>
+  <div class="first on">
+    <div class="bg"><span class="number">1</span></div>
+    <div class="txt">等待商家提<br/>交电子合同</div>
+  </div>
+  
+    <div class="on">
+    <div class="bg"><span class="number">2</span></div>
+    <div class="txt">等待买家<br/>确认合同</div>
+  </div>
+  
+    <div class="on">
+    <div class="bg"><span class="number">3</span></div>
+    <div class="txt">订单已生成<br/>等待您付款</div>
+	</div>
+  
+  <div class="last on">
+    <div class="bg"><span class="number">4</span></div>
+    <div class="txt">订单取消</div>
+  </div>
+ <{else}>
+    <{if $trade.elecontract}>
+        <{if $trade.pay_type == 'online'}><!-- 线上付款 -->
+        <div class="first on">
+        <div class="bg"><span class="number">1</span></div>
+        <div class="txt">等待审核</div>
+    	</div>
+
+        <div class="">
+            <div class="bg"><span class="number">2</span></div>
+            <div class="txt">等待商家提<br/>交电子合同</div>
+        </div>
+
+        <div class="">
+            <div class="bg"><span class="number">3</span></div>
+            <div class="txt">等待买家<br/>确认合同</div>
+        </div>
+
+        <div class="">
+            <div class="bg"><span class="number">4</span></div>
+            <div class="txt">订单已生成<br/>等待您付款</div>
+        </div>
+
+        <div class="last">
+          <div class="bg"><span class="number">5</span></div>
+          <div class="txt">付款成功<br/>等待商家发货</div>
+        </div>
+        <{elseif $trade.pay_type == 'offline'}><!-- 货到付款 -->
+            <div class="first on">
+            <div class="bg"><span class="number">1</span></div>
+            <div class="txt">等待审核</div>
+            </div>
+
+            <div class="">
+                <div class="bg"><span class="number">2</span></div>
+                <div class="txt">等待商家提<br/>交电子合同</div>
+            </div>
+
+            <div class="">
+                <div class="bg"><span class="number">3</span></div>
+                <div class="txt">等待买家<br/>确认合同</div>
+            </div>
+
+            <div class="">
+                <div class="bg"><span class="number">4</span></div>
+                <div class="txt">已生成货到付款订单<br/>等待商家发货</div>
+            </div>
+
+            <div class="">
+              <div class="bg"><span class="number">5</span></div>
+              <div class="txt">商家已经发货<br/等待您确认收货并完成支付></div>
+            </div>
+
+            <div class="last">
+                <div class="bg"><span class="number">6</span></div>
+                <div class="txt">确认收货<br/>完成订单</div>
+            </div>
+        <{else}><!-- 线下付款 -->
+            <div class="first on">
+            <div class="bg"><span class="number">1</span></div>
+            <div class="txt">等待审核</div>
+            </div>
+
+            <div class="">
+                <div class="bg"><span class="number">2</span></div>
+                <div class="txt">等待商家提<br/>交电子合同</div>
+            </div>
+
+            <div class="">
+                <div class="bg"><span class="number">3</span></div>
+                <div class="txt">等待买家<br/>确认合同</div>
+            </div>
+
+            <div class="">
+                <div class="bg"><span class="number">4</span></div>
+                <div class="txt">已生成线下付款订单<br/>等待商家发货</div>
+            </div>
+
+            <div class="">
+              <div class="bg"><span class="number">5</span></div>
+              <div class="txt">发货成功请确认收货<br/>并完成线下支付</div>
+            </div>
+
+            <div class="last">
+                <div class="bg"><span class="number">6</span></div>
+                <div class="txt">确认收货<br/>完成订单</div>
+            </div>
+        <{/if}>
+    <{else}><!-- 不需要电子合同 -->
+        <!-- 线上付款 -->
+        <{if $trade.pay_type == 'online'}>
+        <div class="first on">
+        <div class="bg"><span class="number">1</span></div>
+        <div class="txt">等待审核</div>
+        </div>
+
+        <div class="">
+            <div class="bg"><span class="number">2</span></div>
+            <div class="txt">订单已生成<br/>等待您付款</div>
+        </div>
+
+        <div class="">
+          <div class="bg"><span class="number">3</span></div>
+          <div class="txt">付款成功<br/>等待商家发货</div>
+        </div>
+
+        <div class="">
+            <div class="bg"><span class="number">4</span></div>
+            <div class="txt">商家已经发货<br/>等待您确认收货</div>
+        </div>
+
+        <div class="last">
+            <div class="bg"><span class="number">5</span></div>
+            <div class="txt">确认收货<br/>完成订单</div>
+        </div>
+        <!-- 货到付款 -->
+        <{elseif $trade.pay_type == 'offline'}>
+        <div class="first on">
+            <div class="bg"><span class="number">1</span></div>
+            <div class="txt">等待审核</div>
+        </div>
+
+        <div class="">
+            <div class="bg"><span class="number">2</span></div>
+            <div class="txt">已生成货到付款订单<br/>等待商家发货</div>
+        </div>
+
+        <div class="">
+            <div class="bg"><span class="number">3</span></div>
+            <div class="txt">商家已经发货<br/等待您确认收货并完成支付></div>
+        </div>
+
+        <div class="last">
+            <div class="bg"><span class="number">4</span></div>
+            <div class="txt">确认收货<br/>完成订单</div>
+        </div>
+
+        <!-- 线下付款 -->
+        <{else}>
+        <div class="first on">
+            <div class="bg"><span class="number">1</span></div>
+            <div class="txt">等待审核</div>
+        </div>
+
+        <div class="">
+            <div class="bg"><span class="number">2</span></div>
+            <div class="txt">已生成线下付款订单<br/>等待商家发货</div>
+        </div>
+
+        <div class="">
+            <div class="bg"><span class="number">3</span></div>
+            <div class="txt">发货成功请确认收货<br/>并完成线下支付</div>
+        </div>
+
+        <div class="last">
+            <div class="bg"><span class="number">4</span></div>
+            <div class="txt">确认收货<br/>完成订单</div>
+        </div>
+        <{/if}>
+    <{/if}>
+    <!--
+    <div class="last">
+        <div class="bg"><span class="number">5</span></div>
+        <div class="txt">订单取消</div>
+    </div>
+    -->
+ <{/if}>
+</div>
+<div class="orderdtl-box">
+  <span class="orderdtl-hd">订单取消原因：</span>
+    <{$trade.cancel_reason}>
+</div>
+
+

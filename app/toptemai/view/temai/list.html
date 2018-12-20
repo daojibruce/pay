@@ -1,0 +1,236 @@
+<div class="panel-heading">
+  <h4>商品查询</h4>
+  <form class="form-horizontal" action="<{url action=toptemai_ctl_temai@itemList}>" method="post" id="search-form" >
+
+    <div class="form-group">
+      <div class="col-xs-6">
+        <span class="order-form-w1">平台展销名称：</span><input class="x-input" type="text" name="item_title" <{if $search_keywords}> value="<{$search_keywords|escape:"html"}>" <{/if}>>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="col-xs-6">
+        <span class="order-form-w1">价格区间：</span>
+        <input type="text" value="<{$min_price|escape:"html"}>" name="min_price">&nbsp;-
+        <input type="text" value="<{$max_price|escape:"html"}>" name="max_price">
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary">提交</button>
+      <button type="button" class="btn btn-default" id="reset-form">重置</button>
+    </div>
+  </form>
+</div>
+<form action="" method="post" role="form">
+  <ul class="nav nav-tabs" role="tablist">
+  <{if !$is_search}>
+    <li role="presentation" class="<{if !$status }>active<{/if}>"><a href="<{url action=toptemai_ctl_temai@itemList}>">全部</a></li>
+    <li role="presentation" class="<{if $status=='1'}>active<{/if}>"><a href="<{url action=toptemai_ctl_temai@itemList status=1}>">已上架</a></li>
+    <li role="presentation" class="<{if $status=='2'}>active<{/if}>"><a href="<{url action=toptemai_ctl_temai@itemList status=2}>">已下架</a></li>
+      <!--
+    <li role="presentation" class="<{if $status=='oversku'}>active<{/if}>"><a href="<{url action=toptemai_ctl_temai@itemList status=oversku}>">库存报警</a></li>
+      -->
+    <li role="presentation" class="<{if $status=='3'}>active<{/if}>"><a href="<{url action=toptemai_ctl_temai@itemList status=3}>">审核失败</a></li>
+ <{else}>
+ 	<li role="presentation" class="<{if !$status }>active<{/if}>"><a href="<{url action=toptemai_ctl_temai@searchItem}>">全部</a></li>
+ 	<{foreach from=$search_arr item=search}>
+    <li role="presentation" class="<{if $status==$search.status}>active<{/if}>"><a href="<{$search.url}>"><{$search.label}></a></li>
+ 	<{/foreach}>
+ <{/if}>
+  </ul>
+  <br>
+  <p>
+    <span class="btn btn-default"><input type="checkbox" name="" id="selectAll"> <label for="selectAll">当前页全选</label></span>
+    <button type="button" class="btn btn-default text-blue" id="action-instock">
+      <i class="icon-arrow-right"></i>
+      下架
+    </button>
+    <button type="button" class="btn btn-default text-red act-delall" id="action-remove">
+      <i class="glyphicon glyphicon-remove"></i>
+      删除
+    </button>
+    
+  </p>
+  <table class="table table-primary table-hover table-goods">
+    <thead>
+      <tr>
+        <td class="col-checkbox"></td>
+        <td class="col-name">平台展销品名称</td>
+        <td>价格(元)</td>
+        <td>总库存</td>
+        <td>全部状态</td>
+        <td>更新时间</td>
+        <td class="text-center">操作</td>
+      </tr>
+    </thead>
+    <{if $temai_list}>
+    <tbody id="data_node">
+      <{foreach from=$temai_list item=tmitem}>
+      <tr>
+        <td>
+          <label class="checkbox-inline">
+            <input type="checkbox" name="temai_ids" value=<{$tmitem.temai.temai_id}>>&nbsp;
+          </label>
+        </td>
+        <td>
+          <div class="goods">
+            <a href="<{url action=topc_ctl_item@index item_id=$tmitem.temai.item_id}>" target="_blank">
+            <img src="<{$tmitem.temai.image_default_id|default:$image_default_id.S.default_image|storager:t}>" alt="">
+            <{$tmitem.temai.title}>
+          </a>
+          </div>
+        </td>
+        <td>
+          <span class="text-orange"><{$tmitem.temai.temai_price|cur}></span>
+        </td>
+        <td>
+          <{$tmitem.temai.store}>
+        </td>
+        <td>
+        <{if $tmitem.temai.state == "0"}>
+          <i class="text-danger">待审核</i>
+        <{elseif $tmitem.temai.state == "1"}>
+          <i class="text-danger">已上架</i>
+        <{elseif $tmitem.temai.state == "2"}>
+          <i class="text-danger">已下架</i>
+        <{elseif $tmitem.temai.state == "3"}>
+          <i class="text-success">已被拒</i>
+        <{elseif $tmitem.temai.state}>
+            <i class="text-success">未知状态</i>
+        <{/if}></td>
+        <td>
+          <{$tmitem.temai.lasttime|cdate:FDATE_STIME}>
+        </td>
+        <td class="text-center">
+          <{if $tmitem.temai.state == "1"}>
+            <a href="<{url action=topc_ctl_item@index item_id=$tmitem.temai.item_id}>">查看商品</a>
+          <{/if}>
+          <a href="<{url action=toptemai_ctl_temai@add temaiid=$tmitem.temai.temai_id}>" class="text-add" data-id="<{$tmitem.temai.temai_id}>">重申此平台展销</a>
+          &nbsp;&nbsp;
+          <a href="javascript:void(0);" class="text-remove" data-id="<{$tmitem.temai.temai_id}>">删除平台展销</a>
+          </td>
+      </tr>
+      <{/foreach}>
+    </tbody>
+    <{else}>
+    <tbody id="data_node">
+      <tr>
+        <td algin="center" colspan="11">
+          <p class="text-muted well no-shadow text-center">暂无数据</p>
+        </td>
+      </tr>
+    </tbody>
+    <{/if}>
+  </table>
+
+  <{pagers data=$pagers}>
+  <{if $total > 0 }>
+  <span class="page-number">共&nbsp;<em class="text-aqua"><{$total}></em>&nbsp;条记录</span>
+  <{/if}>
+</form>
+
+<script type="text/javascript">
+    $('#selectAll').change(function(){
+        $('#data_node input[type=checkbox]').prop('checked', this.checked);
+    });
+
+    $('#action-instock').on('click',function(){
+        var itemIds = new Array();
+        $($("#data_node input[name='temai_ids']:checked")).each(function(){
+            $.post('<{url action=toptemai_ctl_temai@setItemStatus}>', 'type=tostock&item_id='+$(this).val(), function(rs){
+              if(rs.error) {
+                $('#messagebox').message(rs.message);
+                return;
+              }
+              if(rs.success) {
+                $('#messagebox').message(rs.message, 'success');
+                setTimeout(function(){location.href = rs.redirect +'?status='+'<{$status}>';}, 800);
+              }
+            });
+        });
+    });
+
+    $('#action-inapply').on('click',function(){
+        var itemIds = new Array();
+        $($("#data_node input[name='temai_ids']:checked")).each(function(){
+            $.post('<{url action=toptemai_ctl_temai@setItemStatus}>', 'type=tosell&item_id='+$(this).val(), function(rs){
+                if(rs.error) {
+                    $('#messagebox').message(rs.message);
+                    return;
+                }
+                if(rs.success) {
+                    $('#messagebox').message(rs.message, 'success');
+                    setTimeout(function(){location.href = rs.redirect +'?status='+'<{$status}>';}, 800);
+                }
+            });
+        });
+    });
+
+    $('#action-remove').on('click',function(){
+      var _this = $(this);
+      var itemIds = new Array();
+      if($("#data_node input[name='temai_ids']:checked").length <= 0) {
+        $('#messagebox').message("请选择要删除的商品！");
+        return;
+      }
+      Modal.confirm({msg: '确定删除该商品？'}).on(function(e) {
+          if(e==true) {
+            $($("#data_node input[name='temai_ids']:checked")).each(function(){
+                delItemById($(this).val());
+            });
+          }
+      });
+    });
+
+    $('.text-remove').on('click', function(){
+      var _this = $(this);
+      Modal.confirm({msg: "确定删除该商品？"}).on(function(e) {
+        if(e==true) {
+          delItemById(_this.attr('data-id'));
+        }
+      });
+    });
+
+    //删除商品
+    function delItemById(gid) {
+      $.post('<{url action=toptemai_ctl_temai@deleteItem}>', 'item_id='+gid, function(rs){
+        if(rs.error) {
+          $('#messagebox').message(rs.message);
+          return;
+        }
+        if(rs.success) {
+          $('#messagebox').message(rs.message, 'success');
+          setTimeout(function(){location.reload();}, 800);
+        }
+      });
+    }
+
+    var chooseItemIds = new Array();
+    $('#action-freigthtemplate').on('click', function() {
+      chooseItemIds = [];
+      if($("#data_node input[name='temai_ids']:checked").length <= 0) {
+        $('#messagebox').message("请选择商品！");
+        return;
+      }
+      $("#freigthTemplate").modal();
+      $($("#data_node input[name='temai_ids']:checked")).each(function(){
+          chooseItemIds.push($(this).val());
+      });
+    });
+</script>
+
+<script>
+  $(document).ready(
+    function() {
+      $(".sidebar .sidebar-menu li a i.glyphicon").eq(1).removeClass("glyphicon-list-alt").addClass("glyphicon-edit");
+    }
+
+  );
+
+  // 重置表单
+  $('#reset-form').on('click',function(){
+	 $('input:visible').val('');
+	 $('.select-reset').val(-1);
+  })
+</script>

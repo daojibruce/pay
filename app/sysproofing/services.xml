@@ -1,0 +1,11 @@
+<services>
+    <service id="desktop_finder.sysproofing_mdl_category">
+        <class>sysproofing_finder_category</class>
+    </service>
+    <service id="desktop_finder.sysproofing_mdl_provider">
+        <class>sysproofing_finder_provider</class>
+    </service>
+    <service id="desktop_finder.sysproofing_mdl_update_cat">
+        <class>sysproofing_finder_update_cat</class>
+    </service>
+</services>

@@ -1,0 +1,20 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <{header app=topc}>
+  <link rel="stylesheet" href="images/index.css" />
+</head>
+<body>
+<{require file="block/header.html"}>
+<{main}>
+<{require file="block/footer.html"}>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $("img.imglazyload").lazyload({
+            effect : "fadeIn"
+        });
+    });
+</script>
+</html>

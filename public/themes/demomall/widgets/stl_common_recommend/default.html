@@ -1,0 +1,37 @@
+<div class="main-floor">
+  <div class="swiper-container" id="lb2-<{$data.orderId}>">
+    <div class="index-title">
+      <div class="title-left">
+        <h3> <{$data.texttag}></h3>
+      </div>
+      <div class="arrow-ctrl">
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+    </div>
+    <div class="swiper-wrapper">
+      <{foreach from=$data.item item=item}>
+      <div class="swiper-slide">
+        <div class="good-pic"><a href="<{url action=topc_ctl_item@index item_id=$item.item_id}>" target="_blank"><img src="<{$item.image_default_id|default:$data.defaultImg.S.default_image|storager:'s'}>" alt=""></a></div>
+        <div class="good-cont">
+          <h5><{$item.title}></h5>
+          <p><{$item.sub_title}></p>
+          <em><{$item.price|cur}></em>
+        </div>
+      </div>
+      <{/foreach}>
+    </div>
+  </div>
+  <script type="text/javascript" src="images/swiper.min.js"></script>
+  <script>
+      var swiper = new Swiper('#lb2-<{$data.orderId}>', {
+          paginationClickable: true,
+          nextButton: '.swiper-button-next',
+          prevButton: '.swiper-button-prev',
+          slidesPerView: 4,
+          slidesPerGroup : 4,
+          paginationClickable: true,
+          spaceBetween: 10
+      });
+  </script>
+</div>

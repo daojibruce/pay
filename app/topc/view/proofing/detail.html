@@ -1,0 +1,105 @@
+<form action="" method="post" id="release_form" class="form-tip-horizontal">
+    <div id="main" class="main" style="width: 1190px;background-color: #f5f5f5;margin: 0 auto;padding: 0;">
+        <div class="wrap-lg" style="max-width: 960px;min-width: 960px;background-color: #ffffff;">
+            <div class="signc">
+                <ul class="signul sign-clone">
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>服务撮合产品名称：</span>
+                        </div>
+                            <{$sample.sample_name}>
+                    </li>
+
+                    <li class="form-row" >
+                        <div class="signcl">
+                            <span>服务撮合数量：</span>
+                        </div>
+                        <{$sample.quantity}>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>服务撮合单位：</span>
+                        </div>
+                        <{$sample.unit}>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>服务撮合商品材质：</span>
+                        </div>
+                        <{$sample.material}>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>服务撮合产品类型：</span>
+                        </div>
+                        <{$sample.cat_name}>
+                    </li>
+
+                    <li class="form-row" style="height: auto;">
+                        <div class="signcl">
+                            <span>服务撮合补充描述：</span>
+                        </div>
+                        <{$sample.desc}>
+                    </li>
+
+                    <li class="form-row" style="height: auto;">
+                        <div class="signcl">
+                            <span>服务撮合图纸：</span>
+                        </div>
+                        <div id="uploader-demo">
+                            <a href="<{url action=topc_ctl_member_proofing@downloadDrawing sample_id=$sample.sample_id}>" target="_blank">查看图纸</a>
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>要求交货日期：</span>
+                        </div>
+                        <{$sample.delivery|date:'Y-m-d'}>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>交易付款方式：</span>
+                        </div>
+                        <{$sample.pay_type}>
+                    </li>
+                </ul>
+            </div>
+            <div class="signc">
+                <ul class="signul">
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>报价截止时间：</span>
+                        </div>
+                        <{$sample.start_time|date:'Y-m-d'}>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>至</span>
+                        </div>
+                        <{$sample.end_time|date:'Y-m-d'}>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>交货地点：</span>
+                        </div>
+                        <{$sample.addr}>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>联系人：</span>
+                        </div>
+                        <{$sample.user_name}>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</form>

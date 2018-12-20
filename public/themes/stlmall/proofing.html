@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <{header app=topc}>
+  <link rel="stylesheet" href="images/index.css">
+</head>
+<body class="is-index">
+<{require file="block/header.html"}>
+<!-- 主内容区 -->
+<div class="seaview dybg">
+  <div class="wrap-lg">
+    <div class="dyzx">
+        <a href="proofing-release.html" target="_blank">发布需求</a>
+        <a href="proofing-update.html" target="_blank">申请服务商</a>
+      <!--<div class="dy-l"></div>
+      <div class="dy-r">
+          <{widgets id="stl_pro1"}>
+          <{widgets id="stl_pro2"}>
+      </div>-->
+    </div>
+  </div>
+</div>
+<div id="main" class="main index" style="background-color: #f5f5f5;">
+  <div class="wrap-lg">
+      <div class="dy-need">
+          <{main}>
+      </div>
+    <div class="dy-tj">
+        <{widgets id="stl_pro3"}>
+    </div>
+
+    <!--<div class="dy-js">
+      <div class="dy-tit">服务撮合介绍</div>
+      <div class="dyjs-m">
+        <div class="dy-js-l"><img src="images/dyjs.jpg" alt=""></div>
+        <div class="dy-js-r">
+          <p>仕泰隆集团作为工业服务平台领跑者，长期致力中国工业服务平台的开拓与创新，与国内外一线品牌长期保持深度合作，经过不断探索，将迎来了“工业服务撮合平台“的崭新篇章。</p>
+        </div>
+      </div>
+    </div>-->
+  </div>
+</div>
+<{require file="block/footer.html"}>
+</body>
+<script type="text/javascript">
+$(function(){
+    $("img.imglazyload").lazyload({
+        effect : "fadeIn"
+    });
+});
+</script>
+</html>

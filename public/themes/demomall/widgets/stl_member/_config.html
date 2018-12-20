@@ -1,0 +1,16 @@
+<div class="division">
+ <label>平台公告：</label>
+ <div class="division goods-selector">
+  <div data-extend = "select" <{if $setting.selector=="filter"}>style="display:none;"<{/if}>>
+  <{input type="object" value=$setting.article_select object="article" app="syscontent" filter="if_pub=0" name="article_select" select="checkbox" multiple="true" textcol="title"}>
+ </div>
+</div>
+</div>
+<div class="division">
+ <label>行业资讯：</label>
+ <div class="division goods-selector">
+  <div data-extend = "select" <{if $setting.selector2=="filter"}>style="display:none;"<{/if}>>
+  <{input type="object" value=$setting.others_select object="others" app="syscontent" filter="" name="others_select" select="checkbox" multiple="true" textcol="title"}>
+ </div>
+</div>
+</div>

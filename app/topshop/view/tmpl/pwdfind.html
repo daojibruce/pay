@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <{include file="topshop/common/head.html"}>
+    </head>
+    <body class="signup-skin-blue">
+        <div class="alert alert-error message in" role="alert" id="messagebox" style="display:none;"></div>
+        <{include file="topshop/common/topbar.html"}>
+        <div class="signup-logo-panel">
+            <{*<a class="logo"  href="<{url action=topc_ctl_default@index}>"><{$topshop.contentTitle}></a> *}>
+            <a class="logo"  href="<{url action=topc_ctl_default@index}>">
+                <{img src="qj-logo.jpg" app="topc"}>
+                <span><{$topshop.contentTitle}></span>
+            </a>
+        </div>
+        <div class="form-box-wrap">
+            <{include file=$topshop.view}>
+        </div>
+    </body>
+</html>

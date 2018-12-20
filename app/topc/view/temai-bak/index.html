@@ -1,0 +1,29 @@
+<div class="membercenter-box">
+  <div class="membercenter-box-hd">
+    <div class="membercenter-box-left">
+      <{foreach item=role from=$member_role_list}>
+      <a href="<{$role.url}>" class="orange" target="_blank"><{$role.name}>中心</a>
+      <{/foreach}>
+    </div>
+
+    <div class="membercenter-box-left clear">您好，<em><{if $userInfo.username}><{$userInfo.username}><{elseif $userInfo.login_account}><{$userInfo.login_account}><{elseif $userInfo.mobile}><{$userInfo.mobile}><{elseif $userInfo.email}><{$userInfo.email}><{/if}></em>，欢迎进入会员中心 <!-- <a href="<{url action=topc_ctl_member@seInfoSet}>">详细信息</a> --> &nbsp;&nbsp;&nbsp;&nbsp;<i class="icon-medal orange"></i> <a href="<{url action=topc_ctl_member_experience@experience}>" class="orange"><{$userInfo.grade_name}></a>
+    </div>
+  </div>
+</div>
+
+<div class="membercenter-box-wrap">
+  <div class="membercenter-box">
+    <{include file="topc/temai/itemlist.html"}>
+  </div>
+</div>
+
+<script>
+//订单状态tab切换
+$('.order-status-tab li').on('click', function() {
+  var status = $(this).attr('data-status');
+  $.post("<{url action=topc_ctl_member@tradeStatusList}>",'status='+status,function(rs){
+    $('.new-order-list').parent().css('display', 'block');
+    $('.new-order-list').html(rs);
+  });
+});
+</script>

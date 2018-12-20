@@ -1,0 +1,86 @@
+<div class="tableform">
+  <form id="sysshop_form" name="sysshop_form" action="?app=systemai&ctl=admin_temai&act=saveonsale"  method="post">
+    <input type="hidden" name="temai_ids" value="<{$temai_ids}>">
+    <div class="division">
+      <table width="100%" cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+          <tr>
+            <th><em class="red">批量上架平台展销信息</em></th>
+          </tr>
+          <tr>
+            <th><{t}>加价类型：<{/t}></th>
+            <td>
+			  <select name="price_type">
+				<{foreach item=p from=$cat_conf.price_type key=key}>
+				<option value="<{$key}>"><{$p}></option>
+				<{/foreach}>
+			  </select>
+			  &nbsp; 加价数值：百分比%，定额 元
+			</td>
+          </tr>
+          <tr>
+            <th><{t}>加价：<{/t}></th>
+            <td><{input type="text" vtype="required"  name="add_price" value=''}> </td>
+          </tr>
+          <tr>
+              <th><{t}>平台库存：<{/t}></th>
+              <td><{input type="text" vtype="required"  name="add_store" value=''}> </td>
+          </tr>
+          <tr>
+              <th><{t}>平台展销开始时间：<{/t}></th>
+              <td><{input data-provide="datepicker" value="" name="add_time_start" vtype="required" type="date" size="10"}></td>
+          </tr>
+          <tr>
+              <th><{t}>本次持续时间：<{/t}></th>
+              <td><{input type="text" vtype="required"  name="add_days" value="7" size="2"}> &nbsp; 天</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+<{area inject='.mainFoot'}>
+    <table cellspacing="0" cellpadding="0" class="table-action">
+      <tbody>
+        <tr valign="middle">
+
+          <td>
+            <{assign var="___c"  value='确定退出?'|t:'sysshop'}>
+
+            <{button label="批量审核并上架"|t:'sysshop' class="btn-primary" type="button"  onclick="submitForm(event,2)"}>
+
+            <{button label="关  闭"|t:'content' class="btn-secondary" type="button" isclosedialogbtn="1"}>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+    <{/area}>
+  </form>
+</div>
+
+<script>
+  var submitForm = function (event,sign){
+    var _form=$('sysshop_form');
+    switch (sign){
+      case 1:
+        var target={
+          onComplete:function(){
+		   location.reload();
+		 }};
+        break;
+      case 2:
+        var target={
+          onComplete:function(rs){
+			   if(rs&&!!JSON.decode(rs).success){
+				   window.finderGroup['<{$env.get.finder_id}>'].refresh();
+				   _form.getParent('.dialog').retrieve('instance').close();
+			   }
+		  }};
+        break;
+    }
+    _form.store('target', target);
+    if(confirm('是否保存?')) {
+      _form.fireEvent('submit',new Event(event));
+    }
+  };
+
+</script>

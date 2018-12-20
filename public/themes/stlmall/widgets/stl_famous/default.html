@@ -1,0 +1,31 @@
+<!-- Swiper -->
+<div class="swiper-container" id="stl-find">
+  <div class="swiper-wrapper stl-find">
+    <div class="swiper-slide find-pic">
+      <a href="<{$data.ad_pic_link}>" target="_blank"><img src="<{$data.ad_pic|storager}>" alt=""></a>
+    </div>
+    <div class="swiper-slide find-pic">
+      <a href="<{$data.ad_pic_link}>" target="_blank"><img src="<{$data.ad_pic|storager}>" alt=""></a>
+    </div>
+    <div class="swiper-slide find-pic">
+      <a href="<{$data.ad_pic_link}>" target="_blank"><img src="<{$data.ad_pic|storager}>" alt=""></a>
+    </div>
+  </div>
+  <!-- Add Pagination -->
+  <div class="swiper-pagination"></div>
+</div>
+
+<!-- Swiper JS -->
+<script type="text/javascript" src="images/swiper.min.js"></script>
+
+<!-- Initialize Swiper -->
+<script>
+    var swiper = new Swiper('#stl-find', {
+        pagination: '.swiper-pagination',
+        slidesPerView: 1,
+        paginationClickable: true,
+        spaceBetween: 0,
+        loop: true,
+        autoplay: 2500
+    });
+</script>

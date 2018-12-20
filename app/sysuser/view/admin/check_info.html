@@ -1,0 +1,194 @@
+<form id="sysuserform" class="tableform" name="sysuserform"  method='post' action='?app=sysuser&ctl=admin_user&act=saveCheckInfo' >
+    <h3><{t}>基本信息<{/t}></h3>
+    <input type="hidden" name="user[user_id]" value="<{$data.user_id}>">
+    <input type="hidden" name="user[name]" value="<{$data.login_account}>">
+    <div class="division">
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <th><{t}>会员名称：<{/t}></th>
+                <td><span class="price0"><{ $data.login_account}></span></td>
+            </tr>
+
+            <tr>
+                <th><em class="red"></em><label for="dlycorp_name"><{t}>会员电话:<{/t}></label></th>
+                <td><{$data.mobile}></td>
+            </tr>
+
+            <tr>
+                <th><em class="red">*</em><label for="dlycorp_name"><{t}>公司名称:<{/t}></label></th>
+                <td>
+                <{$data.company_name}>
+                <!-- <{input type="text" vtype="required" name="company[company_name]" class="x-input" value=$data.company_name maxlength="20" size="44"}> -->
+                </td>
+            </tr>
+
+            <tr>
+                <th><em class="red">*</em><label for="dlycorp_name"><{t}>公司地址:<{/t}></label></th>
+                <td>
+          <span class="region" id="area" vtype=required>
+            <input type="hidden" name="area_id" value="<{$data.area}>">
+            <{if $selectArea}>
+            <{foreach from=$selectArea item=item key=key}>
+            <select class="x-select" disabled="true">
+                <option value="_NULL_">请选择</option>
+                <{foreach from=$item item=row}>
+                <option value="<{$row}>" <{if $row == $key}>selected<{/if}>><{$areaData.$row.value}></option>
+                <{/foreach}>
+            </select>
+            <{/foreach}>
+            <{else}>
+            <select class="x-select">
+                <option value="_NULL_">请选择</option>
+                <{foreach from=$areaLv1 item=item}>
+                <option value="<{$item}>"><{$areaData.$item.value}></option>
+                <{/foreach}>
+            </select>
+            <{/if}>
+          </span>
+                </td>
+            </tr>
+
+            <tr>
+                <th><em class="red">*</em><label for="dlycorp_name"><{t}>营业执照:<{/t}></label></th>
+                <td>
+                <a href="<{$data.business_license}>" style="padding-left:0;color:red;" class='img-tip pointer lnk' target='_blank' >查看详情</a>
+                <!-- <{input type="image" vtype="required" name="company[business_license]" width=100 height=100 value=$data.business_license}>  -->
+                </td>
+            </tr>
+
+            <tr>
+                <th><em class="red">*</em><label for="dlycorp_name"><{t}>营业执照登记号:<{/t}></label></th>
+                <td>
+                <{$data.tax_id}>
+                <!-- <{input type="text" vtype="required" name="company[tax_id]" class="x-input" value=$data.tax_id maxlength="20" size="44"}> -->
+                </td>
+            </tr>
+            <tr>
+                <th><em class="red">*</em><label for="dlycorp_name"><{t}>营业执照有效期至:<{/t}></label></th>
+                <td>
+                    <{$data.valid_time}>
+                    <!-- <{input type="text" vtype="required" name="company[tax_id]" class="x-input" value=$data.tax_id maxlength="20" size="44"}> -->
+                </td>
+            </tr>
+
+            <tr>
+                <th><em class="red">*</em><label for="dlycorp_name"><{t}>注册资本:<{/t}></label></th>
+                <td>
+                    <{$data.registered_capital}>
+                    <!-- <{input type="text" vtype="required" name="company[tax_id]" class="x-input" value=$data.tax_id maxlength="20" size="44"}> -->
+                </td>
+            </tr>
+
+            <tr>
+                <th><em class="red">*</em><label for="dlycorp_name"><{t}>经营地址:<{/t}></label></th>
+                <td>
+                <{$data.company_addr}>
+                <!-- <{input type="text" vtype="required" name="company[company_addr]" class="x-input" value=$data.company_addr maxlength="20" size="44"}> -->
+                </td>
+            </tr>
+
+            <tr>
+                <th><em class="red">*</em><label for="dlycorp_name"><{t}>联系人:<{/t}></label></th>
+                <td>
+                <{$data.company_contact}>
+                <!-- <{input type="text" vtype="required" name="company[company_contact]" class="x-input" value=$data.company_contact maxlength="20" size="44"}> -->
+                </td>
+            </tr>
+
+            <tr>
+                <th><em class="red">*</em><label for="dlycorp_name"><{t}>公司电话:<{/t}></label></th>
+                <td>
+                <{$data.company_contactPhone}>
+                <!-- <{input type="text" vtype="required" name="company[company_contactPhone]" class="x-input" value=$data.company_contactPhone maxlength="11" size="44"}> -->
+                </td>
+            </tr>
+            <tr>
+                <th><label for="dlycorp_name"><{t}>传真:<{/t}></label></th>
+                <td>
+                    <{$data.fax}>
+                    <!-- <{input type="text" vtype="required" name="company[company_contactPhone]" class="x-input" value=$data.company_contactPhone maxlength="11" size="44"}> -->
+                </td>
+            </tr>
+            <tr>
+                <th><label for="dlycorp_name"><{t}>网址:<{/t}></label></th>
+                <td>
+                    <{$data.website}>
+                    <!-- <{input type="text" vtype="required" name="company[company_contactPhone]" class="x-input" value=$data.company_contactPhone maxlength="11" size="44"}> -->
+                </td>
+            </tr>
+            <tr>
+                <th><label for="dlycorp_name"><{t}>email:<{/t}></label></th>
+                <td>
+                    <{$data.email}>
+                    <!-- <{input type="text" vtype="required" name="company[company_contactPhone]" class="x-input" value=$data.company_contactPhone maxlength="11" size="44"}> -->
+                </td>
+            </tr>
+
+            <tr>
+                <th><em class="red"></em><label for="dlycorp_name"><{t}>公司人数:<{/t}></label></th>
+                <td>  <{$data.company_num}></td>
+            </tr>
+
+            <tr>
+                <th><em class="red"></em><label for="dlycorp_name"><{t}>公司性质:<{/t}></label></th>
+                <td>      <{$data.operating_range}> </td>
+            </tr>
+
+        </table>
+    </div>
+
+    <div class="table-action">
+        <button class="btn btn-primary" type="submit"><span><span><{t}>保存并通过<{/t}></span></span></button>
+        <a class="btn digA" href="?app=sysuser&amp;ctl=admin_user&amp;act=refuseCompanyInfo&amp;user_id=<{$data.user_id}>" target="dialog::  {title:'请填写驳回原因', width:500, height:200}"><span><span>不通过</span></span></a>
+    </div>
+
+</form>
+
+<script>
+
+// function removeImg(obj){
+//         if(!confirm('你确定删除本行吗？'))
+//             return false;
+//         var vthis_handler = $(obj).parent();
+//         var src_obj = vthis_handler.parent().find('input[type=hidden]');
+//         var list_src = src_obj.val();
+//         console.log(list_src);
+//         console.log($(obj).prev().attr('id'));
+//         var img_src_list = list_src.replace($(obj).prev().attr('id'),'');
+//         console.log(img_src_list);
+//         src_obj.val(img_src_list);
+//         vthis_handler.remove();
+//     }
+
+
+    $('sysuserform').store('target',{
+        onComplete:function(rs){
+            if(!rs) return;
+            rs = JSON.decode(rs);
+            if(rs.success){
+                if(window.finderGroup) window.finderGroup['<{$env.get.finder_id}>'].refresh();
+                if($('sysuserform').getParent('.dialog')){
+                    var Dlg = $('sysuserform').getParent('.dialog').retrieve('instance');
+                    if(Dlg.update){
+                        Dlg.update.retrieve('instance').initContent();
+                    }
+                    Dlg.close();
+                }
+            }
+        }
+    });
+
+    (function() {
+        var path ='<{$env.statics_host_url}>/ectools/statics/scripts/';
+
+        var container = $('area');
+        var areaData = '<{$areaData|json_encode}>';
+        var areaPath = '<{$areaPath|json_encode}>';
+
+        var loadRegion = function(region){
+            region.init(container, areaData, areaPath);
+        };
+        Ex_Loader(path + 'region.js', function(){loadRegion(region_sel);});
+
+    })();
+</script>

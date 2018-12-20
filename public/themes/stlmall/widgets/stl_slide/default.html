@@ -1,0 +1,28 @@
+<div class="swiper-container" id="lb1">
+<div class="swiper-wrapper">
+  <{foreach from=$data.pic item=item}>
+  <div class="swiper-slide">
+    <a href="<{$item.linktarget}>" target="_blank"><img src="<{$item.link}>" alt="<{$item.linkinfo}>"></a>
+  </div>
+  <{/foreach}>
+</div>
+<!-- Add Pagination -->
+<div class="swiper-pagination"></div>
+<!-- Add Arrows -->
+<div class="swiper-button-next"></div>
+<div class="swiper-button-prev"></div>
+</div>
+<!-- Initialize Swiper -->
+<script>
+  var swiper = new Swiper('#lb1', {
+      pagination: '.swiper-pagination',
+      nextButton: '.swiper-button-next',
+      prevButton: '.swiper-button-prev',
+      paginationClickable: true,
+      spaceBetween: 30,
+      centeredSlides: true,
+      autoplay: 3000,
+      autoplayDisableOnInteraction: false
+  });
+</script>
+

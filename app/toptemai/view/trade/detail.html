@@ -1,0 +1,295 @@
+<link href="/app/toptemai/statics/stylesheets/jquery.fileupload.css" rel="stylesheet" media="screen, projection" />
+<script src="/app/toptemai/statics/scripts/jquery.ui.widget.js"></script>
+<script src="/app/toptemai/statics/scripts/jquery.fileupload.js"></script>
+
+
+<div class="panel panel-outter">
+  <{if $trade.status == "WAIT_SENDCONTRACT"}>
+  <{include file="toptemai/trade/status/sendcontract.html"}>
+  <{elseif $trade.status == "WAIT_CONFIRM"}>
+  <{include file="toptemai/trade/status/unconfirm.html"}>
+  <{elseif $trade.status == "WAIT_BUYER_PAY"}>
+  <{include file="toptemai/trade/status/unpay.html"}>
+  <{elseif $trade.status == "WAIT_SELLER_SEND_GOODS"}>
+  <{include file="toptemai/trade/status/undelivery.html"}>
+  <{elseif $trade.status == "WAIT_BUYER_CONFIRM_GOODS"}>
+  <{include file="toptemai/trade/status/unreceived.html"}>
+  <{elseif $trade.status == "TRADE_FINISHED"}>
+  <{include file="toptemai/trade/status/finish.html"}>
+  <{elseif $trade.status == "TRADE_CLOSED_BY_SYSTEM" || $trade.status == "TRADE_CLOSED"}>
+  <{include file="toptemai/trade/status/cancel.html"}>
+  <{/if}>
+  <div class="panel-body">
+    <div class="box box-solid">
+      <div class="box-body">
+        <h4>订单信息</h4>
+        <input type="hidden" id="contract_img" name="contract_img" value="<{$contact_img}>">
+        <div class="form-group row">
+          <div class="col-xs-4">
+            <label class="order-form-w1">订单号：</label><{$trade.tid}>
+          </div>
+          <div class="col-xs-4">
+            <label class="order-form-w1">订单状态：</label>
+            <{if $trade.status == "WAIT_SENDCONTRACT"}>
+            等待商家发起电子合同
+            <{elseif $trade.status == "REJECT_CONTRACT"}>
+            买家拒绝合同内容，等待卖家修改合同
+            <{elseif $trade.status == "WAIT_CONFIRM"}>
+            等待买家确认电子合同
+            <{elseif $trade.status == "WAIT_BUYER_PAY"}>
+              <{if $trade.payed_fee > 0}>
+              已付款等待发货
+              <{else}>
+              等待买家付款
+              <{/if}>
+            <{elseif $trade.status == "WAIT_SELLER_SEND_GOODS"}>
+            <{if $trade.pay_type == "offline"}>未付款(货到付款)，待发货
+            <{elseif $trade.pay_type == "online"}>买家已付款
+            <{/if}>
+            <{elseif $trade.status == "WAIT_BUYER_CONFIRM_GOODS"}>
+            <{if $trade.pay_type == "offline"}>已发货，待付款收货
+            <{elseif $trade.pay_type == "online"}>卖家已发货
+            <{/if}>
+            <{elseif $trade.status == "TRADE_FINISHED"}>订单已完成
+            <{elseif $trade.status == "WAIT_PLAT_CHECK_OFFLINE"}>
+            等待平台审核
+            <{elseif $trade.status == "TRADE_CLOSED_BY_SYSTEM" || $trade.status == "TRADE_CLOSED"}>订单已关闭
+            <{/if}>
+          </div>
+          <div class="col-xs-4">
+            <label class="order-form-w1">下单时间：</label><{$trade.created_time|cdate}>
+          </div>
+        </div>
+      <div class="form-group row">
+        <div class="col-xs-4">
+          <label class="order-form-w1">商品总额：</label><span class="text-orange"><{$trade.total_fee|cur}></span>
+        </div>
+        <div class="col-xs-4">
+          <label class="order-form-w1">运费金额：</label>
+          <span class="text-orange">
+          <{if $postfee_adjustable}>
+            <input maxlength="8" style="width:69px;" class="x-input form-control" value="<{$trade.post_fee|number_format:2:'.':''}>" onblur="showMoneyTotalValue()" onKeyPress="if((event.keyCode<48 || event.keyCode>57) && event.keyCode!=46)event.returnValue=false" onkeyup="CheckInputIntFloat(this)" name='post_fee' type='text' placeholder="必填" />
+            <{else}>
+            <input value="<{$trade.post_fee|number_format:2:'.':''}>" name='post_fee' type='hidden' />
+            <span id="trade_post_fee"><{$trade.post_fee|cur}></span>
+          <{/if}>
+          </span>
+        </div>
+        <div class="col-xs-4">
+          <label class="order-form-w1">应付金额：</label><span class="text-orange"><{$trade.payment|cur}></span>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-xs-4">
+          <label class="order-form-w1">是否需要开发票：</label><span class="text-orange"><{if !$trade.need_invoice }>不开发票<{else}>需开发票<{/if}></span>
+        </div>
+          <div class="col-xs-4">
+            <label class="order-form-w1">付款时间：</label><{if $trade.pay_time}><{$trade.pay_time|cdate}><{/if}>
+          </div>
+          <div class="col-xs-4">
+            <label class="order-form-w1">联系方式：</label><{$trade.receiver_mobile}><{if $trade.receiver_phone}>&nbsp;,&nbsp;<{$trade.receiver_phone}><{/if}>
+          </div>
+        </div>
+        <div class="form-group row">
+          <{if $trade.shipping_type == 'ziti'}>
+          <div class="col-xs-4">
+            <label class="order-form-w1">自提地区：</label><{$trade.receiver_state}><{$trade.receiver_city}><{$trade.receiver_district}>&nbsp;
+          </div>
+          <div class="col-xs-4">
+            <label class="order-form-w1">自提地址：</label><{$trade.ziti_addr}>
+          </div>
+          <{else}>
+          <div class="col-xs-4">
+            <label class="order-form-w1">收货地区：</label><{$trade.receiver_state}><{$trade.receiver_city}><{$trade.receiver_district}>&nbsp;
+          </div>
+          <div class="col-xs-4">
+            <label class="order-form-w1">收货地址：</label><{$trade.receiver_address}>
+          </div>
+          <{/if}>
+          <div class="col-xs-4">
+            <label class="order-form-w1">邮编：</label><span class="text-orange"><{$trade.receiver_zip}></span>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <{if $trade.discount_fee>0}>
+          <div class="col-xs-4">
+            <label class="order-form-w1">促销优惠：</label><span class="text-orange" id="trade_discount_fee">-<{$trade.discount_fee|cur}></span>
+          </div>
+          <{/if}>
+          <{if $trade.points_fee>0}>
+          <div class="col-xs-4">
+            <label class="order-form-w1">积分抵扣：</label><span class="text-orange" id="trade_points_fee">-<{$trade.points_fee|cur}></span>
+          </div>
+          <{/if}>
+        </div>
+        <div class="form-group row">
+          <div class="col-xs-11">
+            <label class="order-form-w1">下单备注：</label><span class="text-orange"><{$trade.trade_memo}></span>
+          </div>
+        </div>
+        <div class="col-xs-4">
+          <label class="order-form-w1">
+            <span class="text-red">* </span>交货时间：
+          </label>
+          <{if $trade.status == 'WAIT_SENDCONTRACT' || $trade.status == 'REJECT_CONTRACT'}>
+          <input class="x-input form-control" data-provide="datepicker" value="<{$trade.delivery_goods_time|trim}>" name="delivery_goods_time" type="date">
+          <{else}>
+          <span class="text-orange"><{if $trade.delivery_goods_time}><{$trade.delivery_goods_time}><{else}>无<{/if}></span>
+          <{/if}>
+        </div>
+        <{if $trade.contract_id > 0}>
+        <div id='loadcontract' class="col-xs-4">
+          <label class="order-form-w1">线下合同：</label>
+          <{if $contract.contract_img}>
+				<span style="position:relative;" class="text-orange xn_curs">
+					<a href='#' class="text-orange" style="margin-right: 5px;" data-toggle="modal" data-target="#showContract">查看合同</a>
+				</span>
+          <{/if}>
+          <{if $trade.status != 'TRADE_FINISHED'}>
+				<span class="btn btn-success fileinput-button">
+					<i class="glyphicon glyphicon-plus"></i>
+					<span>上传</span>
+                  <!-- The file input field used as target for the file upload widget -->
+					<input id="fileupload" type="file" name="files[]" multiple>
+				</span>
+          <!--<div id="progress" class="progress">
+              <div class="progress-bar progress-bar-success"></div>
+          </div>-->
+          <!-- The container for the uploaded files -->
+          <div id="files" class="files"></div>
+          <{/if}>
+        </div>
+        <{else}>
+        <div class="col-xs-4">
+          <label class="order-form-w1">是否需要线下合同：</label><span class="text-orange xn_curs">否</span>
+        </div>
+        <{/if}>
+        <!--  -->
+        <{include file="toptemai/trade/detail_item.html"}>
+        <{include file="toptemai/trade/trade_total_data.html"}>
+
+        <div class="text-center">
+          <{if $trade.status == "WAIT_SELLER_SEND_GOODS"}>
+          <a href="<{url action=toptemai_ctl_trade_flow@goDelivery tid=$trade.tid}>" class="btn btn-warning" >我要发货 </a>
+          <{/if}>
+        </div>
+
+        <form action="<{url action=toptemai_ctl_trade_detail@setTradeMemo}>" method="post" id="trade_form" data-validate-onsuccess="ajaxSubmit">
+          <div class="form-group">
+            <label>备注信息</label>
+            <input type="hidden" name="tid" value="<{$trade.tid}>">
+            <textarea name="shop_memo" class="form-control" rows="3"><{$trade.shop_memo}></textarea>
+          </div>
+          <!--
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary">保存</button>
+            <button type="reset" class="btn btn-default">取消</button>
+            <a href="#" class="pull-right">订单导出</a>
+          </div>
+          -->
+        </form>
+      </div>
+    </div>
+
+    <div>
+      <{if $logi.logi_no != ''}>
+      <h4>配送信息</h4>
+      <dl class="dl-horizontal">
+        <dt>物流公司：</dt><dd><{$logi.logi_name}></dd>
+        <dt>配送单号：</dt><dd><{$logi.logi_no}></dd>
+      </dl>
+      <{if $tracking && $tracking =='true' }>
+      <h4>物流信息</h4>
+      <dl class="dl-horizontal" id="track-hidden">
+        <dt>物流跟踪：</dt><dd><a href="#" id="click_get_track" class="sp-see">查看详情</a></dd>
+      </dl>
+      <div id="logistics">
+      </div>
+      <{/if}>
+      <{/if}>
+      <{if $ziti == "true" && $trade.ziti_memo}>
+      <h4>配送信息</h4>
+      <dl class="dl-horizontal">
+        <dt>自提备注：</dt><dd><{$trade.ziti_memo}></dd>
+      </dl>
+      <{/if}>
+
+      <{if $trade.status == "WAIT_BUYER_CONFIRM_GOODS"}>
+      <div class="text-center">
+        <a href="javascript::;" data-toggle="modal" data-target="#editLogi" class="btn btn-primary">修改配送信息</a>
+      </div>
+      <{/if}>
+    </div>
+  </div>
+</div>
+<!-- modal -->
+<div class="modal fade" id="editLogi" tabindex="-1" role="dialog">
+  <div class="panel panel-default modal-dialog">
+    <div class="panel-heading clearfix">
+      修改配送信息
+      <div class="pull-right">
+        <!-- <button type="button" class="btn btn-primary action-save">保存</button> -->
+        <button type="button" class="btn btn-default action-cancel" data-dismiss="modal">取消</button>
+      </div>
+    </div>
+    <div class="panel-body text-center">
+      <input type='hidden' name='delivery_id' value='<{$logi.delivery_id}>' >
+      <{if $ziti == 'true'}>
+      <div class="form-group has-error">
+        配送方式：
+        <select name="dlytmpl_id" class="form-control inline" disabled style="width:175px;margin-left:-5px;">
+          <option value="<{$tradeInfo.dlytmpl_id}>">上门自提</option>
+        </select>
+      </div>
+      <{else}>
+      <div class="form-group has-error">
+        配送方式：
+        <select name="dlytmpl_id" class="form-control inline" disabled style="width:175px;margin-left:-5px;">
+          <option value="express">快递</option>
+        </select>
+      </div>
+      <{/if}>
+      <div class="form-group has-error">
+        物流公司：
+        <select name="corp_code" class="form-control inline" style="width:175px;margin-left:-5px;">
+          <{foreach from=$dlycorp key=key item=dlyList}>
+          <option value="<{$dlyList.corp_code}>" <{if $dlyList.corp_code == $logi.corp_code}>checked=checked<{/if}> ><{$dlyList.corp_name}></option>
+          <{/foreach}>
+        </select>
+      </div>
+      <div class="form-group has-error">
+        配送单号：<input type="text" name="logi_no" class="form-control inline" maxlength="20" value='<{$logi.logi_no}>'>
+      </div>
+      <div class="modal-footer text-center">
+        <button type="button" class="btn btn-primary action-save" id="act-update-delivery">确认</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal -->
+<script type="text/javascript">
+    $('#act-update-delivery').click(function(e){
+      var dlytmplId = $('select[name="dlytmpl_id"]').val();
+      var logi_no = $('input[name="logi_no"]').val();
+      var corp_code = $('select[name="corp_code"]').val();
+      var delivery_id = $('input[name="delivery_id"]').val();
+      var tid = $('input[name="tid"]').val();
+      var data = 'dlytmpl_id=' + dlytmplId + '&logi_no=' + logi_no + '&corp_code=' + corp_code + '&delivery_id=' + delivery_id + '&tid=' + tid;
+      $.post('<{url action=toptemai_ctl_trade_flow@updateLogistic}>', data, function(rs){
+        // rs = JSON.parse(rs);
+        if(rs.error) {
+          $('#messagebox').message(rs.message);
+          return;
+        }
+        if(rs.success) {
+          $('#messagebox').message(rs.message, 'success');
+        }
+
+        if(rs.redirect) {
+          location.href = rs.redirect;
+        }
+      })
+    });
+</script>
+<{include file="toptemai/trade/seller_contract.html"}>

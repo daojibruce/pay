@@ -1,0 +1,31 @@
+<div class="find-news">
+  <div class="find-tit">
+    <h3>行业资讯</h3>
+    <a href="<{$data.more_link}>" target="_blank">更多></a>
+  </div>
+  <div class="find-news-con">
+    <div class="find-news-pic">
+      <a href="<{$data.ad_pic_link}>" target="_blank"><img src="<{$data.ad_pic|storager}>" alt=""></a>
+    </div>
+    <div class="find-news-word">
+      <h4><a href="<{url action=topc_ctl_content@getContentInfo article_id=$data.single_article.article_id}>" target="_blank"><{$data.single_article.title}></a></h4>
+      <p><{$data.single_article.content}></p>
+    </div>
+  </div>
+
+  <ul class="find-news-list">
+    <{foreach from=$data.articles item=article}>
+    <li><a href="<{url action=topc_ctl_content@getContentInfo article_id=$article.article_id}>" target="_blank"><{$article.title}></a><span class="find-new-time"><{$article.modified}></span></li>
+      <{/foreach}>
+  </ul>
+</div>
+<script>
+  $(function () {
+      $(".find-news-word p").each(function () {
+          var p_t = $(this).text();
+          if (p_t == "") {
+              $(this).remove();
+          }
+      });
+  });
+</script>

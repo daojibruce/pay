@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <{header app=topc}>
+    <link rel="stylesheet" href="images/swiper.min.css">
+    <link rel="stylesheet" href="images/styles.css">
+    <script src="images/swiper.min.js" type="text/javascript"></script>
+</head>
+<body class="is-index">
+<{require file="block/header.html"}>
+    <!--主屏内容-->
+    <div class="seaview">
+        <div class="wrap-lg">
+            <div class="row cover-content">
+                <div class="col-lg-10 slide-main">
+                    <div class="slide">
+                        <{widgets id="stl_mainslide"}>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--主体楼层-->
+    <div id="main" class="main index">
+        <div class="wrap-lg">
+			<{widgets id="stl_mainslide1"}>
+			<{widgets id="stl_mainslide2"}>
+			<{widgets id="stl_mainslide3"}>
+			<{widgets id="stl_mainslide4"}>
+			<{widgets id="stl_mainslide_more"}>
+        </div>
+    </div>
+
+<{require file="block/footer.html"}>
+
+</body>
+<script>
+    $(function(){
+        $("img").each(function () {
+            var src = $(this).attr("src");
+            $(this).attr("data-original",src);
+            $(this).attr("class","imglazyload");
+        });
+        $("img.imglazyload").lazyload({
+            effect : "fadeIn"
+        });
+    });
+</script>
+</html>

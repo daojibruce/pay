@@ -1,0 +1,23 @@
+<div class="wrap-lg" id="dy_more">
+    <ul class="dy-more">
+        <{foreach from=$providers item=provider}>
+        <li class="dy-more-list">
+            <div class="dy-more-title"><{$provider.provider_name}></div>
+            <div class="dy-more-box">
+                <div class="dy-more-comp">
+                    <h3><{$prodider.provider_name}></h3>
+                    <div class="dy-more-pho">
+                        <img src="<{$provider.yp_img}>" alt="">
+                    </div>
+                    <a href="" target="_blank">样品展示</a>
+                </div>
+                <div class="dy-more-info">
+                    <h5>服务能力介绍</h5>
+                    <p><{$provider.provider_desc}></p>
+                </div>
+            </div>
+        </li>
+        <{/foreach}>
+    </ul>
+    <{pagers data=$pagers}>
+</div>

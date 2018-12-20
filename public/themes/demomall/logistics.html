@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <{header app=topc}>
+    <link rel="stylesheet" href="images/index.css">
+</head>
+<body class="is-index">
+<{require file="block/header.html"}>
+<!-- 主内容区 -->
+<div class="seaview wlbg">
+    <div class="wrap-lg">
+        <div class="dyzx">
+            <a href="proofing-release.html" target="_blank">我要发货</a>
+            <a href="proofing-update.html" target="_blank">物流服务商</a>
+            <!--<div class="dy-l"></div>
+            <div class="dy-r">
+                <{widgets id="stl_pro1"}>
+                <{widgets id="stl_pro2"}>
+            </div>-->
+        </div>
+    </div>
+</div>
+<div id="main" class="main index" style="background-color: #ffffff;padding-bottom: 0;">
+    <div class="wlgj">
+        <div class="wrap-lg">
+            <div class="wlgj-tit"><h3>物流管家服务</h3></div>
+            <h4>省成本，效率高，您身边的贴身物流助手</h4>
+            <ul class="wlgj-lists">
+                <li class="wlgj-list">
+                    <div class="wlgj-list-pic"><img src="images/gj1.png" alt=""></div>
+                    <h4>发布物流需求</h4>
+                </li>
+                <li class="wlgj-list">
+                    <div class="wlgj-list-pic"><img src="images/gj2.png" alt=""></div>
+                    <h4>发布物流需求</h4>
+                    <h5>评价、结算、跟踪、取件、报价</h5>
+                </li>
+                <li class="wlgj-list">
+                    <div class="wlgj-list-pic"><img src="images/gj3.png" alt=""></div>
+                    <h4>物流配送</h4>
+                    <h5>物流公司、快递公司、零担车队</h5>
+                </li>
+                <li class="wlgj-list">
+                    <div class="wlgj-list-pic"><img src="images/gj4.png" alt=""></div>
+                    <h4>客户</h4>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="hzwl">
+        <div class="wrap-lg">
+            <div class="hzwl-tit">合作物流商</div>
+            <ul class="hzs">
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl1.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl1a.jpg" alt=""></li>
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl2.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl2a.jpg" alt=""></li>
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl3.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl3a.jpg" alt=""></li>
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl4.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl4a.jpg" alt=""></li>
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl5.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl5a.jpg" alt=""></li>
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl6.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl6a.jpg" alt=""></li>
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl7.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl7a.jpg" alt=""></li>
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl8.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl8a.jpg" alt=""></li>
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl9.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl9a.jpg" alt=""></li>
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl10.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl10a.jpg" alt=""></li>
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl11.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl11a.jpg" alt=""></li>
+                <li class="hzs-list"><img class="hzwl-pic1" src="images/hzwl12.jpg" alt=""><img class="hzwl-pic2" src="images/hzwl12a.jpg" alt=""></li>
+            </ul>
+        </div>
+        <script>
+            $(function () {
+                $(".hzs-list").eq(0).addClass("hzs-border");
+                $(".hzs-list").eq(0).find("img.hzwl-pic1").addClass("hzwl-show");
+                $(".hzs-list").each(function () {
+                    $(this).find("img.hzwl-pic2").addClass("hzwl-show");
+                });
+                $(".hzs-list").eq(0).find("img.hzwl-pic2").removeClass("hzwl-show");
+                $(".hzs-list").on("mouseover",function () {
+                    $(this).addClass("hzs-border").siblings().removeClass("hzs-border");
+                    $(this).find("img.hzwl-pic1").addClass("hzwl-show").parent().siblings().find("img.hzwl-pic1").removeClass("hzwl-show");
+                    $(this).find("img.hzwl-pic2").removeClass("hzwl-show").parent().siblings().find("img.hzwl-pic2").addClass("hzwl-show");
+                })
+            })
+        </script>
+    </div>
+</div>
+<{require file="block/footer.html"}>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $("img.imglazyload").lazyload({
+            effect : "fadeIn"
+        });
+    });
+</script>
+</html>

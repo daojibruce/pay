@@ -1,0 +1,363 @@
+<{css app='topc' src="webuploader.css"}>
+<{script app='topc' src="webuploader.js"}>
+<form action="<{url action=topc_ctl_proofing@doUpdate}>" method="post" id="proofingForm" class="form-tip-horizontal">
+    <div id="main" class="main" style="width: 1190px;background-color: #f5f5f5;margin: 0 auto;padding: 0;">
+        <div class="wrap-lg" style="max-width: 960px;min-width: 960px;background-color: #ffffff;">
+            <{if $provider}>
+            <div class="signc">
+                审核未通过原因：<{$provider.reason}>
+                <input type="hidden" value="<{$provider.provider_id}>" name="provider_id">
+            </div>
+            <{/if}>
+            <div class="signc">
+                <ul class="signul">
+                    <li class="form-row" >
+                        <div class="signcl">
+                            <i>*</i><span>企业名称：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" id="company_name_id" name="company_name"  placeholder="填写企业名称" required data-equalto="company_name" data-caution="请填写企业名称" value="<{if $provider}><{$provider.provider_name}><{else}><{$info.company_name}><{/if}>">
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>营业执照登记号：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="tax_id" id="tax_id"  placeholder="填写营业执照登记号" required data-equalto="tax_id" data-caution="请填写营业执照登记号" value="<{if $provider}><{$provider.provider_cert}><{else}><{$info.tax_id}><{/if}>">
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>申请服务类型：</span>
+                        </div>
+                        <div class="signcr update-list">
+                            <{foreach from=$cats item=cat}>
+                            <label for=""><input type="checkbox" name="cats[]" value="<{$cat.cat_id}>" class="" <{if $cat.is_checked}> checked<{/if}>><{$cat.cat_name}></label>
+                            <{/foreach}>
+                        </div>
+                    </li>
+
+                    <li class="form-row" style="height: auto;">
+                        <div class="signcl">
+                            <i>*</i><span>设备图片(最大4M)：</span>
+                        </div>
+                        <div id="uploader-demo">
+                            <!--用来存放item-->
+                            <div id="fileList" class="uploader-list">
+                                <{if $provider}>
+                                <{foreach from=$provider.sb_img item=img key=key}>
+                                <div id="<{$key}>_r" class="file-item thumbnail upload-state-done"><img src="<{$img}>"><div class="info"><{$key}></div><div class="file-panel"><span class="cancel">删除</span></div><input type="hidden" name="sb[<{$key}>_r]" value="<{$img}>"></div>
+                                <{/foreach}>
+                                <{/if}>
+                            </div>
+                            <div id="filePicker">选择图片</div>
+                        </div>
+                    </li>
+
+                    <li class="form-row" style="height: auto;">
+                        <div class="signcl">
+                            <i>*</i><span>样品图片(最大4M)：</span>
+                        </div>
+                        <div id="uploader-demo2" style="float: left;">
+                            <!--用来存放item-->
+                            <div id="fileList2" class="uploader-list">
+                                <{if $provider}>
+                                <{foreach from=$provider.yp_img item=img key=key}>
+                                <div id="<{$key}>_y" class="file-item thumbnail upload-state-done"><img src="<{$img}>"><div class="info"><{$key}></div><div class="file-panel"><span class="cancel">删除</span></div><input type="hidden" name="yp[<{$key}>_y]" value="<{$img}>"></div>
+                                <{/foreach}>
+                                <{/if}>
+                            </div>
+                            <div id="filePicker2">选择图片</div>
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>联系人手机号：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="company_contact" placeholder="填写公司联系人手机号" required data-equalto="company_contact" data-caution="请填写公司联系人手机号" value="<{$provider.provider_mobile}>">
+                        </div>
+                    </li>
+                    <li  class="form-row" style="height: auto;">
+                        <div class="signcl">
+                            <i>*</i><span>能力描述：</span>
+                        </div>
+                        <div class="division">
+                            <textarea class="form-control" required name="company_desc" maxlength="300"><{$provider.provider_desc}></textarea>
+                        </div>
+                    </li>
+                    <li class="form-row">
+              <span class="form-act" style="padding-left: 155px;">
+                <input type="checkbox" class="x-checkbox" checked name="license" id="for_license" data-validate="onerequired" data-caution="<{t}>请选择同意<{/t}>">
+                <label for="for_license" style="color: #999999;font-size: 14px;">我已阅读并同意<a href="javascript:void(0);" class="link-color" style="float: none;color: #da251a;">《服务商协议》</a></label>
+              </span>
+                    </li>
+                    <li class="signagre">
+              <span class="form-act">
+                <button type="submit" class="btn btn-success btn-block" id="proofing-submit"><span><span>申请成为服务商</span></span></button>
+              </span>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!--注册协议弹框-->
+    <div id="dialog" style="display:none;">
+        <div class="agreement">
+            <div class="title">服务商协议</div>
+            <div><{$license}></div>
+            <div class="text-center"><a href="javascript:void(0);" class="btn btn-import btn-lg dialog-btn-close"><span><span>同意并继续</span></span></a></div>
+        </div>
+    </div>
+</form>
+<script>
+    // 初始化Web Uploader
+    var uploader = WebUploader.create({
+        // 选完文件后，是否自动上传。
+        auto: true,
+        // swf文件路径
+        swf: '<{resource app="image" path="/uploader.swf"}>',
+        // 文件接收服务端。
+        server: '<{url action=topc_ctl_proofing@imageUpload}>',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker',
+        fileSingleSizeLimit : 4*1024*1024,
+
+        // 只允许选择图片文件。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
+    });
+    // 当有文件添加进来的时候
+    uploader.on( 'fileQueued', function( file ) {
+        var $li = $(
+                '<div id="' + file.id + '" class="file-item thumbnail">' +
+                '<img>' +
+                '<div class="info">' + file.name + '</div>' +
+                '</div>'
+            ),
+            $btns = $('<div class="file-panel">' +
+                '<span class="cancel">删除</span></div>').appendTo( $li ),
+            $img = $li.find('img');
+
+        // $list为容器jQuery实例
+        $list = $('#fileList');
+        $list.append( $li );
+        // 创建缩略图
+        // 如果为非图片文件，可以不用调用此方法。
+        // thumbnailWidth x thumbnailHeight 为 100 x 100
+        thumbnailWidth =100;
+        thumbnailHeight =100;
+        uploader.makeThumb( file, function( error, src ) {
+            if ( error ) {
+                $img.replaceWith('<span>不能预览</span>');
+                return;
+            }
+            $img.attr( 'src', src );
+        }, thumbnailWidth, thumbnailHeight );
+    });
+    // 文件上传过程中创建进度条实时显示。
+    uploader.on( 'uploadProgress', function( file, percentage ) {
+        var $li = $( '#'+file.id ),
+            $percent = $li.find('.progress span');
+
+        // 避免重复创建
+        if ( !$percent.length ) {
+            $percent = $('<p class="progress"><span></span></p>')
+                .appendTo( $li )
+                .find('span');
+        }
+
+        $percent.css( 'width', percentage * 100 + '%' );
+    });
+
+    // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+    uploader.on( 'uploadSuccess', function( file, response ) {
+        $( '#'+file.id ).addClass('upload-state-done');
+        var html = '<input type="hidden" name="sb['+file.id+']" value="'+response.image_scr+'">';
+        $( '#'+file.id ).append(html);
+        $( '#'+file.id ).on( 'click', '.cancel', function() {
+            $( '#'+file.id ).remove();
+        });
+    });
+
+    // 文件上传失败，显示上传出错。
+    uploader.on( 'uploadError', function( file ) {
+        var $li = $( '#'+file.id ),
+            $error = $li.find('div.error');
+        $( '#'+file.id ).on( 'click', '.cancel', function() {
+            $( '#'+file.id ).remove();
+        });
+
+        // 避免重复创建
+        if ( !$error.length ) {
+            $error = $('<div class="error"></div>').appendTo( $li );
+        }
+        $error.text('上传失败');
+    });
+
+    uploader.on('error',function (type) {
+        if (type == 'F_EXCEED_SIZE') {
+            alert('图片大小不能超过4M');
+        }
+    });
+
+    // 完成上传完了，成功或者失败，先删除进度条。
+    uploader.on( 'uploadComplete', function( file ) {
+        $( '#'+file.id ).find('.progress').remove();
+    });
+</script>
+<script>
+    // 初始化Web Uploader
+    var uploader2 = WebUploader.create({
+        // 选完文件后，是否自动上传。
+        auto: true,
+        // swf文件路径
+        swf: '<{resource app="image" path="/uploader.swf"}>',
+        // 文件接收服务端。
+        server: '<{url action=topc_ctl_proofing@imageUpload}>',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker2',
+        fileSingleSizeLimit : 4*1024*1024,
+
+        // 只允许选择图片文件。
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/*'
+        }
+    });
+    // 当有文件添加进来的时候
+    uploader2.on( 'fileQueued', function( file ) {
+        var $li = $(
+                '<div id="' + file.id + '" class="file-item thumbnail">' +
+                '<img>' +
+                '<div class="info">' + file.name + '</div>' +
+                '</div>'
+            ),
+            $btns = $('<div class="file-panel">' +
+                '<span class="cancel">删除</span></div>').appendTo( $li ),
+            $img = $li.find('img');
+
+
+        // $list为容器jQuery实例
+        $list = $('#fileList2');
+        $list.append( $li );
+
+        // 创建缩略图
+        // 如果为非图片文件，可以不用调用此方法。
+        // thumbnailWidth x thumbnailHeight 为 100 x 100
+        thumbnailWidth =100;
+        thumbnailHeight =100;
+        uploader2.makeThumb( file, function( error, src ) {
+            if ( error ) {
+                $img.replaceWith('<span>不能预览</span>');
+                return;
+            }
+
+            $img.attr( 'src', src );
+        }, thumbnailWidth, thumbnailHeight );
+    });
+    // 文件上传过程中创建进度条实时显示。
+    uploader2.on( 'uploadProgress', function( file, percentage ) {
+        var $li = $( '#'+file.id ),
+            $percent = $li.find('.progress span');
+
+        // 避免重复创建
+        if ( !$percent.length ) {
+            $percent = $('<p class="progress"><span></span></p>')
+                .appendTo( $li )
+                .find('span');
+        }
+
+        $percent.css( 'width', percentage * 100 + '%' );
+    });
+
+    uploader2.on('error',function (type) {
+        if (type == 'F_EXCEED_SIZE') {
+            alert('图片大小不能超过4M');
+        }
+    });
+
+    // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+    uploader2.on( 'uploadSuccess', function( file , response) {
+        var html = '<input type="hidden" name="yp['+file.id+']" value="'+response.image_scr+'">';
+        $( '#'+file.id ).append(html);
+        $( '#'+file.id ).addClass('upload-state-done');
+        $( '#'+file.id ).on( 'click', '.cancel', function() {
+            $( '#'+file.id ).remove();
+        });
+    });
+
+    // 文件上传失败，显示上传出错。
+    uploader2.on( 'uploadError', function( file ) {
+        var $li = $( '#'+file.id ),
+            $error = $li.find('div.error');
+        $( '#'+file.id ).on( 'click', '.cancel', function() {
+            $( '#'+file.id ).remove();
+        });
+
+        // 避免重复创建
+        if ( !$error.length ) {
+            $error = $('<div class="error"></div>').appendTo( $li );
+        }
+
+        $error.text('上传失败');
+    });
+
+    // 完成上传完了，成功或者失败，先删除进度条。
+    uploader2.on( 'uploadComplete', function( file ) {
+        $( '#'+file.id ).find('.progress').remove();
+    });
+</script>
+<script>
+    /*
+     * 表单提交
+     * custom s dengLy
+     * 2015.12.31
+     */
+    $('#proofing-submit').on('click', function (e) {
+        var form = $('#proofingForm');
+        $.post(form.attr('action'), form.serialize(), function (re) {
+            if (re.status == 'error') {
+                if (re.url) {
+                    location.href = re.url;
+                } else {
+                    Message.error(re.message);
+                }
+            } else {
+                Message.success('提交成功！');
+                location.href = '<{url action=topc_ctl_proofing@index}>';
+            }
+        });
+        return false;
+    });
+
+    $('.link-color').click(function (e) {
+        $('#dialog').dialog({
+            width: 890,
+            height: 400,
+            title:'服务商协议',
+            close: function(){
+                document.querySelector('#for_license').checked = true;
+            }
+        });
+    });
+
+    $('.file-item').on( 'click', '.cancel', function() {
+        $(this).parents('.file-item').remove();
+    });
+
+    $("body").css("background-color","#ffffff");
+</script>

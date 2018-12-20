@@ -1,0 +1,7 @@
+<services>
+
+    <service id="desktop_finder.b2bpay_mdl_api_log">
+        <class>b2bpay_finder_api_log</class>
+    </service>
+
+</services>

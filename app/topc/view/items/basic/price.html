@@ -1,0 +1,124 @@
+<{if $no_step_price != '1' &&  ($item.step_price.0.quantity != 1 || ($item.step_price.0.quantity ==1 && $item.step_price.1.quantity > 0))}>
+<div class="summary-outbox">
+  <ul class="summary">
+    <li>
+      <div class="dt">价格</div>
+      <div class="dd">起批量</div>
+    </li>
+      <{if $item.step_price.0.quantity != 1}>
+    <li>
+      <div class="dt">
+        <{$item.price|cur}>
+        <{if $item.show_mkt_price}>
+        <del class="old-price"><{$item.mkt_price|cur}></del>
+        <{/if}>
+      </div>
+      <{if $item.step_price.0.quantity == 2}>
+      <div class="dd">1PCS</div>
+      <{else}>
+      <div class="dd">1-<{$item.step_price.0.quantity-1}>PCS</div>
+      <{/if}>
+    </li>
+      <{/if}>
+      <{if $item.step_price.1.quantity}>
+      <li>
+          <div class="dt">
+            <{$item.step_price.0.price|cur}>
+            <{if $item.show_mkt_price}>
+            <del class="old-price"><{$item.mkt_price|cur}></del>
+            <{/if}>
+          </div>
+        <{if ($item.step_price.1.quantity-1) == $item.step_price.0.quantity}>
+          <div class="dd"><{$item.step_price.0.quantity}>PCS</div>
+        <{else}>
+        <div class="dd"><{$item.step_price.0.quantity}>-<{$item.step_price.1.quantity-1}>PCS</div>
+        <{/if}>
+      </li>
+      <{if $item.step_price.2.quantity}>
+      <li>
+          <div class="dt">
+            <{$item.step_price.1.price|cur}>
+            <{if $item.show_mkt_price}>
+            <del class="old-price"><{$item.mkt_price|cur}></del>
+            <{/if}>
+          </div>
+        <{if ($item.step_price.2.quantity-1) == $item.step_price.1.quantity}>
+        <div class="dd"><{$item.step_price.1.quantity}>PCS</div>
+        <{else}>
+          <div class="dd"><{$item.step_price.1.quantity}>-<{$item.step_price.2.quantity-1}>PCS</div>
+        <{/if}>
+      </li>
+      <{else}>
+      <li>
+          <div class="dt"><{$item.step_price.1.price|cur}></div>
+          <div class="dd">>=<{$item.step_price.1.quantity}>PCS</div>
+      </li>
+      <{/if}>
+      <{else}>
+      <li>
+          <div class="dt"><{$item.step_price.0.price|cur}></div>
+          <div class="dd">>=<{$item.step_price.0.quantity}>PCS</div>
+      </li>
+      <{/if}>
+
+  </ul>
+
+</div>
+<{/if}>
+<!-- 活动价，单品活动促销 -->
+<{if $activityDetail}>
+<li>
+  <div class="dt red"><{$activityDetail.activity_info.activity_tag}>价：</div>
+  <div class="dd"><span class="price"><{$activityDetail.activity_price|cur}></span></div>
+</li>
+<{/if}>
+
+<{if $promotionDetail || $giftDetail}>
+<li class="activity">
+  <div class="activity-wrap">
+    <div class="dt">优惠信息：</div>
+    <div class="dd activity-content">
+      <{assign var="gifcount" value=$giftDetail.gift_item|count}>
+      <div class="promotion-list <{if $gifcount > 2}>more-gift<{/if}>">
+        <{if $giftDetail}>
+        <{assign var=gift_count value=1}>
+        <div class="activity-txt" data-skus=<{$giftDetail.sku_ids|json_encode}>>
+          <span class="label-danger">赠品</span>
+          <{foreach from=$giftDetail.gift_item item=gift key=key name=giftdata}>
+          <a href="<{url action=topc_ctl_item@index item_id=$gift.item_id}>" >
+            <img src="<{$gift.image_default_id|default:$image_default_id.S.default_image|storager:s}>" alt="" title="<{$gift.title}>[<{$gift.spec_info}>]">
+          </a>
+          x <{$gift.gift_num}>&nbsp;&nbsp;<{if $env.foreach.giftdata.last}>（购满<{$giftDetail.limit_quantity}>件即赠，赠完为止）<{/if}>
+          <{/foreach}>
+        </div>
+        <{/if}>
+        <{foreach from=$promotionDetail item=promotionDetail name=name}>
+        <a href="<{url action=topc_ctl_promotion@getPromotionItem promotion_id=$promotionDetail.promotion_id}>" class="activity-txt" data-skus=<{$promotionDetail.sku_id|json_encode}>><span class="label-danger"><{$promotionDetail.promotion_tag}></span>
+          <{$promotionDetail.promotion_name}></a>
+        <{/foreach}>
+      </div>
+      <{if $promotion_count+$gift_count>1}>
+      <div class="more">共<{$promotion_count+$gift_count}>条促销活动 <i class="icon icon-arrow-down-b"></i><i class="icon icon-arrow-up-b"></i></div>
+      <{/if}>
+    </div>
+  </div>
+</li>
+<{/if}>
+<!--<ul class="goods-other-info">
+  <li>
+    <span>销量：<em><{$item.sold_quantity|default:'0'}></em> 件</span>
+  </li>
+  <li>
+    <span>商品评分：<em><{$shopDsrData.countDsr.tally_dsr}></em> 分</span>
+    &lt;!&ndash; <span>
+      <a href="#" class="icon icon-star"></a>
+      <a href="#" class="icon icon-star"></a>
+      <a href="#" class="icon icon-star"></a>
+      <a href="#" class="icon icon-star"></a>
+      <a href="#" class="icon icon-star disabled"></a>
+    </span> &ndash;&gt;
+  </li>
+  <li>
+    <span>商品评论：<em><{$item.rate_count|default:"0"}></em> 条</span>
+  </li>
+</ul>-->

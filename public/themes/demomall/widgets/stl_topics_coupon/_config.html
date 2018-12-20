@@ -1,0 +1,47 @@
+<div class="tableform">
+  <div class="widgetconfig">
+    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+      <tbody>
+      <tr>
+        <th><{t app='b2c'}>图片1：<{/t}></th>
+        <td>
+          <input type=hidden name="ad_pic1" value="<{$setting.ad_pic1}>"><input name='ad_pic1' class="imgsrc" id="ad_pic1" value="<{$setting.ad_pic1}>"><input type=button value="<{t app='b2c'}>上传图片<{/t}>" class="uploadbtn" onclick="addPic()">
+        </td>
+      </tr>
+      <tr>
+        <th><{t app='b2c'}>图片1链接：<{/t}></th>
+        <td><input type="text" name="ad_pic1_link" value="<{$setting.ad_pic1_link}>"></td>
+      </tr>
+      <tr>
+        <th><{t app='b2c'}>图片2：<{/t}></th>
+        <td>
+          <input type=hidden name="ad_pic2" value="<{$setting.ad_pic2}>"><input name='ad_pic2' class="imgsrc" id="ad_pic2" value="<{$setting.ad_pic2}>"><input type=button value="<{t app='b2c'}>上传图片<{/t}>" class="uploadbtn" onclick="addPic2()">
+        </td>
+      </tr>
+      <tr>
+        <th><{t app='b2c'}>图片2链接：<{/t}></th>
+        <td><input type="text" name="ad_pic2_link" value="<{$setting.ad_pic2_link}>"></td>
+      </tr>
+      </tbody></table>
+  </div>
+</div>
+<script>
+    function addPic(){
+        var goto_url=encodeURIComponent('<{url route="shopadmin" app="image" ctl="admin_manage" act="image_broswer" type="big"}>');
+        var url='<{url route="shopadmin" app="desktop" act="alertpages" goto=""}>'+goto_url;
+        Ex_Loader('modedialog',function(){
+            return new imgDialog(url,{onCallback:function(image_id,image_src){
+                $('ad_pic1').value=image_src;
+            }})	;
+        });
+    }
+    function addPic2(){
+        var goto_url=encodeURIComponent('<{url route="shopadmin" app="image" ctl="admin_manage" act="image_broswer" type="big"}>');
+        var url='<{url route="shopadmin" app="desktop" act="alertpages" goto=""}>'+goto_url;
+        Ex_Loader('modedialog',function(){
+            return new imgDialog(url,{onCallback:function(image_id,image_src){
+                $('ad_pic2').value=image_src;
+            }})	;
+        });
+    }
+</script>

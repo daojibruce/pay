@@ -1,0 +1,131 @@
+<div class="tableform"  id="sysproofing_review">
+    <div class="division">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+            <tr>
+                <th><em class="red">申请用户信息</em></th>
+            </tr>
+            <tr>
+                <th><{t}>用户登录名：<{/t}></th>
+                <td><{$provider.user_name}></td>
+            </tr>
+            <tr>
+                <th><{t}>企业名称：<{/t}></th>
+                <td><{$provider.provider_name}></td>
+            </tr>
+            <tr>
+                <th><{t}>企业证件：<{/t}></th>
+                <td><{$provider.provider_cert}></td>
+            </tr>
+            <tr>
+                <th><{t}>申请服务类型：<{/t}></th>
+                <td>
+                    <ul>
+                        <{foreach from=$provider.cats item=cat}>
+                        <li><{$cat.cat_name}></li>
+                        <{/foreach}>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th><{t}>服务撮合设备图片：<{/t}></th>
+                <td>
+                    <ul>
+                        <{foreach from=$provider.sb_img item=img}>
+                        <li><a href="<{$img}>" target="_blank"><img src="<{$img}>" alt="" width="100px" height="100px"></a></li>
+                        <{/foreach}>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th><{t}>服务撮合样品图片：<{/t}></th>
+                <td>
+                    <ul>
+                        <{foreach from=$provider.yp_img item=img}>
+                        <li><a href="<{$img}>" target="_blank"><img src="<{$img}>" alt="" width="100px" height="100px"></a></li>
+                        <{/foreach}>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th><{t}>联系人手机号：<{/t}></th>
+                <td><{$provider.provider_mobile}></td>
+            </tr>
+            <tr>
+                <th><{t}>服务撮合能力描述：<{/t}></th>
+                <td><{$provider.provider_desc}></td>
+            </tr>
+            <tr id="pass_result">
+                <th><{t}>审核结果：<{/t}></th>
+                <td>
+                    <input type="radio" name="pass" value="1" id="pass" checked>通过
+                    <input type="radio" name="pass" value="2" id="reject">不通过
+                    <input type="hidden" name="is_reject" value="1" id="is_reject">
+                </td>
+            </tr>
+            <tr valign="" hidden id="reject_tr">
+                <th><{t}>拒绝原因：<{/t}></th>
+                <td>
+                    <textarea name="reject_reason" value="" required id="reject_reason"></textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <table cellspacing="0" cellpadding="0" class="table-action">
+        <tbody>
+        <tr>
+            <{button label="保  存"|t:'content' class="btn-primary " id="proofing-review" type="button"}>
+            <{button label="关  闭"|t:'content' class="btn-secondary" type="button" isclosedialogbtn="1"}>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<script>
+    $('pass').addEvent('click', function(e) {
+        $('reject_tr').set('hidden',true);
+        $('is_reject').set('value',1);
+    });
+    $('reject').addEvent('click', function(e) {
+        $('reject_tr').erase('hidden');
+        $('is_reject').set('value',2);
+    });
+
+    $('proofing-review').addEvent('click', function(e) {
+        var is_reject=$('is_reject').get("value");
+        var reject_reason = $('reject_reason').get('value');
+        if (is_reject == '1') {
+            var req = new Request({
+                url: '?app=sysproofing&ctl=admin_proofing&act=doReview&provider_id='+'<{$provider.provider_id}>',
+                method:'get' ,
+                onComplete:function(rs){
+                    var _table=$('sysproofing_review');
+                    if(rs&&!!JSON.decode(rs).success){
+                        window.finderGroup['<{$env.get.finder_id}>'].refresh();
+                        _table.getParent('.dialog').retrieve('instance').close();
+                    } else {
+                        rs = JSON.decode(rs);
+                        alert(rs.error);
+                    }
+                }
+            }).send();
+        } else {
+            var req = new Request({
+                url: '?app=sysproofing&ctl=admin_proofing&act=toReview&provider_id='+'<{$provider.provider_id}>&reject_reason='+reject_reason,
+                method:'get' ,
+                onComplete:function(rs){
+                    var _table=$('sysproofing_review');
+                    if(rs&&!!JSON.decode(rs).success){
+                        window.finderGroup['<{$env.get.finder_id}>'].refresh();
+                        _table.getParent('.dialog').retrieve('instance').close();
+                    } else {
+                        rs = JSON.decode(rs);
+                        alert(rs.error);
+                    }
+                }
+            }).send();
+        }
+
+
+    });
+</script>

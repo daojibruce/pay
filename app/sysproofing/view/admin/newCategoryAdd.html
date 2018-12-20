@@ -1,0 +1,70 @@
+<form id="dlycorpForm" class="tableform" method="POST" action="?app=sysproofing&ctl=admin_proofing&act=newCategorySave" >
+    <input type="hidden" name="apply_id" value="<{$apply.apply_id}>">
+    <div class="division">
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <th><label><{t}>服务商名称:<{/t}></label></th>
+                <td><{$provider.provider_name}></td>
+            </tr>
+            <tr>
+                <th><label><{t}>服务类型:<{/t}></label></th>
+                <{foreach from=$apply.cat_id item=cat}>
+                <td><{$cat.cat_name}></td>
+                <{/foreach}>
+            </tr>
+            <tr>
+                <th><label><{t}>申请原因:<{/t}></label></th>
+                <td><{$apply.reason}></td>
+            </tr>
+            <tr>
+                <th><label><{t}>服务能力描述:<{/t}></label></th>
+                <td><{$apply.desc}></td>
+            </tr>
+            <tr id="pass_result">
+                <th><{t}>审核结果：<{/t}></th>
+                <td>
+                    <input type="radio" name="pass" value="1" id="pass" checked>通过
+                    <input type="radio" name="pass" value="2" id="reject">不通过
+                    <input type="hidden" name="is_reject" value="1" id="is_reject">
+                </td>
+            </tr>
+            <tr valign="" hidden id="reject_tr">
+                <th><{t}>拒绝原因：<{/t}></th>
+                <td>
+                    <textarea name="reject_reason" value="" id="reject_reason"></textarea>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="table-action">
+        <button class="btn btn-primary" type="submit"><span><span><{t}>保存<{/t}></span></span></button>
+    </div>
+</form>
+
+<script>
+    $('pass').addEvent('click', function(e) {
+        $('reject_tr').set('hidden',true);
+        $('is_reject').set('value',1);
+    });
+    $('reject').addEvent('click', function(e) {
+        $('reject_tr').erase('hidden');
+        $('is_reject').set('value',2);
+    });
+
+    $('dlycorpForm').store('target',{
+        onComplete:function(rs){
+            if(!rs) return;
+            rs = JSON.decode(rs);
+            if(rs.success){
+                if(window.finderGroup) window.finderGroup['<{$env.get.finder_id}>'].refresh();
+                if($('dlycorpForm').getParent('.dialog')){
+                    var Dlg = $('dlycorpForm').getParent('.dialog').retrieve('instance');
+                    if(Dlg.update){
+                        Dlg.update.retrieve('instance').initContent();
+                    }
+                    Dlg.close();
+                }
+            }
+        }
+    });
+</script>

@@ -1,0 +1,50 @@
+<div class="alert alert-error message in" role="alert" id="messagebox" style="display:none;"></div>
+<header class="header">
+  <a href="#" class="logo" style="text-align: center;">
+    <{img src="logo.png" app="topc"}>
+  </a>
+  <nav class="navbar navbar-static-top" role="navigation">
+    <!-- Sidebar toggle button-->
+
+    <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button" title="显示/隐藏导航">
+      <span class="sr-only">显示/隐藏导航</span>
+      <span class="fa fa-bars"></span>
+    </a>
+
+    <div class="navbar-left container-fluid">
+      <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">显示/隐藏导航栏</span>
+        <span class="fa fa-bars"></span>
+      </button>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+          <{foreach from=$toptemai.navbar item=item_navbar}>
+          <li <{if $item_navbar.default}>class="active"<{/if}>>
+            <a href="<{url action=$item_navbar.action}>">
+              <i class="<{$item_navbar.icon}>"></i>
+              <{$item_navbar.label}>
+            </a>
+          </li>
+          <{/foreach}>
+        </ul>
+      </div>
+    </div>
+    <div class="navbar-right">
+      <ul class="nav navbar-nav">
+        <li class="dropdown user user-menu">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            <i class="glyphicon glyphicon-user"></i>
+            <span><{$toptemai.userinfo}></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>
+<div class="modal fade" id="pwdupdateIndexDialog" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+

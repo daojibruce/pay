@@ -1,0 +1,8 @@
+<services>
+    <service id="desktop_finder.systemai_mdl_temai">
+        <class>systemai_finder_temai</class>
+    </service>
+	<service id="desktop_finder.systemai_mdl_temaiapply">
+        <class>systemai_finder_temaiapply</class>
+    </service>
+</services>

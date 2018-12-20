@@ -1,0 +1,49 @@
+<div class="col-lg-13 box">
+  <div class="membercenter-box">
+    <div class="membercenter-box-hd">
+      绑定提现银行卡列表
+    </div>
+      <div class="membercenter-box-bd">
+        <table class="item-table table-address">
+        <colgroup>
+          <col class="table-col-1">
+          <col class="table-col-3">
+		  <col class="table-col-3">
+		  <col class="table-col-3">
+		  <{*}><col class="table-col-3"><{*}>
+          <col class="table-col-4">
+          <col class="table-col-5">
+        </colgroup>
+        <thead>
+          <tr>
+            <td>证件类型</td>
+            <td>证件号码</td>
+            <td>银行卡号</td>
+            <td>开户行</td>
+			<td>银行信息</td>
+			<td>手机号</td>
+            <{*}><td>操作</td><{*}>
+          </tr>
+        </thead>
+        <tbody>
+		<{foreach item=bank from=$bank_list}>
+        <tr>
+            <td><{$b2bpay_bind.id_type[$bank.id_type]}></td>
+            <td><{$bank.id_code}></td>
+            <td><{$bank.acct_id}></td>
+            <td><{$b2bpay_bind.bank_list[$bank.bank_code]}></td>
+			<td><{$bank.bank_name}></td>
+			<td><{$bank.mobile_phone}></td>
+            <{*}>
+			<td class="col-operate">
+              <a href="<{url action=topc_ctl_pay_bank@bindBankCard id=$bank.id}>" class="action-edit">编辑</a>
+              <!-- <a href="http://jingbo.com/member-deladdr.html" class="action-delete">删除</a> -->
+            </td>
+			<{*}>
+          </tr>
+		  <{/foreach}>
+      </tbody></table>
+      </div>
+    </form>
+  </div>
+</div>

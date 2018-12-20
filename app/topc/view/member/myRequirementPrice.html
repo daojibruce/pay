@@ -1,0 +1,70 @@
+<{if $offers}>
+<div class="col-lg-13 box">
+    <div class="membercenter-box section">
+        <div class="membercenter-box-bd">
+            <table class="proofing-require">
+                <thead>
+                    <td class="proo-name">报价单位</td>
+                    <td class="proo-name">需求名称</td>
+                    <td>数量</td>
+                    <td>单价</td>
+                    <td>单位</td>
+                    <td>小计</td>
+                    <td>运费</td>
+                    <td>合计</td>
+                </thead>
+                <tbody>
+                <{foreach from=$offers item=offer}>
+                    <tr>
+                        <td><{$offer.provider_name}></td>
+                        <td><{$offer.sample_name}></td>
+                        <td><{$offer.quantity}></td>
+                        <td><{$offer.per_fee}></td>
+                        <td><{$offer.unit}></td>
+                        <td><{$offer.sample_fee}></td>
+                        <td><{$offer.post_fee}></td>
+                        <td><{$offer.total_fee}></td>
+                    </tr>
+                    <tr>
+                        <td colspan="1">发货方式：<{$offer.post_type}></td>
+                        <td colspan="4">期望付款方式：<{if $offer.pay_type != '0'}><{$offer.pay_type}><{else}>一次性<{/if}></td>
+                        <td colspan="2">预计到货日期：<{$offer.offer_delivery|date:'Y/m/d'}></td>
+                        <td colspan="1">
+                            <button type="button" class="btn btn-major proofing-btn bid-offer" style="margin: 0 auto;">
+                                <span style="padding-left: 10px;"><span style="padding-right: 10px;line-height: 30px!important;">确定中标</span></span>
+                            </button>
+                            <input type="hidden" name="offer_id" value="<{$offer.offer_id}>">
+                            <input type="hidden" name="sample_id" value="<{$offer.sample_id}>">
+                        </td>
+                    </tr>
+                <{/foreach}>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<{else}>
+该需求当前无报价！
+<{/if}>
+
+<script>
+    $('.bid-offer').on('click', function(){
+        var offer_id = $(this).next().val();
+        var sample_id = $(this).next().next().val();
+        if (confirm('确认选定该报价吗？')) {
+            $.post('<{url action=topc_ctl_member@bidOffer}>', {'offer_id':offer_id, 'sample_id':sample_id}, function(re){
+                if (re.status == 'error') {
+                    Message.error(re.message);
+                    setTimeout('',1000);
+                    if (re.url) {
+                        location.href = re.url;
+                    }
+                } else {
+                    Message.success(re.message);
+                    setTimeout('',1000);
+                    location.href = re.url;
+                }
+            });
+        }
+    });
+</script>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <{include file="toptemai/common/head.html"}>
+  </head>
+  <body class="skin-blue">
+    <{include file="toptemai/common/header.html"}>
+    <div class="wrapper row-offcanvas row-offcanvas-left<{if !$toptemai.sidebar}> center-container<{/if}>">
+
+      <{include file="toptemai/common/sidebar.html"}>
+
+      <aside class="right-side">
+        <{if $toptemai.contentTitle}>
+        <section class="content-header">
+          <h1>
+            <{$toptemai.contentTitle}>
+            <small></small>
+          </h1>
+          <ol class="breadcrumb breadcrumb-primary">
+            <{foreach from=$toptemai.path item=item name=name}>
+            <{if !$env.foreach.name.last}>
+            <li><a href="<{$item.url}>"><{$item.title}></a></li>
+            <{else}>
+            <li class="active"><{$item.title}></li>
+            <{/if}>
+            <{/foreach}>
+          </ol>
+        </section>
+        <{/if}>
+        <section class="content">
+          <{include file=$toptemai.view}>
+        </section>
+      </aside>
+    </div>
+    <{include file="toptemai/common/footer.html"}>
+  </body>
+</html>

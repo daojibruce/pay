@@ -1,0 +1,16 @@
+<app>
+    <name>广发银行见证宝</name>
+    <description>广发见证宝B2B</description>
+    <author>
+        <name>千匠开发团队</name>
+        <email>lijidao@stl.cn</email>
+        <url>http://www.stl.cn</url>
+    </author>
+
+    <version>1.0</version>
+    <license>stl license</license>
+
+    <depends>
+        <app>base</app>
+    </depends>
+</app>

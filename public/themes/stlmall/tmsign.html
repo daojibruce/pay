@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <{header app=topc}>
+    <link rel="stylesheet" href="images/index.css" />
+</head>
+<body class="login-panel">
+<{require file="block/passport_header.html"}>
+
+<div class="signin2 signinup-center">
+    <div class="form-control">
+        <!--注册协议弹框-->
+        <div class="agreement">
+            <div class="title">平台展销商入驻协议</div>
+            <div><{$license}></div>
+        </div>
+        <ul>
+            <li class="form-row">
+                <label class="form-label">&nbsp;</label>
+                <span class="form-act">
+            <input type="checkbox" class="x-checkbox" name="license" id="for_license" data-validate="onerequired" data-caution="<{t}>请选择同意<{/t}>">
+            <label for="for_license" style="color: #999999;">我已阅读并同意该协议</label>
+        </span>
+            </li>
+        </ul>
+    </div>
+    <div class="text-center"><a href="javascript:void(0);" class="btn btn-import btn-lg dialog-btn-close"><span><span>我要平台展销</span></span></a></div>
+</div>
+
+
+<{require file="block/passport_footer.html"}>
+</body>
+<script>
+    $(function(){
+        $("img.imglazyload").lazyload({
+            effect : "fadeIn"
+        });
+    });
+</script>
+</html>

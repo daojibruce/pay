@@ -1,0 +1,37 @@
+<form id="dlycorpForm" class="tableform" method="POST" action="?app=thirdparty&ctl=admin_thirdparty&act=categorySave" >
+    <input type="hidden" name="cat_id" value="<{$cat_id}>">
+    <div class="division">
+        <table width="100%" cellspacing="0" cellpadding="0">
+            <tr>
+                <th><em class="red">*</em><label><{t}>服务类型名称:<{/t}></label></th>
+                <td><{input type="text" vtype="required" name="cat_name" class="x-input" value=$cat_name maxlength="20" size="30"}></td>
+            </tr>
+            <tr>
+                <th><em class="red">*</em><label><{t}>排序(数字越小越靠前):<{/t}></label></th>
+                <td><{input type="text" vtype="required" name="sort" class="x-input" value=$sort maxlength="10" size="10"}></td>
+            </tr>
+        </table>
+    </div>
+    <div class="table-action">
+        <button class="btn btn-primary" type="submit"><span><span><{t}>保存<{/t}></span></span></button>
+    </div>
+</form>
+
+<script>
+    $('dlycorpForm').store('target',{
+        onComplete:function(rs){
+            if(!rs) return;
+            rs = JSON.decode(rs);
+            if(rs.success){
+                if(window.finderGroup) window.finderGroup['<{$env.get.finder_id}>'].refresh();
+                if($('dlycorpForm').getParent('.dialog')){
+                    var Dlg = $('dlycorpForm').getParent('.dialog').retrieve('instance');
+                    if(Dlg.update){
+                        Dlg.update.retrieve('instance').initContent();
+                    }
+                    Dlg.close();
+                }
+            }
+        }
+    });
+</script>

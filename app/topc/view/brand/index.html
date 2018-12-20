@@ -1,0 +1,50 @@
+<!--主体内容-->
+<div id="main" class="main index">
+	<div class="wrap-lg">
+		<div class="module">
+			<div class="brand-list">
+				<div class="searchbar">
+					<h3>全部品牌</h3>
+					<div class="al-wrap">
+						<div class="al-list">
+							<ul id="brand-nav">
+								<{foreach from=$tips item=tip}>
+								<li><a href="javascript:void(0);" title="<{$tip}>"><{$tip}></a></li>
+								<{/foreach}>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="al-items">
+					<{if $valid == 1}>
+					未找到品牌！
+					<{else}>
+					<{foreach from=$brands key=key item=brandList}>
+					<div class="al-item">
+						<a class="al-mao" id="<{$key}>" name="<{$key}>"><{$key}></a>
+						<ul class="clearfix">
+							<{foreach from=$brandList key=index item=brand}>
+							<li class="<{if $index%7==6}>nomar<{/if}>">
+								<a href="<{url action=topc_ctl_list@index n=$brand.brand_name k=brands}>"><img src="<{$brand.brand_logo}>"></a>
+								<div class="al-name"><{$brand.brand_name}></div>
+							</li>
+							<{/foreach}>
+						</ul>
+					</div>
+					<{/foreach}>
+					<{/if}>
+				</div>
+				<script>
+					$(function($) {
+						$("#brand-nav li a").click(function() {
+							var title = $(this).attr("title");
+							var go = "#" + title;
+							$("html,body").animate({scrollTop: $(go).offset().top}, 500);
+							$(this).css("color","#4480ca");
+						});
+					});
+				</script>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,23 @@
+<div class="side-box" id="aa">
+  <div class="hd">店铺分类</div>
+  <{foreach from=$shopCat item=data}>
+  <div class="bd">
+    <h5><{$data.cat_name}></h5>
+    <ul class="fl-list">
+      <{foreach from=$data.children item=cat}>
+      <li><a class="link" href="<{url subdomain=$subdomain action=topc_ctl_shopcenter@search shop_id=$cat.shop_id shop_cat_id=$cat.cat_id}>"><{$cat.cat_name}></a></li>
+      <{/foreach}>
+    </ul>
+  </div>
+  <{/foreach}>
+</div>
+<script>
+  $(function () {
+      $("#aa").find(".bd").eq(0).find(".fl-list").css("display","block");
+      $("#aa").find(".bd").eq(0).find("h5").addClass("jj");
+      $("#aa h5").on("click",function () {
+          $(this).toggleClass("jj").parent().siblings().find("h5").removeClass("jj");
+          $(this).next(".fl-list").slideToggle(300).parent(".bd").siblings().find(".fl-list").slideUp(300);
+      })
+  })
+</script>

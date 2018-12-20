@@ -1,0 +1,190 @@
+<ul class="signul sign-clone-append">
+    <li class="form-row">
+        <div class="signcl">
+            <span>服务撮合产品名称：</span>
+        </div>
+        <div class="signcr">
+            <input type="text" class="input-ln action-account-check" autocomplete="off" name="sample[<{$index}>][sample_name]" placeholder="填写服务撮合产品名称" required  data-caution="填写服务撮合产品名称" data-remote="" autofocus>
+        </div>
+    </li>
+
+    <li class="form-row" >
+        <div class="signcl">
+            <span>服务撮合数量：</span>
+        </div>
+        <div class="signcr">
+            <input type="text" id="" name="sample[<{$index}>][quantity]"  placeholder="填写服务撮合数量" required data-equalto="" data-caution="请填写服务撮合数量" >
+        </div>
+    </li>
+
+    <li class="form-row">
+        <div class="signcl">
+            <span>服务撮合单位：</span>
+        </div>
+        <div class="signcr">
+            <input type="text" name="sample[<{$index}>][unit]" id="t"  placeholder="填写服务撮合单位" required data-equalto="" data-caution="请填写服务撮合单位" >
+        </div>
+    </li>
+
+    <li class="form-row">
+        <div class="signcl">
+            <span>服务撮合商品材质：</span>
+        </div>
+        <div class="signcr">
+            <input type="text" name="sample[<{$index}>][material]" placeholder="填写服务撮合商品材质" required data-equalto="" data-caution="请填写服务撮合商品材质">
+        </div>
+    </li>
+
+    <li class="form-row">
+        <div class="signcl">
+            <span>服务撮合产品类型：</span>
+        </div>
+        <div class="signcrszb">
+            <select name="sample[<{$index}>][cat_id]" class="signcrform4">
+                <{foreach from=$cats item=cat}>
+                <option value="<{$cat.cat_id}>"><{$cat.cat_name}></option>
+                <{/foreach}>
+            </select>
+        </div>
+    </li>
+
+    <li class="form-row" style="height: auto;">
+        <div class="signcl">
+            <span>服务撮合补充描述：</span>
+        </div>
+        <div class="division">
+            <textarea class="form-control" placeholder="填写服务撮合补充描述" required name="sample[<{$index}>][desc]" maxlength="300"></textarea>
+        </div>
+    </li>
+
+    <li class="form-row" style="height: auto;">
+        <div class="signcl">
+            <span>上传图纸：</span>
+        </div>
+        <div id="uploader-demo<{$index}>" style="float: left;">
+            <!--用来存放item-->
+            <div id="fileList<{$index}>" class="uploader-list"></div>
+            <div id="filePicker<{$index}>">选择文件</div>
+        </div>
+    </li>
+
+    <li class="form-row">
+        <div class="signcl">
+            <span>要求交货日期：</span>
+        </div>
+        <div>
+            <select name="sample[<{$index}>][year]"></select>
+            <select name="sample[<{$index}>][month]"></select>
+            <select name="sample[<{$index}>][day]"></select>
+        </div>
+    </li>
+
+    <!--<li class="form-row">
+        <div class="signcl">
+            <span>交易付款方式：</span>
+        </div>
+        <div class="signcr">
+            <input type="text" name="sample[<{$index}>][pay_type]" placeholder="填写交易付款方式" required data-equalto="" data-caution="请填写公司地址">
+        </div>
+    </li>-->
+
+    <li class="form-row">
+        <div class="delete-proofing file-panel">
+            <span class="cancel" style="cursor: pointer;margin-left: 170px;">删除</span>
+        </div>
+
+    </li>
+    <script>
+        // 初始化Web Uploader
+        var uploader = WebUploader.create({
+            // 选完文件后，是否自动上传。
+            auto: true,
+            // swf文件路径
+            swf: '<{resource app="image" path="/uploader.swf"}>',
+            // 文件接收服务端。
+            server: '<{url action=topc_ctl_proofing@imageUpload}>',
+
+            // 选择文件的按钮。可选。
+            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+            pick: '#filePicker<{$index}>',
+        });
+        // 当有文件添加进来的时候
+        uploader.on( 'fileQueued', function( file ) {
+            var $li = $(
+                    '<div id="' + file.id + '" class="file-item thumbnail">' +
+                    '<img>' +
+                    '<div class="info">' + file.name + '</div>' +
+                    '</div>'
+                ),
+                $btns = $('<div class="file-panel">' +
+                    '<span class="cancel">删除</span></div>').appendTo( $li ),
+                $img = $li.find('img');
+
+            // $list为容器jQuery实例
+            $list = $('#fileList<{$index}>');
+            $list.append( $li );
+            // 创建缩略图
+            // 如果为非图片文件，可以不用调用此方法。
+            // thumbnailWidth x thumbnailHeight 为 100 x 100
+            thumbnailWidth =100;
+            thumbnailHeight =100;
+            uploader.makeThumb( file, function( error, src ) {
+                if ( error ) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+                $img.attr( 'src', src );
+            }, thumbnailWidth, thumbnailHeight );
+        });
+        // 文件上传过程中创建进度条实时显示。
+        uploader.on( 'uploadProgress', function( file, percentage ) {
+            var $li = $( '#'+file.id ),
+                $percent = $li.find('.progress span');
+
+            // 避免重复创建
+            if ( !$percent.length ) {
+                $percent = $('<p class="progress"><span></span></p>')
+                    .appendTo( $li )
+                    .find('span');
+            }
+
+            $percent.css( 'width', percentage * 100 + '%' );
+        });
+
+        // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+        uploader.on( 'uploadSuccess', function( file, response ) {
+            $( '#'+file.id ).addClass('upload-state-done');
+            var html = '<input type="hidden" name="sample[<{$index}>][drawing]['+file.id+']" value="'+response.new_name+'">';
+            $( '#'+file.id ).append(html);
+            $( '#'+file.id ).on( 'click', '.cancel', function() {
+                $( '#'+file.id ).remove();
+            });
+        });
+
+        // 文件上传失败，显示上传出错。
+        uploader.on( 'uploadError', function( file ) {
+            var $li = $( '#'+file.id ),
+                $error = $li.find('div.error');
+            $( '#'+file.id ).on( 'click', '.cancel', function() {
+                $( '#'+file.id ).remove();
+            });
+
+            // 避免重复创建
+            if ( !$error.length ) {
+                $error = $('<div class="error"></div>').appendTo( $li );
+            }
+
+            $error.text('上传失败');
+        });
+
+        // 完成上传完了，成功或者失败，先删除进度条。
+        uploader.on( 'uploadComplete', function( file ) {
+            $( '#'+file.id ).find('.progress').remove();
+        });
+    </script>
+</ul>
+<script>
+    $(function () {
+        new YMDselect('sample[<{$index}>][year]','sample[<{$index}>][month]','sample[<{$index}>][day]');
+    })
+</script>

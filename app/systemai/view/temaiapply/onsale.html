@@ -1,0 +1,61 @@
+<div class="tableform">
+  <form id="systemai_form" name="systemai_form" action="?app=systemai&ctl=admin_temaiapply&act=saveonsale"  method="post">
+    <input type="hidden" name="temai_server_ids" value="<{$temai_server_ids}>">
+    <div class="division">
+      <table width="100%" cellspacing="0" cellpadding="0" border="0">
+        <tbody>
+          <tr>
+            <th><em class="red">同意成为平台展销商</em></th>
+          </tr>
+          <tr>
+            <th><{t}>申请说明：<{/t}></th>
+            <td>
+                <{$temaiapply['server_desc']}>
+			</td>
+          </tr>
+          <tr>
+              <th><{t}>上次拒绝原因：<{/t}></th>
+              <td>
+                  <{$temaiapply['reson_refuse']}>
+              </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+<{area inject='.mainFoot'}>
+    <table cellspacing="0" cellpadding="0" class="table-action">
+      <tbody>
+        <tr valign="middle">
+
+          <td>
+            <{assign var="___c"  value='确定退出?'|t:'systemai'}>
+
+            <{button label="批量审核并上架"|t:'systemai' class="btn-primary" type="button"  onclick="submitForm(event)"}>
+
+            <{button label="关  闭"|t:'content' class="btn-secondary" type="button" isclosedialogbtn="1"}>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+    <{/area}>
+  </form>
+</div>
+
+<script>
+  var submitForm = function (event){
+      var _form=$('systemai_form');
+      var target={
+          onComplete:function(rs){
+              if(rs && !!JSON.decode(rs).success){
+                  window.finderGroup['<{$env.get.finder_id}>'].refresh();
+                  _form.getParent('.dialog').retrieve('instance').close();
+              }
+          }};
+    _form.store('target', target);
+    if(confirm('是否保存?')) {
+      _form.fireEvent('submit',new Event(event));
+    }
+  };
+
+</script>

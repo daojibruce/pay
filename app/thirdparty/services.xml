@@ -1,0 +1,9 @@
+<services>
+    <service id="desktop_finder.thirdparty_mdl_category">
+        <class>thirdparty_finder_category</class>
+    </service>
+
+    <service id="desktop_finder.thirdparty_mdl_provider">
+        <class>thirdparty_finder_provider</class>
+    </service>
+</services>

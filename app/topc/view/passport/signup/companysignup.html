@@ -1,0 +1,350 @@
+<!--<{css app="topshop" src="bootstrap-datepicker.css"}>
+<{script app="topshop" src="lib/datepicker2.js"}>-->
+<{script app='topc' src="distpicker.data.js"}>
+<{script app='topc' src="distpicker.js"}>
+<{script app='topc' src="YMDClass.js"}>
+<form action="<{url action=topcompany_ctl_passport@companycreate}>" method="post" id="ajaxForm" class="form-tip-horizontal">
+    <div id="main" class="main" style="width: 1190px;background-color: #f5f5f5;margin: 0 auto;padding: 0;">
+      <div class="wrap-lg" style="max-width: 960px;min-width: 960px;background-color: #ffffff;">
+          <input type="hidden"  name="pam_user[account]" id="for_account" value="wzp" data-remote="<{url action=topc_ctl_passport@checkLoginAccount}>">
+
+        <div class="signc">
+          <h3 class="signh3">公司信息</h3>
+          <ul class="signul">
+            <li class="form-row" >
+              <div class="signcl">
+                <i>*</i><span>公司名称：</span>
+              </div>
+              <div class="signcr" style="width: 690px;border: none;border-radius: 0;">
+                  <input type="text" id="company_name_id" name="pam_user[company_name]"  placeholder="填写公司名称" required data-equalto="pam_user[company_name]" data-caution="请填写公司名称"  style="border: 1px solid #cccccc;border-radius: 3px;"><span>(跟营业执照上的企业名称一致)</span>
+              </div>
+            </li>
+              <li class="form-row" style="height: 105px;">
+                <div class="signcl">
+                    <i>*</i><span>营业执照：</span>
+                </div>
+                <div class="images-uploader">
+                    <div class="handle action-upload">
+                        <input type="file" name="demand[business_license][]" accept="image/png,image/jpg,image/gif,image/jpeg"
+                               data-size="<{$env.config.image.uploadedFileMaxSize}>" data-max="2"
+                               data-remote="<{url action=toputil_ctl_image@companyUploadImages from=user type=purchase}>"
+                               class="action-file-input" >
+                        <span class="qh_xz223_dxqbg"></span>
+                    </div>
+                </div>
+            </li>
+
+              <li class="form-row">
+                  <div class="signcl">
+                      <i>*</i><span>营业执照登记号：</span>
+                  </div>
+                  <div class="signcr">
+                      <input type="text" name="pam_user[tax_id]" id="tax_id"  placeholder="填写税务登记号" required data-equalto="pam_user[tax_id]" data-caution="请填写税务登记号" >
+                  </div>
+              </li>
+              <li class="form-row">
+                  <div class="signcl">
+                      <i>*</i><span>营业执照有效期至：</span>
+                  </div>
+                  <!--<div class="signcr">
+                      <input class="x-input form-control" data-provide="datepicker" value="" name="valid_time" id="short_valid" type="date">
+                  </div>-->
+                  <div style="width: 320px;float: left;">
+                      <select name="sample[year]"></select>
+                      <select name="sample[month]"></select>
+                      <select name="sample[day]"></select>
+                  </div>
+                  <input type="checkbox" value="1" name="long_valid_time" id="long_valid">长期有效
+              </li>
+
+              <li class="form-row">
+                  <div class="signcl">
+                      <i>*</i><span>注册资本：</span>
+                  </div>
+                  <div class="signcr" style="width: 550px;border: none;border-radius: 0;">
+                      <input type="text" name="pam_user[registered_capital]" id="registered_capital"  placeholder="填写注册资本" required data-equalto="pam_user[registered_capital]" value="" data-caution="请填写注册资本" style="border: 1px solid #cccccc;border-radius: 3px;"><span>万元</span>
+                  </div>
+              </li>
+
+            <li class="form-row">
+              <div class="signcl">
+                <i>*</i><span>营业执照上注册地址：</span>
+              </div>
+            <span class="region">
+              <span id="area" data-validate="area"></span>
+            </span>
+
+            </li>
+            <li class="form-row">
+              <div class="signcl">
+                <i>*</i><span>经营地址：</span></div>
+              <div class="signcr">
+                <input type="text" name="pam_user[company_address]" placeholder="填写经营地址" required data-equalto="pam_user[company_address]" data-caution="请填写经营地址">
+              </div>
+            </li>
+            <li class="form-row">
+              <div class="signcl">
+                <i>*</i><span>联系人：</span>
+              </div>
+              <div class="signcr">
+                <input type="text" name="pam_user[company_contact]" placeholder="填写公司联系人" required data-equalto="pam_user[company_contact]" data-caution="请填写公司联系人">
+              </div>
+            </li>
+              <div class="signfl">
+                  <li class="form-row">
+                      <div class="signcl">
+                          <i>*</i><span>公司电话：</span>
+                      </div>
+                      <div class="signcr">
+                          <input type="text" name="pam_user[company_contactPhone]" placeholder="填写公司电话" required data-caution="填写公司电话">
+                      </div>
+                  </li>
+                  <li class="form-row">
+                      <div class="signcl sss">
+                          <span>传真：</span>
+                      </div>
+                      <div class="signcr">
+                          <input type="text" name="pam_user[fax]" placeholder="填写传真">
+                      </div>
+                  </li>
+              </div>
+
+
+              <li class="form-row">
+                  <div class="signcl">
+                      <span>email：</span>
+                  </div>
+                  <div class="signcr">
+                      <input type="text" name="pam_user[email]" placeholder="填写公司email" data-caution="填写公司email">
+                  </div>
+              </li>
+
+              <li class="form-row">
+                  <div class="signcl">
+                      <span>网址：</span>
+                  </div>
+                  <div class="signcr">
+                      <input type="text" name="pam_user[website]" placeholder="填写公司网址">
+                  </div>
+              </li>
+
+            <li class="form-row">
+              <div class="signcl">
+                  <i>*</i><span>企业人数：</span>
+              </div>
+              <div class="signcr">
+                  <input type="text" name="pam_user[company_peopleNum]" placeholder="填写企业人数">
+              </div>
+            </li>
+            <li>
+              <div class="signcl">
+                <span>公司性质：</span>
+              </div>
+              <div class="signcrszb">
+                <select name="pam_user[company_nature]" class="signcrform5">
+                  <option value="0">-请选择-</option>
+                    <{foreach from=$company_type item=company}>
+                  <option value="<{$company.name}>"><{$company.name}></option>
+                    <{/foreach}>
+                </select>
+              </div>
+            </li>
+
+
+            <li class="form-row">
+              <span class="form-act" style="padding-left: 155px;">
+                <input type="checkbox" class="x-checkbox" name="license" id="for_license" data-validate="onerequired" data-caution="<{t}>请选择同意<{/t}>">
+                <label for="for_license" style="color: #999999;font-size: 14px;">我已阅读并同意<a href="javascript:void(0);" class="link-color" style="float: none;color: #da251a;">《千匠用户服务协议》</a></label>
+              </span>
+            </li>
+            <li class="signagre">
+              <span class="form-act">
+                <button type="submit" class="btn btn-success btn-block" rel="_request"><span><span>立即认证</span></span></button>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+    <!--注册协议弹框-->
+    <div id="dialog" style="display:none;">
+        <div class="agreement">
+            <div class="title">仕泰隆用户服务协议</div>
+            <div><{$license}></div>
+            <div class="text-center"><a href="javascript:void(0);" class="btn btn-import btn-lg dialog-btn-close"><span><span>同意并继续</span></span></a></div>
+        </div>
+    </div>
+</form>
+
+<script>
+
+//图片处理
+    $(function () {
+        var uploader = $('.images-uploader1');
+        uploader.AjaxFileUpload({
+            onComplete: function(rs, container) {
+                if (rs.error) {
+                    return alert(rs.message);
+                }
+                var data = $.makeArray(rs.data);
+                var name = container.find('input[type=file]').attr('name');
+
+                $.each(data, function () {
+                    var str = container.parent().next().find('input[type=hidden]').val();
+                    container.parent().next().find('input[type=hidden]').val(str+","+this.image_id);
+                    var img_src_list_html = '<div class="handle img-thumbnail">' +
+                            '<a href="' + this.url + '" id="'+this.image_id+'" target="_blank">'+this.image_name+'</a> &nbsp;&nbsp; ' +
+                            '<a href="javascript:void(0)" ' +
+                            'onclick="if(!confirm(\'你确定删除本行吗？\')) return false;' +
+                            'var vthis_handler = $(this).parent();' +
+                            'var src_obj = vthis_handler.parent().find(\'input[type=hidden]\');' +
+                            'var list_src = src_obj.val();' +
+                            'var img_src_list = list_src.replace($(this).prev().attr(\'id\'),\'\');' +
+              'src_obj.val(img_src_list);' +
+                            'vthis_handler.remove();">删除</a></div>';
+                    container.parent().next().append(img_src_list_html);
+                });
+                container.on('click', '.action-remove', function (e) {
+                    $(this).parent().remove();
+                });
+                container.on('mouseover', '.img-thumbnail', function (e) {
+                    $(this).find('.action-remove').show();
+                });
+                container.on('mouseout', '.img-thumbnail', function (e) {
+                    $(this).find('.action-remove').hide();
+                });
+            }
+        });
+    })
+
+
+    new AreaWidget({
+        dataUrl:"<{$env.base_url}>/app/ectools/statics/scripts/region.json",
+        select:$('#area')
+    });
+
+    /*
+    * 用户名验证
+    * custom s dengLy
+    * 2015.12.31
+    */
+    var form = $('#ajaxForm');
+    var account = form.find('.action-account-check');
+
+    form.find('button[type=submit]').data('ajaxConfig', {
+        callback: function(rs) {
+            if(rs.error) {
+                changeCode($('img.auto-change-verify-handle'));
+            }
+        }
+    });
+
+    account.data('remoteCallback',function(rs){
+        var parent = this.closest('.form-row');
+        var tips = new Tips({
+            'class': 'caution col-lg-4',
+            'target': parent
+        });
+        if(rs.error) {
+            parent.removeClass('has-success').addClass('has-error');
+            return tips.error(rs.message);
+        }
+        else {
+            parent.removeClass('has-error');
+            if(rs.success) {
+                parent.addClass('has-success');
+                tips.success(rs.message);
+            }
+            else {
+                tips.hide();
+            }
+        }
+    });
+
+  /*
+  * custom s dengLy
+  *  2015.12.31
+  *  判断密码输入是否一致
+  */
+
+ $('#set_pwd_confirm').change(function(){
+     var loginPassword=$('#set_password').val();
+     var login_pwd_confirm=$('#set_pwd_confirm').val();
+
+     $.post('<{url action=topcompany_ctl_passport@verifyPassword}>', 'loginPassword='+loginPassword+'&login_pwd_confirm='+login_pwd_confirm, function(rs){
+         var parent = $('#set_pwd_confirm').closest('.form-row');
+         var tips = new Tips({
+             'class': 'caution col-lg-4',
+             'target': parent
+         });
+         if(rs.error) {
+             parent.removeClass('has-success').addClass('has-error');
+             return tips.error(rs.message);
+         }
+         else {
+             parent.removeClass('has-error');
+             if(rs.success) {
+                 parent.addClass('has-success');
+                 tips.success(rs.message);
+             }
+             else {
+                 tips.hide();
+             }
+         }
+
+         if(rs.success) {
+
+             $('#messagebox').message(rs.message, 'success');
+             setTimeout(function(){location.reload();}, 800);
+         }
+     });
+ });
+
+    $('.link-color').click(function (e) {
+        $('#dialog').dialog({
+            width: 890,
+            height: 400,
+            title:'仕泰隆用户注册协议',
+            close: function(){
+                document.querySelector('#for_license').checked = true;
+            }
+        });
+    });
+
+    $("body").css("background-color","#ffffff");
+
+    $('#long_valid').on('click', function(){
+       if ($(this).prop('checked')) {
+           $('#short_valid').attr('value','');
+       }
+    });
+$('#short_valid').on('click', function(){
+    $('#long_valid').prop('checked',false);
+});
+$(".signfl li").css({
+    "width":"410px",
+    "height":"60px",
+    "margin-left":0,
+    "margin-right":"10px"
+});
+$(".signfl .signcr").css({
+    "width":"200px",
+    "margin-left":0,
+});
+$(".signfl input").css({
+    "width":"180px",
+    "margin-left":0,
+});
+$(".signfl li .signcl").css({
+    "line-height":"58px",
+    "margin-top":0,
+});
+$(".signcl").css("width","180px");
+$(".sss").css("width","80px");
+$(function () {
+    new YMDselect('sample[year]','sample[month]','sample[day]');
+    new YMDselect('start_year','start_month','start_day');
+    new YMDselect('end_year','end_month','end_day');
+});
+</script>

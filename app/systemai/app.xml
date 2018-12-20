@@ -1,0 +1,12 @@
+<app>
+    <name>平台展销频道管理平台</name>
+    <type>systemai</type>
+    <description>平台展销管理业务功能</description>
+    <author>
+        <name>shopex开发团队</name>
+        <email>dev@shopex.cn</email>
+        <url>http://www.shopex.cn</url>
+    </author>
+    <version>0.1</version>
+    <license>shopex license</license>
+</app>

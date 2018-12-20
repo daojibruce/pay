@@ -1,0 +1,321 @@
+<{css app='topc' src="webuploader.css"}>
+<{script app='topc' src="webuploader.js"}>
+<{script app='topc' src="distpicker.data.js"}>
+<{script app='topc' src="distpicker.js"}>
+<{script app='topc' src="YMDClass.js"}>
+<form action="<{url action=topc_ctl_proofing@doRelease}>" method="post" id="release_form" class="form-tip-horizontal">
+    <div id="main" class="main" style="width: 1190px;background-color: #f5f5f5;margin: 0 auto;padding: 0;">
+        <div class="wrap-lg" style="max-width: 960px;min-width: 960px;background-color: #ffffff;">
+            <div class="signc sign-clone">
+                <ul class="signul">
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>产品名称：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" class="input-ln action-account-check" autocomplete="off" name="sample[0][sample_name]"  placeholder="填写产品名称" required  data-caution="填写产品名称" data-remote="" autofocus>
+                        </div>
+                    </li>
+
+                    <li class="form-row" >
+                        <div class="signcl">
+                            <span>数量：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" id="" name="sample[0][quantity]"  placeholder="填写数量" required data-equalto="" data-caution="请填写数量" >
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>单位：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="sample[0][unit]" id="t"  placeholder="填写单位" required data-equalto="" data-caution="请填写单位" >
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>商品材质：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="sample[0][material]" placeholder="填写商品材质" required data-equalto="" data-caution="请填写商品材质">
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>产品类型：</span>
+                        </div>
+                        <div class="signcrszb">
+                            <select name="sample[0][cat_id]" class="signcrform4">
+                                <{foreach from=$cats item=cat}>
+                                <option value="<{$cat.cat_id}>"><{$cat.cat_name}></option>
+                                <{/foreach}>
+                            </select>
+                        </div>
+                    </li>
+
+                    <li class="form-row" style="height: auto;">
+                        <div class="signcl">
+                            <span>补充描述：</span>
+                        </div>
+                        <div class="division">
+                            <textarea class="form-control" placeholder="填写补充描述" required name="sample[0][desc]" maxlength="300"></textarea>
+                        </div>
+                    </li>
+
+                    <li class="form-row" style="height: auto;">
+                        <div class="signcl">
+                            <span>上传图纸：</span>
+                        </div>
+                        <div id="uploader-demo">
+                            <!--用来存放item-->
+                            <div id="fileList" class="uploader-list"></div>
+                            <div id="filePicker">选择文件</div>
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>要求交货日期：</span>
+                        </div>
+                        <div>
+                            <select name="sample[0][year]"></select>
+                            <select name="sample[0][month]"></select>
+                            <select name="sample[0][day]"></select>
+                        </div>
+                    </li>
+
+                    <!--<li class="form-row" style="display: none;">
+                        <div class="signcl">
+                            <span>交易付款方式：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="sample[0][pay_type]" placeholder="填写交易付款方式" data-equalto="" data-caution="请填写公司地址" value="不知道是什么">
+                        </div>
+                    </li>-->
+                    <li class="form-row">
+                        <div class="delete-proofing file-panel">
+                            <span class="cancel" style="cursor: pointer;margin-left: 170px;">删除</span>
+                        </div>
+
+                    </li>
+
+                </ul>
+                <div class="add-new"></div>
+            </div>
+            <div class="signc">
+                <ul class="signul">
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>报价截止时间：</span>
+                        </div>
+                        <div>
+                            <select name="start_year"></select>
+                            <select name="start_month"></select>
+                            <select name="start_day"></select>
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>至</span>
+                        </div>
+                        <div>
+                            <select name="end_year"></select>
+                            <select name="end_month"></select>
+                            <select name="end_day"></select>
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>交货地点：</span>
+                        </div>
+                        <div class="form-inline">
+                            <div data-toggle="distpicker">
+                                <div class="form-group">
+                                    <select class="form-control" id="province1" name="province"></select>
+                                    <label class="sr-only" for="province1"> </label>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="city1" name="city"></select>
+                                    <label class="sr-only" for="city1"> </label>
+                                </div>
+                                <div class="form-group">
+                                    <select class="form-control" id="district1" name="district"></select>
+                                    <label class="sr-only" for="district1"> </label>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>详细地址：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="detail_addr" placeholder="填写详细地址" required data-equalto="" data-caution="请填写详细地址">
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>联系人：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="user_name" placeholder="填写联系人" required data-equalto="" data-caution="请填写联系人">
+                        </div>
+                    </li>
+
+                    <li class="signagre">
+              <span class="form-act">
+                <button type="submit" class="btn btn-success btn-block" rel="_request" id="submit_release"><span><span>发布需求</span></span></button>
+              </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    // 初始化Web Uploader
+    var uploader = WebUploader.create({
+        // 选完文件后，是否自动上传。
+        auto: true,
+        // swf文件路径
+        swf: '<{resource app="image" path="/uploader.swf"}>',
+        // 文件接收服务端。
+        server: '<{url action=topc_ctl_proofing@saveDrawing}>',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#filePicker',
+    });
+    // 当有文件添加进来的时候
+    uploader.on( 'fileQueued', function( file ) {
+        var $li = $(
+                '<div id="' + file.id + '" class="file-item thumbnail">' +
+                '<img>' +
+                '<div class="info">' + file.name + '</div>' +
+                '</div>'
+            ),
+            $btns = $('<div class="file-panel">' +
+                '<span class="cancel">删除</span></div>').appendTo( $li ),
+            $img = $li.find('img');
+
+        // $list为容器jQuery实例
+        $list = $('#fileList');
+        $list.append( $li );
+        // 创建缩略图
+        // 如果为非图片文件，可以不用调用此方法。
+        // thumbnailWidth x thumbnailHeight 为 100 x 100
+        thumbnailWidth =100;
+        thumbnailHeight =100;
+        uploader.makeThumb( file, function( error, src ) {
+            if ( error ) {
+                $img.replaceWith('<span>不能预览</span>');
+                return;
+            }
+            $img.attr( 'src', src );
+        }, thumbnailWidth, thumbnailHeight );
+    });
+    // 文件上传过程中创建进度条实时显示。
+    uploader.on( 'uploadProgress', function( file, percentage ) {
+        var $li = $( '#'+file.id ),
+            $percent = $li.find('.progress span');
+
+        // 避免重复创建
+        if ( !$percent.length ) {
+            $percent = $('<p class="progress"><span></span></p>')
+                .appendTo( $li )
+                .find('span');
+        }
+
+        $percent.css( 'width', percentage * 100 + '%' );
+    });
+
+    // 文件上传成功，给item添加成功class, 用样式标记上传成功。
+    uploader.on( 'uploadSuccess', function( file, response ) {
+        console.log(response);
+        $( '#'+file.id ).addClass('upload-state-done');
+        var html = '<input type="hidden" name="sample[0][drawing]['+file.id+']" value="'+response.new_name+'">';
+        $( '#'+file.id ).append(html);
+        $( '#'+file.id ).on( 'click', '.cancel', function() {
+            $( '#'+file.id ).remove();
+        });
+    });
+
+    // 文件上传失败，显示上传出错。
+    uploader.on( 'uploadError', function( file ) {
+        var $li = $( '#'+file.id ),
+            $error = $li.find('div.error');
+        $( '#'+file.id ).on( 'click', '.cancel', function() {
+            $( '#'+file.id ).remove();
+        });
+
+        // 避免重复创建
+        if ( !$error.length ) {
+            $error = $('<div class="error"></div>').appendTo( $li );
+        }
+
+        $error.text('上传失败');
+    });
+
+    // 完成上传完了，成功或者失败，先删除进度条。
+    uploader.on( 'uploadComplete', function( file ) {
+        $( '#'+file.id ).find('.progress').remove();
+    });
+</script>
+<script>
+    new AreaWidget({
+        dataUrl:"<{$env.base_url}>/app/ectools/statics/scripts/region.json",
+        select:$('#area')
+    });
+
+    $("body").css("background-color","#ffffff");
+    $(function () {
+        var index = 1;
+        $('body').on('click','.add-new', function () {
+            $.post('<{url action=topc_ctl_proofing@getSampleHtml}>',{'index':index}, function(re){
+                $('.add-new').before(re);
+            });
+            index += 1;
+        }).on('click','.delete-proofing', function () {
+            if ($('.sign-clone').children('ul').length <= 1) {
+                Message.error('至少填写一个撮合需求！')
+            } else {
+                $(this).parents('ul').remove();
+            }
+
+        });
+
+    });
+    $(function () {
+        new YMDselect('sample[0][year]','sample[0][month]','sample[0][day]');
+        new YMDselect('start_year','start_month','start_day');
+        new YMDselect('end_year','end_month','end_day');
+    });
+
+    //提交表单
+    $('#submit_release').on('click', function(e){
+        var form = $('#release_form');
+        var url = form.attr('action');
+        $.post(url, form.serialize(), function (re) {
+            if (re.status == 'error') {
+                if (re.url) {
+                    location.href = re.url;
+                } else {
+                    Message.error(re.message);
+                }
+            } else {
+                Message.success('发布成功！');
+                setTimeout("",3000);
+                location.href = '<{url action=topc_ctl_proofing@index}>';
+            }
+        });
+        return false;
+    });
+</script>

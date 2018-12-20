@@ -1,0 +1,33 @@
+<!-- main container -->
+<div class="row member-container">
+  <div class="col-lg-3 box member-container-left">
+    <div ><a href="<{url action=topc_ctl_member@control}>"  class="member-home-btn">返回会员中心</a> </div>
+    <div class="side-nav">
+      <div class="side-nav-item">
+        <div class="side-nav-title"><{$cpmenu.label}></div>
+        <ul class="side-nav-list">
+          <{foreach from=$cpmenu.items item=items}>
+          <li <{if $action == $items.action}> class="on"<{/if}>><a href="<{url action=$items.action}>"><{$items.label}></a></li>
+          <{/foreach}>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-13 box">
+    <{include file=$_PAGE_}>
+  </div>
+</div>
+<script>
+  $('.side-nav-item .side-nav-title').on('click', function() {
+      var ul = $(this).next();
+      if(ul.is(':hidden')) {
+          ul.show();
+          ul.parents('.side-nav-item').siblings().children('ul').hide();
+      } else {
+          ul.hide();
+      }
+  });
+  $(function(){
+      $('.side-nav-list .on').parents('ul').show();
+  });
+</script>

@@ -1,0 +1,31 @@
+<form id="cancelForm" action="?app=sysuser&ctl=admin_user&act=approve&status=agree&user_id=<{$user_id}> "  method="POST" >
+    <div class="table-action">
+        <{button type="submit" id='cancel-form-submit' label="确定"}>
+        <{button type="button" isclosedialogbtn="1" label="放弃"}>
+    </div>
+</form>
+
+<script>
+    (function(){
+        var _form = $('cancelForm');
+        var btn =$('cancel-form-submit');
+        var finder = finderGroup['<{$env.get._finder.finder_id}>'];
+        _form.store('target',{
+            onSuccess:function(response){
+                var hash_res_obj = JSON.decode(response);
+                if (hash_res_obj.success != undefined && hash_res_obj.success != ""){
+                    try{
+                        var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                    }catch(e){}
+                    if(_dialogIns){
+                        _dialogIns.close();
+                    }
+                }
+            }
+        });
+
+        btn.addEvent('click',function(){
+            _form.fireEvent('submit',{stop:$empty});
+        });
+    })();
+</script>

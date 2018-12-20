@@ -1,0 +1,120 @@
+<div class="col-lg-13 box">
+  <div class="membercenter-box">
+    <div class="membercenter-box-hd">
+      会员账户信息
+    </div>
+    <form action="<{url action=topc_ctl_pay_bank@saveBankInfo}>" method="post" id="ajax_form">
+      <div class="membercenter-box-bd">
+        <div class="row">
+          <div class="col-lg-8 membercenter-userinfo">
+            <ul>
+              <li class="form-row">
+                <label class="form-label" for="for_CustName">真实姓名：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="CustName" id="for_CustName" value="<{$bank_info.cust_name}>" required maxlength="20" >
+                </span>
+              </li>
+              <li class="form-row">
+                <label class="form-label" for="for_IdType">会员证件类型：</label>
+                <span class="form-act">
+                  <select name="IdType">
+                    <{foreach item=type key=key from=$b2bpay_bind.id_type}>
+                    <option value="<{$key}>"<{if $bank_info.id_type == $key}> selected<{/if}>><{$type}></option>
+					<{/foreach}>
+                  </select>
+                </span>
+              </li>
+              <li class="form-row">
+                <label class="form-label" for="for_IdCode">会员证件号码：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="IdCode" id="for_IdCode" value="<{$bank_info.id_code}>" required maxlength="20" >
+                </span>
+              </li>
+              <li class="form-row">
+                <label class="form-label" for="for_bankNames">开户银行：</label>
+                <span class="form-act">
+                  <select id="bankCode" name="bankCode">
+					<{foreach item=bank key=key from=$b2bpay_bind.bank_list}>
+                    <option value="<{$key}>"<{if $bank_info.bank_code == $key}> selected<{/if}>><{$bank}></option>
+					<{/foreach}>
+                  </select>
+                </span>
+              </li>
+              <li class="form-row">
+                <label class="form-label" for="area">开户城市：</label>
+                <span class="form-act" id="area" data-validate="area"></span>
+              </li>
+              <li class="form-row">
+                <label class="form-label" for="for_AcctId">银行账户：</label>
+                <span class="form-act">
+                  <input class="input-ln" type="text" name="AcctId" id="for_AcctId" value="<{$bank_info.acct_id}>" required minlength="2" maxlength="20" placeholder="提现的银行卡">
+                </span>
+              </li>
+              <li class="form-row">
+                <label for="for_MobilePhone" class="form-label">手机号：</label>
+                <span class="form-act">
+                  <input type="text" name="MobilePhone" id="for_MobilePhone" required maxlength="11" value="<{$bank_info.mobile_phone}>">
+				  <i style="color:#666"> Tips: 请填写该卡在银行预留的手机号码</i>
+                </span>
+
+              </li>
+
+              <li class="form-row">
+                <label class="form-label">开户支行：</label>
+                <span class="form-act">
+                  <select name="bankName" id="bankName">
+                        <option>--请选择开户支行--</option>
+                  </select>
+                </span>
+              </li>
+
+              <li class="form-row">
+                <label for="" class="form-label">选择绑定类型：</label>
+                <span class="form-act">
+					<label>
+						<input type="radio" name="bindtype" value="0" <{if $userInfo.bindtype==0}>checked<{/if}>>
+						小额鉴权
+					</label>
+					<label>
+						<input type="radio" name="bindtype" value="1" <{if $userInfo.bindtype==1}>checked<{/if}>>
+						银联验证
+					</label>
+                </span>
+              </li>
+			  
+              <li class="form-row">
+                <label for="" class="form-label"></label>
+                <span class="form-act">
+                  <button type="submit" class="btn btn-success" ><span>下一步</span></button>
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+      
+<script type="text/javascript">
+    $('#area').multiSelect({
+        dataUrl: '<{url action=topc_ctl_pay_bank@showC}>',
+        initData: '<{$userInfo.region_id}>'
+    });
+    $('#area ,#bankCode').change(function(){
+        var citycode = $('#arealist').val()
+        var bankclscode = $('#bankCode').val();
+        $.ajax({
+            type : 'POST',
+            url : "<{url action=topc_ctl_pay_bank@getBankList}>" ,
+            data : {"bankclscode":bankclscode,"citycode":citycode},
+            success:function(res){
+                console.log(res);
+                $('#bankName').empty();
+                $.each(res,function(i,val){
+                    $('#bankName').append('<option value="'+val.bankno+'">'+val.bankname+'</option>');
+                });
+            }
+        })
+    });
+</script>

@@ -1,0 +1,38 @@
+<div class="main-tit" style="background-position: 0px 0px;">
+<h3><{$data.home_catename}></h3>
+<ul class="main-tab">
+  <{foreach from=$data.home_groupname item=groupName key=groupIndex}>
+  <li class="mom">
+    <h4 class="tab-tit"><{$groupName}></h4>
+    <div class="tab-list show">
+      <{assign var="firstItemId" value=$data['home_goods'][$groupIndex].0}>
+      <{assign var="firstItem" value=$data['data'][$groupName][$firstItemId]}>
+      <div class="tab-big tab-link" data-href="/item.html?item_id=<{$firstItemId}>">
+        <div class="tab-big-pic"><img width="168" height="120" src="<{$firstItem['image_default_id']}>" alt="<{$firstItem['title']}>"></div>
+        <h3><{$firstItem['title']}></h3>
+        <p><{$firstItem['sub_title']}></p>
+        <span>¥<{$firstItem['price']}></span>
+        <div class="tab-go c0">go&gt;&gt;</div>
+      </div>
+      <{assign var="itemList" value=$data['home_goods'][$groupIndex]}>
+      <ul class="tab-sm">
+        <{foreach from=$itemList item=itemId key=itemIndex}>
+        <{if $itemIndex > 0}>
+            <{assign var="goodsItem" value=$data['data'][$groupName][$itemId]}>
+            <li>
+              <div class="tab-sm-pic"><a href="/item.html?item_id=<{$itemId}>"><img width="75" height="70" src="<{$goodsItem['image_default_id']}>" alt="<{$goodsItem['title']}>"></a></div>
+              <div class="tab-info">
+                <h3><a href="/item.html?item_id=<{$itemId}>"><{$goodsItem['title']}></a></h3>
+                <p><{$goodsItem['sub_title']}></p>
+                <span>¥<{$goodsItem['price']}></span>
+              </div>
+            </li>
+        <{/if}>
+        <{/foreach}>
+      </ul>
+    </div>
+  </li>
+  <{/foreach}>
+</ul>
+<a class="ui-more" href="<{$data.home_link}>" target="_blank">更多&gt;&gt;</a>
+</div>

@@ -1,0 +1,93 @@
+<div class="col-lg-13 box">
+    <div class="membercenter-box">
+        <div class="membercenter-box-hd">
+            子账号添加
+        </div>
+        <form  action="<{url action=topc_ctl_subaccount@subAccountSave}>" method="post" class="form-horizontal"  id="form_sub" role="form">
+            <input type="hidden" name="sub_user_id" value="<{$sub_user_id}>">
+
+            <div class="row">
+                <div class="col-lg-8 membercenter-userinfo" style="width: 720px;">
+                    <ul>
+                        <li class="form-row">
+                            <label class="form-label">用户名：</label>
+                            <span class="form-act">
+                                <input type="text" class="input-ln" name="pam_user[account]" id="for_account" placeholder="邮箱/手机号/数字字符串" required data-caution="用户名为手机号或者邮箱或数字字符串" autofocus autocomplete="off">
+                            </span>
+                        </li>
+                        <li class="form-row">
+                            <label  class="form-label">姓名：</label>
+                            <span class="form-act">
+                               <input  name='name' class="input-ln" type='text' value="<{$name}>" placeholder="店员姓名,最多10个字符" required maxlength="10" class="form-control" >
+                            </span>
+                        </li>
+                        <li class="form-row">
+                            <label  class="form-label">分配权限：</label>
+                            <span class="form-act">
+                                <{if $mainUserRole}>
+				                <{foreach item=role from=$mainUserRole key=key}>
+                                <input type="checkbox" name="role[]" value="<{$key}>" /> <{$key}>
+                                <{/foreach}>
+                                <{/if}>
+                            </span>
+                        </li>
+                        <li class="form-row">
+                            <label  class="form-label">设置密码：</label>
+                            <span class="form-act">
+                                <input type="password" id="password" class="input-ln" name="pam_user[password]" class="form-control" placeholder="6-20个字符" required minlength="6" maxlength="20" data-caution="请填写密码，6-20个字符&&输入不正确，最少6个字符&&输入不正确，最多20个字符">
+                            </span>
+                        </li>
+                        <li class="form-row">
+                            <label  class="form-label">确认密码：</label>
+                            <span class="form-act">
+                                <input  name='pam_user[pwd_confirm]' id="psw_confirm" class="input-ln" type='password' placeholder="登录密码确认" maxlength="20" required data-equalto="pam_user[password]" data-caution="密码与确认密码不相符，请重新填写" class="form-control" >
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="modal-footer text-center">
+                <button type="submit" class="btn btn-success"  id="subButton"><span><span><{t}>保存<{/t}></span></span></button>
+            </div>
+
+        </form>
+    </div>
+</div>
+<script>
+    $(function () {
+        var form = $('#form_sub');
+        $('#for_account').data('remoteCallback', function (rs) {
+            var parent = this.closest('.form-row');
+            var tips = new Tips({
+                'class': 'caution col-lg-4',
+                'target': parent
+            });
+            if (rs.error) {
+                parent.removeClass('has-success').addClass('has-error');
+                return tips.error(rs.message);
+            }
+            else {
+                parent.removeClass('has-error');
+                if (rs.success) {
+                    parent.addClass('has-success');
+                    tips.success(rs.message);
+                }
+                else {
+                    tips.hide();
+                }
+
+                if (validatorMap.mobile[1](this, this.val())) {
+                    if (rs.needVerify == 'mobile') {
+                        form.find('.action-mobile-verify').removeClass('hide');
+                        form.find('.action-verifycode').addClass('hide');
+                    }
+                    return;
+                }
+                form.find('.action-mobile-verify').addClass('hide');
+                form.find('.action-verifycode').removeClass('hide');
+            }
+        });
+    });
+</script>

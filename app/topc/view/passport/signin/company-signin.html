@@ -1,0 +1,510 @@
+<!--<{css app="topshop" src="bootstrap-datepicker.css"}>
+<{script app="topshop" src="lib/datepicker2.js"}>-->
+<{script app='topc' src="distpicker.data.js"}>
+<{script app='topc' src="distpicker.js"}>
+<{script app='topc' src="YMDClass.js"}>
+<form action="<{url action=topcompany_ctl_passport@companyupdate}>" method="post" id="ajaxForm" class="form-tip-horizontal" style="background-color: #ffffff;">
+    <input type="hidden" value="<{$company_info.company_id}>" name="company_id">
+    <div id="main" class="main" style="width: 1190px;background-color: #f5f5f5;margin: 0 auto;padding: 0;">
+        <div class="wrap-lg" style="max-width: 960px;min-width: 960px;background-color: #ffffff;">
+            <!--<div class="cqxz_221_qyimg">-->
+                <!--<img src="<{$company_banner}>">-->
+            <!--</div>-->
+            <div class="signc">
+                <h3 class="signh3">企业会员注册流程</h3>
+                <ul class="signul">
+                    <li class="form-row">
+                        <div class="cqxz_221_qyacent">
+                            <{if $verify_status=='0'}>
+                            <span>您的认证申请已提交，需要1-2个工作日，请耐心等待！</span>
+                            <{elseif $verify_status=='1'}>
+                            <span>恭喜！您的审核通过 <a href="<{url action=topc_ctl_member@control}>"> >>回到个人中心</a></span>
+                            <{elseif $verify_status=='2'}>
+                            <span>对不起！审核没通过(原因：<{$refuse_reason}>)</span>
+                            <{/if}>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="signc">
+                <h3 class="signh3">公司信息</h3>
+                <ul class="signul">
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>公司名称：</span>
+                        </div>
+                        <div class="signcr" style="width: 690px;border: none;border-radius: 0;">
+                            <input type="text" id="company_name_id" name="pam_user[company_name]"  placeholder="填写公司名称" required data-equalto="pam_user[company_name]" data-caution="请填写公司名称"  style="border: 1px solid #cccccc;border-radius: 3px;" value="<{$company_info.company_name}>"><span>(跟营业执照上的企业名称一致)</span>
+                        </div>
+                    </li>
+                    <li class="form-row" style="height: 105px;">
+                        <div class="signcl">
+                            <i>*</i><span>营业执照：</span>
+                        </div>
+                        <div class="images-uploader">
+                            <div class="handle img-thumbnail" id="delete_id1">
+                                <i class="icon-close-b action-remove" id="delete1" style="display: none;"></i>
+                                <img src="<{$company_info['business_license1']|storager:t}>">
+                                <input type="hidden"  name="demand[business_license_1][]" value="<{$company_info['business_license']}>">
+                            </div>
+
+                            <div class="handle action-upload">
+                                <input type="file" name="demand[business_license][]" accept="image/png,image/jpg,image/gif,image/jpeg"
+                                       data-size="<{$env.config.image.uploadedFileMaxSize}>" data-max="2"
+                                       data-remote="<{url action=toputil_ctl_image@companyUploadImages from=user type=purchase}>"
+                                       class="action-file-input">
+                                <span class="qh_xz223_dxqbg"></span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>营业执照登记号：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="pam_user[tax_id]" id="tax_id" value="<{$company_info['tax_id']}>"placeholder="填写营业执照登记号" required data-equalto="pam_user[tax_id]" data-caution="请填写营业执照登记号" >
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>营业执照有效期至：</span>
+                        </div>
+                        <!--<div class="signcr">
+
+                            <input class="x-input form-control" data-provide="datepicker" value="<{$company_info.valid_time}>" name="valid_time" id="short_valid" type="date">
+                        </div>-->
+                        <div style="width: 320px;float: left;">
+                            <select name="sample[year]"></select>
+                            <select name="sample[month]"></select>
+                            <select name="sample[day]"></select>
+                        </div>
+                        <input type="checkbox" value="1" name="long_valid_time" id="long_valid" <{if !$company_info.valid_time || $company_info.valid_time=='长期有效'}>  checked<{/if}>>长期有效
+                    </li>
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>注册资本：</span>
+                        </div>
+                        <div class="signcr" style="width: 550px;border: none;border-radius: 0;">
+                            <input type="number" name="pam_user[registered_capital]" id="registered_capital"  placeholder="填写注册资本" required data-equalto="pam_user[registered_capital]" value="<{$company_info.registered_capital}>" data-caution="请填写注册资本" style="border: 1px solid #cccccc;border-radius: 3px;"><span>万元</span>
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>注册所在地：</span>
+                        </div>
+                        <span class="region">
+                          <span id="area" data-validate="area"></span>
+                        </span>
+
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>经营地址：</span>
+                        </div>
+                        <div class="cqxz_221_qyacr">
+                            <input type="text" name="pam_user[company_address]" value="<{$company_info['company_addr']}>" placeholder="填写经营地址" required data-equalto="pam_user[company_address]" data-caution="请填写经营地址">
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>联系人：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="pam_user[company_contact]" placeholder="填写公司联系人" required data-equalto="pam_user[company_contact]" data-caution="请填写公司联系人" value="<{$company_info.company_contact}>">
+                        </div>
+                    </li>
+                    <div class="signfl">
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>公司电话：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="pam_user[company_contactPhone]" placeholder="填写公司电话" required data-caution="填写公司电话"  value="<{$company_info.company_contactPhone}>">
+                        </div>
+                    </li>
+                    <li class="form-row">
+                        <div class="signcl sss">
+                            <span>传真：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="pam_user[fax]" placeholder="填写传真"  data-caution="填写传真"   value="<{$company_info.fax}>">
+                        </div>
+                    </li>
+                    </div>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>email：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="pam_user[email]" placeholder="填写公司email"  data-caution="填写公司email" value="<{$company_info.email}>">
+                        </div>
+                    </li>
+                    <li class="form-row">
+                        <div class="signcl">
+                            <span>网址：</span>
+                        </div>
+                        <div class="signcr">
+                            <input type="text" name="pam_user[website]" placeholder="填写公司网址"  data-caution="填写公司网址" value="<{$company_info.website}>">
+                        </div>
+                    </li>
+
+                    <li class="form-row">
+                        <div class="signcl">
+                            <i>*</i><span>企业人数：</span>
+                        </div>
+                        <div class="signcrszb">
+                            <input type="text" name="pam_user[company_peopleNum]" placeholder="填写企业人数" value="<{$company_info['company_num']}>">
+                        </div>
+                    </li>
+                    <li>
+                        <div class="signcl">
+                            <span>公司性质：</span>
+                        </div>
+                        <div class="signcrszb">
+                            <select name="pam_user[company_nature]" class="cqxz_221_qyacrform5">
+                                <option value="0">-请选择-</option>
+                                <{foreach from=$company_type item=company}>
+                                <option <{if $company_info['operating_range']== $company.name }> selected<{/if}> value="<{$company.name}>"><{$company.name}></option>
+                                <{/foreach}>
+                            </select>
+                        </div>
+                    </li>
+
+
+                    <{if $verify_status == 2}>
+                    <li class="form-row">
+              <span class="form-act">
+                <input type="checkbox" class="x-checkbox" checked name="license" id="for_license" data-validate="onerequired" data-caution="<{t}>请选择同意<{/t}>">
+                <label for="for_license">我已阅读并同意<a href="javascript:void(0);" class="link-color">《仕泰隆用户服务协议》</a></label>
+              </span>
+                    </li>
+                    <li class="signagre">
+              <span class="form-act">
+                <button type="submit" class="btn btn-success btn-block" rel="_request"><span><span>重新提交审核</span></span></button>
+              </span>
+                    </li>
+                    <{/if}>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!--注册协议弹框-->
+    <div id="dialog" style="display:none;">
+        <div class="agreement">
+            <div class="title">仕泰隆用户服务协议</div>
+            <div><{$license}></div>
+            <div class="text-center"><a href="javascript:void(0);" class="btn btn-import btn-lg dialog-btn-close"><span><span>同意并继续</span></span></a></div>
+        </div>
+    </div>
+    <input name="login_account"  style="display: none" value="<{$login_account}>">
+    <input name="verify_status"  style="display: none" value="<{$verify_status}>">
+</form>
+
+<style>
+    .images-uploader1 {
+       width: 138px;
+       height: 78px;
+       margin: 0;
+       padding: 0;
+       float: left;
+       border: 1px solid #CCC;
+       overflow: hidden;
+       letter-spacing: -4px;
+    }
+    .images-uploader1 input[type=file] {
+        position: absolute;
+        z-index: 1;
+        width: 138px;
+        height: 78px;
+        padding: 0;
+        overflow: hidden;
+        opacity: 0;
+        filter: alpha(opacity=0);
+    }
+    .images-uploader1 .handle {
+        display: inline-block;
+        position: relative;
+    }
+    .images-uploader1 .icon-close-b:before {
+        left: 0;
+        top: 0;
+        content: "删除";
+        color: #fff;
+        position: absolute;
+        text-align: center;
+        line-height: 70px;
+        width: 100%;
+        height: 100%;
+    }
+    .images-uploader1 .img-thumbnail img {
+        max-width: 100%;
+        max-height: 100%;
+        vertical-align: middle;
+        width: 68px;
+        height: 68px;
+    }
+    .cqh_xz223_dl .handle{
+        width: 210px;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        float: left;
+    }
+</style>
+
+<script>
+
+function removeImg(obj){
+        if(!confirm('你确定删除本行吗？'))
+            return false;
+        var vthis_handler = $(obj).parent();
+        var src_obj = vthis_handler.parent().find('input[type=hidden]');
+        var list_src = src_obj.val();
+        console.log(list_src);
+        console.log($(obj).prev().attr('id'));
+        var img_src_list = list_src.replace($(obj).prev().attr('id'),'');
+        console.log(img_src_list);
+        src_obj.val(img_src_list);
+        vthis_handler.remove();
+    }
+
+$(function () {
+        var uploader = $('.images-uploader1');
+        uploader.AjaxFileUpload({
+            onComplete: function(rs, container) {
+                if (rs.error) {
+                    return alert(rs.message);
+                }
+                var data = $.makeArray(rs.data);
+                var name = container.find('input[type=file]').attr('name');
+
+                $.each(data, function () {
+                    var str = container.parent().next().find('input[type=hidden]').val();
+                    container.parent().next().find('input[type=hidden]').val(str+","+this.image_id);
+                    var img_src_list_html = '<div class="handle img-thumbnail">' +
+                            '<a href="' + this.url + '" id="'+this.image_id+'" target="_blank">'+this.image_name+'</a> &nbsp;&nbsp; ' +
+                            '<a href="javascript:void(0)" ' +
+                            'onclick="if(!confirm(\'你确定删除本行吗？\')) return false;' +
+                            'var vthis_handler = $(this).parent();' +
+                            'var src_obj = vthis_handler.parent().find(\'input[type=hidden]\');' +
+                            'var list_src = src_obj.val();' +
+                            'var img_src_list = list_src.replace(\',\'+$(this).prev().attr(\'id\'),\'\');' +
+                            'src_obj.val(img_src_list);' +
+                            'vthis_handler.remove();">删除</a></div>';
+                    container.parent().next().append(img_src_list_html);
+                });
+                container.on('click', '.action-remove', function (e) {
+                    $(this).parent().remove();
+                });
+                container.on('mouseover', '.img-thumbnail', function (e) {
+                    $(this).find('.action-remove').show();
+                });
+                container.on('mouseout', '.img-thumbnail', function (e) {
+                    $(this).find('.action-remove').hide();
+                });
+            }
+        });
+    });
+
+
+    var region_id = "<{$area_id}>"
+    new AreaWidget({
+        dataUrl: "<{$env.base_url}>/app/ectools/statics/scripts/region.json",
+        select: $('#area'),
+        initData:region_id
+    });
+
+    /*
+     * 用户名验证
+     * custom s dengLy
+     * 2015.12.31
+     */
+    var form = $('#ajaxForm');
+    var account = form.find('.action-account-check');
+
+    form.find('button[type=submit]').data('ajaxConfig', {
+        callback: function(rs) {
+            if(rs.error) {
+                if (rs.redirect) {
+                    location.href = rs.redirect;
+                }
+                changeCode($('img.auto-change-verify-handle'));
+            }
+        }
+    });
+
+    account.data('remoteCallback',function(rs){
+        var parent = this.closest('.form-row');
+        var tips = new Tips({
+            'class': 'caution col-lg-4',
+            'target': parent
+        });
+        if(rs.error) {
+            parent.removeClass('has-success').addClass('has-error');
+            return tips.error(rs.message);
+        }
+        else {
+            parent.removeClass('has-error');
+            if(rs.success) {
+                parent.addClass('has-success');
+                tips.success(rs.message);
+            }
+            else {
+                tips.hide();
+            }
+        }
+    });
+
+    /*
+     * custom s dengLy
+     *  2015.12.31
+     *  判断密码输入是否一致
+     */
+
+    $('#set_pwd_confirm').change(function(){
+        var loginPassword=$('#set_password').val();
+        var login_pwd_confirm=$('#set_pwd_confirm').val();
+
+        $.post('<{url action=topcompany_ctl_passport@verifyPassword}>', 'loginPassword='+loginPassword+'&login_pwd_confirm='+login_pwd_confirm, function(rs){
+            var parent = $('#set_pwd_confirm').closest('.form-row');
+            var tips = new Tips({
+                'class': 'caution col-lg-4',
+                'target': parent
+            });
+            if(rs.error) {
+                parent.removeClass('has-success').addClass('has-error');
+                return tips.error(rs.message);
+            }
+            else {
+                parent.removeClass('has-error');
+                if(rs.success) {
+                    parent.addClass('has-success');
+                    tips.success(rs.message);
+                }
+                else {
+                    tips.hide();
+                }
+            }
+
+            if(rs.success) {
+
+                $('#messagebox').message(rs.message, 'success');
+                setTimeout(function(){location.reload();}, 800);
+            }
+        });
+    });
+
+    $('.link-color').click(function (e) {
+        $('#dialog').dialog({
+            width: 890,
+            height: 400,
+            title:'仕泰隆用户注册协议',
+            close: function(){
+                document.querySelector('#for_license').checked = true;
+            }
+        });
+    });
+    $('#delete_id1').mouseover(
+            function(){
+                $('#delete1').show();
+            }
+    );
+    $('#delete_id1').mouseout(
+            function(){
+                $('#delete1').hide();
+            }
+    );
+    $('#delete1').click(
+            function(){
+              $('#delete_id1').hide();
+            }
+    );
+    $('#delete_id2').mouseover(
+            function(){
+                $('#delete2').show();
+            }
+    );
+    $('#delete_id2').mouseout(
+            function(){
+                $('#delete2').hide();
+            }
+    );
+    $('#delete2').click(
+            function(){
+                $('#delete_id2').hide();
+            }
+    );
+
+    $('#delete_id3').mouseover(
+            function(){
+                $('#delete3').show();
+            }
+    );
+    $('#delete_id3').mouseout(
+            function(){
+                $('#delete3').hide();
+            }
+    );
+    $('#delete3').click(
+            function(){
+                $('#delete_id3').hide();
+            }
+    );
+
+    $('#delete_id4').mouseover(
+            function(){
+                $('#delete4').show();
+            }
+    );
+    $('#delete_id4').mouseout(
+            function(){
+                $('#delete4').hide();
+            }
+    );
+    $('#delete4').click(
+            function(){
+                $('#delete_id4').hide();
+            }
+    );
+
+$('#long_valid').on('click', function(){
+    if ($(this).prop('checked')) {
+        $('#short_valid').attr('value','');
+    }
+});
+$('#short_valid').on('click', function(){
+    $('#long_valid').prop('checked',false);
+});
+$(".signfl li").css({
+    "width":"410px",
+    "height":"60px",
+    "margin-left":0,
+    "margin-right":"10px"
+});
+$(".signfl .signcr").css({
+    "width":"200px",
+    "margin-left":0,
+});
+$(".signfl input").css({
+    "width":"180px",
+    "margin-left":0,
+});
+$(".signfl li .signcl").css({
+    "line-height":"58px",
+    "margin-top":0,
+});
+$(".signcl").css("width","180px");
+$(".sss").css("width","80px");
+$(function () {
+    new YMDselect('sample[year]','sample[month]','sample[day]');
+    new YMDselect('start_year','start_month','start_day');
+    new YMDselect('end_year','end_month','end_day');
+});
+</script>

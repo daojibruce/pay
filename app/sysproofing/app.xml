@@ -1,0 +1,20 @@
+<app>
+  <name>服务撮合中心</name>
+  <type>core</type>
+
+  <description>服务撮合中心</description>
+
+  <author>
+	  <name>shopex开发团队</name>
+	  <email>dev@shopex.cn</email>
+	  <url>www.shopex.cn</url>
+  </author>
+
+  <version>0.0.1</version>
+    <parent_model_class>dbeav_model</parent_model_class>
+
+    <depends>
+        <app>desktop</app>
+    </depends>
+  <license>Commercial</license>
+</app>

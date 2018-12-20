@@ -1,0 +1,46 @@
+<div class="col-lg-13 box">
+    <div class="membercenter-box">
+        <div class="membercenter-box-hd">
+            子账号添加
+        </div>
+        <form  action="<{url action=topc_ctl_subaccount@subAccountUpdate}>" method="post" class="form-horizontal"  id="form_sub" role="form">
+            <input type="hidden" name="user_id" value="<{$userInfo.userId}>">
+
+            <div class="row">
+                <div class="col-lg-8 membercenter-userinfo" style="width: 720px;">
+                    <ul>
+                        <li class="form-row">
+                            <label class="form-label">用户名：</label>
+                            <span class="form-act">
+                                <{$userInfo.login_account}>
+                            </span>
+                        </li>
+                        <li class="form-row">
+                            <label  class="form-label">姓名：</label>
+                            <span class="form-act">
+                               <input  name='name' class="input-ln" type='text' value="<{$userInfo.name}>" placeholder="店员姓名,最多10个字符" required maxlength="10" class="form-control" >
+                            </span>
+                        </li>
+                        <li class="form-row">
+                            <label  class="form-label">分配权限：</label>
+                            <span class="form-act">
+                                <{if $mainUserRole}>
+				                <{foreach item=role from=$mainUserRole key=key}>
+                                <input type="checkbox" name="role[]" value="<{$key}>" <{if in_array($key, $userRole)}> checked="checked"<{/if}> /> <{$key}>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <{/foreach}>
+                                <{/if}>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div class="modal-footer text-center">
+                <button type="submit" class="btn btn-success"  id="subButton"><span><{t}>保存<{/t}></span></button>
+            </div>
+
+        </form>
+    </div>
+</div>
+

@@ -1,0 +1,43 @@
+<li>
+    <div class="tm-scroll-box">
+        <dl class="tm-scroll tm-scroll1">
+            <{foreach from=$data.temaiToday item=temaiItem}>
+            <dd><a href="<{url action=topc_ctl_item@index item_id=$temaiItem['item_id']}>" target="_blank"><{$temaiItem.title}></a></dd>
+            <{/foreach}>
+        </dl>
+    </div>
+</li>
+<li>
+    <div class="tm-scroll-box">
+        <dl class="tm-scroll tm-scroll2">
+            <{foreach from=$data.samples item=sample}>
+            <{if $data.is_provider}>
+            <dd><a href="<{url action=topc_ctl_proofing@detail sample_id=$sample.sample_id}>" target="_blank"><{$sample.sample_name}></a></dd>
+            <{else}>
+            <dd><{$sample.sample_name}></dd>
+            <{/if}>
+            <{/foreach}>
+        </dl>
+    </div>
+</li>
+<script type="text/javascript">
+    function autoScroll(obj, scrol){
+        $(obj).find(scrol).animate({
+            marginTop : "-20px"
+        },500,function(){
+            $(this).css({marginTop : "0px"}).find("dd:first").appendTo(this);
+        });
+    };
+    $(document).ready(function () {
+        var time1 = setInterval('autoScroll(".tm-scroll-box", ".tm-scroll1")',2500);
+        var time2 = setInterval('autoScroll(".tm-scroll-box", ".tm-scroll2")',2500);
+        $(".tm-scroll1 dd").hover(function () {
+            clearInterval(time1);}, function () {
+                time1 = setInterval('autoScroll(".tm-scroll-box", ".tm-scroll1")',2500)
+        });
+        $(".tm-scroll2 dd").hover(function () {
+            clearInterval(time2);}, function () {
+                time2 = setInterval('autoScroll(".tm-scroll-box", ".tm-scroll2")',2500)
+        });
+    });
+</script>

@@ -1,0 +1,477 @@
+<header class="page-header" style="display:block;">
+	<a href="<{url action=topwap_ctl_member_trade@tradeList}>"><i class="header-left icon-func bbc-icon bbc-icon-back"></i></a>
+	<div class="header-title"><{$title}></div>
+	<a href="#minimenu" class="header-right icon-func bbc-icon bbc-icon-more-vertical btn-mini-menu"></a>
+</header>
+<section class="container">
+	<section class="section-white section-container order-detail-info">
+		<i class="bbc-icon bbc-icon-package"></i>
+		<div class="detail-info-txt">
+			<div class="detail-status">
+		  <{if $trade.cancel_status !="NO_APPLY_CANCEL" && $trade.cancel_status !="FAILS"}>
+		  	<{if $trade.cancel_status == "WAIT_PROCESS"}>
+		  	取消中，等待商家审核
+		  	<{elseif $trade.cancel_status == "SUCCESS"}>
+		  	取消成功
+		  	<{elseif $trade.cancel_status == "REFUND_PROCESS"}>
+		  	取消中，正在进行退款处理
+		  	<{/if}>
+		  <{else}>
+		  	 	<{if $trade.status == "WAIT_SENDCONTRACT"}>
+				待卖家发合同
+				<{elseif $trade.status == "WAIT_CONFIRM"}>
+				待确认合同
+				<{elseif $trade.status == "REJECT_CONTRACT"}>
+				已拒绝合同
+				<{elseif $trade.status == "WAIT_BUYER_PAY"}>
+				等待买家付款
+	            <{elseif $trade.status == "WAIT_SELLER_SEND_GOODS" && $trade.pay_type == "online"}>
+	            等待商家发货
+	            <{elseif $trade.status == "WAIT_SELLER_SEND_GOODS" && $trade.pay_type == "offline"}>
+	            等待商家发货(货到付款)
+	            <{elseif $trade.status == "WAIT_BUYER_CONFIRM_GOODS" && $trade.pay_type == "online"}>
+	            待收货
+	            <{elseif $trade.status == "WAIT_BUYER_CONFIRM_GOODS" && $trade.pay_type == "offline"}>
+	            待收货(货到付款)
+	            <{elseif $trade.status == "TRADE_FINISHED"}>
+	            已完成
+	            <{elseif $trade.status == "TRADE_CLOSED_BY_SYSTEM" || $trade.status == "TRADE_CLOSED"}>
+	            已关闭
+	            <{/if}>
+		  <{/if}>
+      </div>
+			<p>订单号：<{$trade.tid}></p>
+			<p>创建时间：<{$trade.created_time|cdate}></p>
+		</div>
+	</section>
+	<section class="section-white section-container receiver-info">
+		<i class="bbc-icon bbc-icon-location-gap"></i>
+		<div class="receiver-info-item">
+			<div class="receiver-user">
+				<div class="receiver-name">收货人：<{$trade.receiver_name}></div>
+				<div class="receiver-phone"><{$trade.receiver_mobile}></div>
+			</div>
+			<div class="add-detail">收货地址：<{$trade.receiver_state}><{$trade.receiver_city}> <{$trade.receiver_district}>&nbsp;<{$trade.receiver_address}></div>
+		</div>
+	</section>
+	<{if $trade.status == "WAIT_BUYER_CONFIRM_GOODS" || $trade.status == "TRADE_FINISHED"}>
+	<section class="section-white">
+		<ul class="shopex-table-view">
+			<li class="shopex-table-view-cell">
+        <a href="<{url action=topwap_ctl_member_trade@logistics tid=$trade.tid}>"
+  				class="shopex-navigate-right"><i class="bbc-icon bbc-icon-logistics-gap fontm"></i> &nbsp;&nbsp;&nbsp;&nbsp;物流信息
+        </a>
+      </li>
+		</ul>
+	</section>
+	<{/if}>
+	<{include file="topwap/member/trade/trade_items.html"}>
+	<section class="section-white">
+		<ul class="shopex-table-view fontS">
+			<{if $trade.pay_type == "online"}>
+			<li class="shopex-table-view-cell">
+				<div class="shopex-table">
+					<div class="shopex-table-cell shopex-col-xs-6 font-gray-20">支付方式：</div>
+          <{if $trade.hongbao_fee && $trade.payment == $trade.hongbao_fee }>
+            <div class="shopex-table-cell shopex-col-xs-6 content-right">红包抵扣</div>
+          <{else}>
+            <{if $trade.hongbao_fee > 0 && ($trade.payment > $trade.hongbao_fee) }>
+            <div class="shopex-table-cell shopex-col-xs-6 content-right">在线支付／红包抵扣</div>
+            <{else}>
+            <div class="shopex-table-cell shopex-col-xs-6 content-right">在线支付</div>
+            <{/if}>
+          <{/if}>
+				</div>
+			</li>
+			<{else}>
+			<li class="shopex-table-view-cell">
+				<div class="shopex-table">
+					<div class="shopex-table-cell shopex-col-xs-6 font-gray-20">支付方式：</div>
+					<div class="shopex-table-cell shopex-col-xs-6 content-right">货到付款</div>
+				</div>
+			</li>
+			<{/if}>
+			<li class="shopex-table-view-cell">
+				<div class="shopex-table">
+					<div class="shopex-table-cell shopex-col-xs-6 font-gray-20">配送方式：</div>
+					<div class="shopex-table-cell shopex-col-xs-6 content-right">
+						<p><{$trade.shipping_type_name}></p>
+					</div>
+				</div>
+			</li>
+		<{if $trade.trade_memo}>
+		<li class="shopex-table-view-cell">
+			<div class="shopex-table">
+				<div class="shopex-table-cell shopex-col-xs-6 font-gray-20">提货地址：</div>
+				<div class="shopex-table-cell shopex-col-xs-6 content-right">
+					<p><{$trade.trade_memo}></p>
+				</div>
+			</div>
+		</li>
+		<{/if}>
+		<li class="shopex-table-view-cell">
+			<div class="shopex-table">
+				<div class="shopex-table-cell shopex-col-xs-6 font-gray-20">付款信息：</div>
+				<div class="shopex-table-cell shopex-col-xs-6 content-right">
+					<div>已完成第<strong><{$trade.position}></strong>次付款</div>
+					<div>应付总金额：<{$trade.payment|cur}>元</div>
+					<div>已付金额：<{$trade.payed_fee|cur}>元</div>
+					<div>待付金额：<{$trade.payment-$trade.payed_fee|cur}>元</div>
+				</div>
+			</div>
+		</li>
+      <{if $trade.ziti_addr}>
+      <li class="shopex-table-view-cell">
+        <div class="shopex-table">
+          <div class="shopex-table-cell shopex-col-xs-6 font-gray-20">提货地址：</div>
+          <div class="shopex-table-cell shopex-col-xs-6 content-right">
+            <p><{$trade.ziti_addr}></p>
+          </div>
+        </div>
+      </li>
+      <{/if}>
+      <{if !$trade.need_invoice}>
+			<li class="shopex-table-view-cell">
+				<div class="shopex-table">
+					<div class="shopex-table-cell shopex-col-xs-6 font-gray-20">发票信息：</div>
+			    <div class="shopex-table-cell shopex-col-xs-6 content-right">
+				    <p>无发票</p>
+			  	</div>
+				</div>
+			</li>
+      <{/if}>
+      <{if $trade.trade_memo}>
+      		<li class="shopex-table-view-cell">
+				<div class="shopex-table">
+					<div class="shopex-table-cell shopex-col-xs-6 font-gray-20">订单备注信息：</div>
+			    <div class="shopex-table-cell shopex-col-xs-6 content-right">
+				    <p><{$trade.trade_memo}></p>
+			  	</div>
+				</div>
+			</li>
+      <{/if}>
+    </ul>
+	</section>
+
+  <{if $trade.need_invoice}>
+  <section class="section-white section-container receiver-info">
+		<div class="receiver-info-item">
+			<div class="receiver-user">
+				<div class="receiver-name">发票类型：</div>
+				<div class="receiver-phone"><{if $trade.invoice_type=='normal'}>普通发票<{elseif $trade.invoice_type=='vat'}>增值税发票<{/if}></div>
+			</div>
+      <{if $trade.invoice_type=='normal'}>
+      <div class="add-detail"><{if $trade.invoice_name=='individual'}>个人<{else}>公司<{/if}>（<{$trade.invoice_main}>）</div>
+      <{else}>
+      <div class="shopex-table">
+  		<dl class="checkout-fee">
+  			<dt>公司名：</dt><dd>&nbsp;<{$trade.invoice_vat_main.company_name}></dd>
+      		<dt>公司登记号：</dt><dd>&nbsp;<{$trade.invoice_vat_main.registration_number}></dd>
+      		<dt>公司地址：</dt><dd>&nbsp;<{$trade.invoice_vat_main.company_address}></dd>
+      		<dt>公司电话：</dt><dd>&nbsp;<{$trade.invoice_vat_main.company_phone}></dd>
+      		<dt>银行开户名：</dt><dd>&nbsp;<{$trade.invoice_vat_main.bankname}></dd>
+      		<dt>银行账号：</dt><dd>&nbsp;<{$trade.invoice_vat_main.bankaccount}></dd>
+  		</dl>
+      </div>
+      <{/if}>
+	</div>
+  </section>
+  <{/if}>
+
+	<{if $trade.status != "WAIT_SENDCONTRACT"}>
+	<style>
+		.item-table td{border:1px solid #999;}
+		.xn_114_cl dd{ margin-top: 10px}
+		.xn_114_cr dd{ margin-top: 10px}
+		.xn_114_cont{ margin-top: 15px}
+	</style>
+	<form action="<{url action=topwap_ctl_member_trade@ajaxConfirmEleContract}>" method="post" id='form_template' >
+		<input type='hidden' name='tid' value="<{$trade.tid}>">
+		<input type='hidden' name='user_id' value="<{$trade.elecontract.user_id}>">
+		<div class="select-store">
+			<div class="xn_114_cont">
+				<dl class="xn_114_cdl xn_114_cl">
+					<dd><span>出卖人(公司名称)：</span><i><{$company_name}></i></dd>
+					<dd><span>买受人(公司名称)：</span><i><{$trade.elecontract.user_name}></i></dd>
+				</dl>
+				<dl class="xn_114_cdl xn_114_cr">
+					<dd><span>合同编号：</span><i><{$trade.elecontract.tid}></i></dd>
+					<dd><span>签订地点：</span><i><{$trade.elecontract.signed_place}></i></dd>
+					<dd><span>签订方式：</span><i><{$trade.elecontract.signed_pattern}></i></dd>
+					<dd><span>签订时间：</span><i><{$time}></i></dd>
+				</dl>
+			</div>
+			<div class="xn_114_cont">
+				<h3>一、标的、数量、价款及交货时间。</h3>
+				<table class="item-table need-table">
+					<colgroup>
+						<col class="table-col-1">
+						<col class="table-col-2">
+						<col class="table-col-3">
+						<col class="table-col-4">
+						<col class="table-col-5">
+						<col class="table-col-6">
+						<col class="table-col-7">
+						<col class="table-col-8">
+					</colgroup>
+					<thead>
+					<tr>
+						<td>产品名称</td>
+						<td>品牌</td>
+						<td>规格型号</td>
+						<td>单位</td>
+						<td>数量</td>
+						<td>单价</td>
+						<td>金额</td>
+						<td>交货时间</td>
+					</tr>
+					</thead>
+					<tbody>
+					<{foreach from=$trade.orders item=item}>
+					<tr>
+						<td><{$item.title}></td>
+						<td><{$item.brand_name}></td>
+						<td><{$item.spec_nature_info}></td>
+						<td><{$item.unit}></td>
+						<td><{$item.num}></td>
+						<td><{$item.sku_price|cur}></td>
+						<td><{$item.price|cur}></td>
+						<td><{$trade.delivery_goods_time}></td>
+					</tr>
+					<{/foreach}>
+					<tr>
+						<td colspan="8" class="xn_colleft">合计：<{$trade.unfeePayment|cur}>
+							<{if $trade.adjust_fee<0}>
+							<i class="xn_i_color">(已优惠：<{$trade.adjust_fee|cur}>)</i>
+							<{/if}>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="8" class="xn_colleft">合计人民币金额：<{$trade.cny_payment}>（大写）</td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="xn_114_cont">
+				<h3>二、质量标准：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.standard|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>三、出卖人对质量负责的条件及期限：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.terms|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>四、包装标准、包装物的供应与回收：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.packing_pattern|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>五、随货的必备：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.appendix|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>六、合理损耗标准及计算方法：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.loss_standard|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>七、交货时间、方式、地点、运输方式、费用负担：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.content|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>八、检验标准、方法及期限：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.inspection_standard|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>九、结算方式、时间：</h3>
+				<dl class="xn_114_cjs">
+		  <span><{if $trade.elecontract.is_part_pay == '0'}>一次付款<{else}>多次付款
+			<{if $trade.elecontract.pay_type.pay_1 != 0 && isset($trade.elecontract.pay_type.pay_1)}>保证金：<{$trade.elecontract.pay_type.pay_1|cur}> <{/if}><{if $trade.elecontract.pay_type.pay_2 != 0 && isset($trade.elecontract.pay_type.pay_2)}>  收货款：<{$trade.elecontract.pay_type.pay_2|cur}><{/if}>
+			<{if $trade.elecontract.pay_type.pay_3 != 0 && isset($trade.elecontract.pay_type.pay_3)}>  收货<{$trade.elecontract.pay_type.detail_time1}><{$trade.elecontract.pay_type.pay_3|cur}><{/if}>
+			<{if $trade.elecontract.pay_type.pay_4 != 0 && isset($trade.elecontract.pay_type.pay_4)}>  收货<{$trade.elecontract.pay_type.detail_time2}><{$trade.elecontract.pay_type.pay_4|cur}><{/if}>
+			<{if $trade.elecontract.pay_type.pay_5 != 0 && isset($trade.elecontract.pay_type.pay_5)}>  收货<{$trade.elecontract.pay_type.detail_time3}><{$trade.elecontract.pay_type.pay_5|cur}><{/if}>
+		  <{/if}></span>
+					<span><{if $trade.elecontract.is_part_delivery == '0'}>一次发货<{else}>分次发货（将形成多次发货单）<{/if}></span>
+				</dl>
+
+			</div>
+			<div class="xn_114_cont">
+				<h3>十、本合同的解除条件：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.Change_release|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>十一、违约责任：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.breach_responsibility|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>十二、知识产权保护：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.ipr|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>十三、合同争议的解决方式：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.disputed|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>十四、合同争议的解决方式：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.customer_service|nl2br}>
+				</div>
+			</div>
+			<div class="xn_114_cont">
+				<h3>十五、合同争议的解决方式：</h3>
+				<div class="xn_114_ctexa">
+					<{$trade.elecontract.effective_condition|nl2br}>
+				</div>
+			</div>
+
+			<div class="xn_114_cont">
+				<dl class="xn_114_cdl xn_114_cl">
+					<dd><span>出卖人(公司名称)：</span><i><{$company_name}></i></dd>
+					<dd><span>住所：</span><i><{$trade.elecontract.seller_place}></i></dd>
+					<dd><span>法定代表人：</span><i><{$trade.elecontract.seller_legal_agent}></i></dd>
+					<dd><span>委托代理人：</span><i><{$trade.elecontract.seller_entrusted_agent}></i></dd>
+					<dd><span>传真：</span><i><{$trade.elecontract.seller_fax}></i></dd>
+					<dd><span>电话：</span><i><{$trade.elecontract.seller_phone}></i></dd>
+				</dl>
+				<dl class="xn_114_cdl xn_114_cr xn_114_bootdl lt_bootdl">
+					<dd><span>买受人(公司名称): </span><i><{if $trade.status == "WAIT_CONFIRM"}><input type='text' name='user_name' value="<{$trade.elecontract.user_name}>" /><{else}><{$trade.elecontract.user_name}><{/if}></i></dd>
+					<dd><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;住所：</span><i><{if $trade.status == "WAIT_CONFIRM"}><input name='user_place' type="text"><{else}><{$trade.elecontract.user_place}><{/if}></i></dd>
+					<dd><span>法定代表人：</span><i><{if $trade.status == "WAIT_CONFIRM"}><input name='user_legal_agent' type="text"><{else}><{$trade.elecontract.user_legal_agent}><{/if}></i></dd>
+					<dd><span>委托代理人：</span><i><{if $trade.status == "WAIT_CONFIRM"}><input name='user_entrusted_agent' type="text"><{else}><{$trade.elecontract.user_entrusted_agent}><{/if}></i></dd>
+					<dd><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;传真：</span><i><{if $trade.status == "WAIT_CONFIRM"}><input name='user_fax' type="text"><{else}><{$trade.elecontract.user_fax}><{/if}></i></dd>
+					<dd><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话：</span><i><{if $trade.status == "WAIT_CONFIRM"}><input type='text' name='phone' value="" /><{else}><{$trade.elecontract.phone}><{/if}></i></dd>
+				</dl>
+			</div>
+		</div>
+	</form>
+	<{/if}>
+</section>
+<!-- 右上角menu菜单 -->
+<div id="minimenu" class="bbc-mini-menu shopex-popover">
+  <div class="shopex-popover-arrow"></div>
+  <div>
+    <ul class="shopex-table-view">
+      <li class="shopex-table-view-cell">
+        <a href="<{url action=topwap_ctl_default@index}>"><i class="bbc-icon bbc-icon-home-empty"></i> 首页</a>
+      </li>
+      <li class="shopex-table-view-cell">
+        <a href="<{url action=topwap_ctl_category@index}>"><i class="bbc-icon bbc-icon-category-empty"></i> 分类</a>
+      </li>
+      <li class="shopex-table-view-cell">
+        <a href="<{url action=topwap_ctl_cart@index}>"><i class="bbc-icon bbc-icon-cart-empty"></i> 购物车</a>
+      </li>
+      <li class="shopex-table-view-cell">
+        <a href="<{url action=topwap_ctl_member@index}>"><i class="bbc-icon bbc-icon-user-empty"></i> 会员</a>
+      </li>
+    </ul>
+  </div>
+</div>
+<!--订单详情底部操作按钮-->
+<{include file="topwap/member/trade/detail/button.html"}>
+<script type="text/javascript">
+  $(".trade-pay").on('tap',function(e){
+	  var url = $(this).data('url');
+	  var tid = $(this).data('tid');
+	  $.post(url, {tid: tid, merge: false}, function(rs){
+		  if( rs.error ){
+			  shopex.alert(rs.message);
+		  }
+		  if(rs.redirect) {
+			  location.href = rs.redirect;
+		  }
+	  })
+  });
+
+  function postHandle(e , thisObj){
+	  e.preventDefault();
+	  var url = $(thisObj).attr('href');
+	  var tid = $(thisObj).data('tid');
+	  $.post(url, {tid: tid, merge: false}, function(rs){
+		  if( rs.error ){
+			  shopex.alert(rs.message);
+		  }else if(rs.success) {
+			  shopex.alert(rs.message);
+		  }
+
+		  if(rs.redirect) {
+			  location.href = rs.redirect;
+		  }
+	  })
+  }
+  $(".reject-contract").on('tap',function (e) {
+	  postHandle(e , this);
+  });
+
+  $(".confirm-contract").on('tap',function (e) {
+	  var formValidatorMsg = {tid : '交易号错误，请联系平台工作人员' ,user_name : '请填写：买受人(公司名称)' , user_place : '请填写：住所' , user_legal_agent : '请填写：法定代表人' , user_entrusted_agent : '请填写：委托代理人' , user_fax : '请填写：传真' , phone : '请填写：电话'};
+	  var formInputVal = {
+		  tid:$("input[name='tid']").val(),
+		  user_name:$("input[name='user_name']").val(),
+		  user_place:$("input[name='user_place']").val(),
+		  user_legal_agent:$("input[name='user_legal_agent']").val(),
+		  user_entrusted_agent:$("input[name='user_entrusted_agent']").val(),
+		  user_fax:$("input[name='user_fax']").val(),
+		  phone:$("input[name='phone']").val()
+	  };
+
+	  for(var theKey in formInputVal){
+		  if('' == formInputVal[theKey]){
+			  shopex.alert(formValidatorMsg[theKey]);
+			  return false;
+		  }
+	  }
+	  formInputVal['merge'] = false;
+
+	  var url = $("#form_template").attr("action");
+	  $.post(url, formInputVal , function(rs){
+		  if( rs.error ){
+			  shopex.alert(rs.message);
+		  }
+		  if(rs.redirect) {
+			  location.href = rs.redirect;
+		  }
+	  })
+  });
+
+  $(".trade-confirm").on('tap', function(e) {
+    e.preventDefault();
+    var tid = $(this).data('tid');
+    var url = $(this).attr('href');
+    shopex.confirm('是否确认已收到货？', function(e) {
+      if (e.index != 1) {
+        return
+      } else {
+        $.post(url, {
+          tid: tid
+        }, function(rs) {
+          if (rs.error) {
+            shopex.alert(rs.mesage);
+          }
+          if (rs.redirect) {
+            location.href = rs.redirect;
+          }
+        });
+      }
+    });
+  });
+</script>

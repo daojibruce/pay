@@ -1,0 +1,23 @@
+<desktop>
+
+    <permissions>
+		<permission id="temaiserver" display='true' parent='0' workground='systemai.workground.temai'>平台展销商家列表</permission>
+        <permission id="temailist" display='true' parent='0' workground='systemai.workground.temai'>平台展销商品列表</permission>
+        <permission id="temai_clearlist" display='true' parent='0' workground='systemai_ctl_admin_settlement'>汇总汇总</permission>
+        <permission id="temai_cleardetail" display='true' parent='0' workground='systemai_ctl_admin_settlement'>汇总明细</permission>
+    </permissions>
+
+    <workground name="平台展销" id="systemai.workground.temai" controller="admin_temaiapply" action="index" order='90'>
+		<menugroup name="平台展销商列表">
+             <menu controller='admin_temaiapply' action='index' permission='temaiserver' display='true' order='1'>平台展销商家审核</menu>
+        </menugroup>
+		<menugroup name="平台展销商品管理">
+             <menu controller='admin_temai' action='index' permission='temailist' display='true' order='1'>平台展销商品上下架</menu>
+        </menugroup>
+        <menugroup name="平台展销结算">
+             <menu controller='admin_settlement' action='index' permission='temai_clearlist' display='true' order='1'>汇总汇总</menu>
+             <menu controller='admin_settlement' action='detail' permission='temai_cleardetail' display='true' order='2'>汇总明细</menu>
+        </menugroup>
+    </workground>
+
+</desktop>

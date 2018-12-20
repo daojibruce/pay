@@ -1,0 +1,39 @@
+
+<div class="main-floor">
+  <div class="swiper-container" id="stl_shop">
+    <div class="index-title">
+      <div class="title-left">
+        <h3><a href="<{url action=topc_ctl_list@shopList}>" target="_blank">店铺</a></h3>
+      </div>
+      <div class="arrow-ctrl"><a href="<{url action=topc_ctl_list@shopList}>" target="_blank">更多+</a></div>
+    </div>
+    <div class="swiper-wrapper stl-shop">
+      <{foreach from=$data.shops item=shop}>
+      <div class="swiper-slide">
+        <div class="good-pic"><a href="<{url action=topc_ctl_shopcenter@index shop_id=$shop.shop_id}>" target="_blank">
+          <{if $shop.shop_logo}>
+          <img src="<{$shop.shop_logo}>" alt="">
+          <{else}>
+          <img src="images/qj.png" alt="">
+          <{/if}>
+        </a></div>
+        <div class="good-cont">
+          <h5><{$shop.shop_name}></h5>
+        </div>
+      </div>
+      <{/foreach}>
+    </div>
+  </div>
+  <!--<script type="text/javascript" src="images/swiper.min.js"></script>
+  <script>
+      var swiper = new Swiper('#stl_shop', {
+          paginationClickable: true,
+          nextButton: '.swiper-button-next',
+          prevButton: '.swiper-button-prev',
+          slidesPerView: 5,
+          slidesPerGroup : 5,
+          paginationClickable: true,
+          spaceBetween: 10
+      });
+  </script>-->
+</div>

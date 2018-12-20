@@ -1,0 +1,30 @@
+<{foreach from=$temailist item=temaiItem}>
+<li class="tm-list">
+    <div class="pic">
+        <a href="<{url action=topc_ctl_item@index item_id=$temaiItem.item_id temai_id=$temaiItem.temai_id}>" target="_blank">
+            <img width="210" height="230" src="<{$temaiItem['image_default_id']}>" alt="<{$temaiItem.title}>">
+        </a>
+    </div>
+    <div class="item-info<{if $temaiItem.state != 1}> add-gray<{/if}>">
+        <{if $temaiItem.state == 1}>
+        <a class="name" href="<{url action=topc_ctl_item@index item_id=$temaiItem.item_id temai_id=$temaiItem.temai_id}>" target="_blank"><{$temaiItem.title}></a>
+        <{else}>
+        <{$temaiItem.title}>
+        <{/if}>
+        <p>
+            <{$temaiItem.sub_title}>
+            <!--
+            <div class="frr">
+                <span class="discount-tag co1">实<em>实体认证</em></span>
+                <span class="discount-tag co2">保<em>正品保证</em></span>
+            </div>
+            -->
+        </p>
+        <div><span>¥<{$temaiItem.price|default:'0.00'}></span><span>原价：<{$temaiItem.mkt_price|default:'0.00'}></span></div>
+        <div class="tm-pr">
+            <em>总库存: <{$temaiItem.store}>件</em>
+            <em>剩余库存: <{$temaiItem.store_remain}>件</em>
+        </div>
+    </div>
+</li>
+<{/foreach}>

@@ -1,0 +1,12 @@
+<desktop>
+    <permissions>
+		<permission id="thirdparty" display='true' parent='0' workground='thirdparty.workground.thirdparty'>第三方服务商列表</permission>
+        <permission id="thirdpartycate" display='true' parent='0' workground='thirdparty.workground.thirdparty'>第三方服务商类型</permission>
+    </permissions>
+    <workground name="第三方服务商" id="thirdparty.workground.thirdparty" controller="admin_thirdparty" action="index" order='90'>
+		<menugroup name="第三方服务商">
+             <menu controller='admin_thirdparty' action='index' permission='thirdparty' display='true' order='1'>第三方服务商列表</menu>
+            <menu controller='admin_thirdparty' action='category' permission='thirdpartycate' display='true' order='1'>第三方服务商类型</menu>
+        </menugroup>
+    </workground>
+</desktop>

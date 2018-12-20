@@ -1,0 +1,60 @@
+<div class="spec-tree">
+    <table cellspacing="0" cellpadding="0" border="0" class="table table-bordered" id="goods-table">
+        <thead>
+        <tr>
+            <th style="width:30%;">规格值</th>
+            <th style="width:20%;">售价(元)<label  data-toggle="tooltip" data-placement="top" title="多规格时，标准价要介于SKU最低和价最高价之间；无规格时就是真实售价"><i class="fa fa-question-circle text-aqua"></i></label></th>
+            <th style="width:50%;">阶梯价格设置</th>
+        </tr>
+        </thead>
+        <tbody>
+        <{foreach from=$item.sku item=sku}>
+        <tr>
+            <td>
+                <div class="form-group">
+                    <{if $sku.spec_info}>
+                    <{$sku.spec_info}>
+                    <{else}>
+                    无多规格
+                    <{/if}>
+                </div>
+            </td>
+            <td>
+                <div class="form-group">
+                    <{$sku.price}>
+                </div>
+            </td>
+            <td>
+                <button class="btn btn-primary edit-step-price" data-toggle="modal" data-target="#myModal">设置阶梯价格</button>
+                <input name="sku_id" value="<{$sku.sku_id}>" type="hidden">
+                <button class="btn btn-danger delete-step-price">清除阶梯价格</button>
+            </td>
+        </tr>
+        <{/foreach}>
+        </tbody>
+    </table>
+</div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+<script>
+ $('.edit-step-price').on('click', function () {
+     var sku_id = $(this).siblings("input[name=sku_id]").val();
+     var url = "<{url action=topshop_ctl_item@editStepPrice}>";
+     $.get(url,{'sku_id':sku_id}, function(re){
+         $('#myModal .modal-content').html(re);
+     });
+ });
+
+ $('.delete-step-price').on('click', function () {
+     var sku_id = $(this).siblings("input[name=sku_id]").val();
+     var url = "<{url action=topshop_ctl_item@deleteStepPrice}>";
+     $.get(url,{'sku_id':sku_id}, function(re){
+         alert(re.message);
+     });
+ });
+</script>

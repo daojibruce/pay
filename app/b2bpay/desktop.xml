@@ -1,0 +1,18 @@
+<desktop>
+
+    <permissions>
+        <permission id="b2bpay_apilogmanager" display='true' parent='0' workground='system'>交易日志管理</permission>
+    </permissions>
+
+    <workground name="系统" id="system" controller="admin_crontab" action="index" order="205">
+       
+        <menugroup name="日志管理">
+            <menu controller="admin_apilog" permission='b2bpay_apilogmanager' action="index" display='true' order='6'>见证宝API请求日志</menu>
+
+            <menu controller="admin_apilog" permission='b2bpay_apilogmanager' action="log" display='true' order='7'>交易日志</menu>
+        </menugroup>
+
+
+    </workground>
+
+</desktop>

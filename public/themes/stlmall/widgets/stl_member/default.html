@@ -1,0 +1,67 @@
+<div class="index-modul" style="width: 290px;">
+    <ul class="top-news" style="margin-top: 0;">
+        <li class="nac">
+            <div class="news-tab">热点资讯</div>
+            <div class="news-list">
+                <{foreach from=$data.others item=article}>
+                <!--<dl><a href="<{url action=topc_ctl_content@getOtherContentInfo article_id=$article.article_id}>" target="_blank"><{$article.title}></a></dl>-->
+                <dl><a href="<{url action=topc_ctl_content@getContentInfo article_id=$article.article_id}>" target="_blank"><{$article.title}></a></dl>
+                <{/foreach}>
+            </div>
+        </li>
+        <li>
+            <div class="news-tab">平台发布</div>
+            <div class="news-list">
+                <{foreach from=$data.articles item=article}>
+                <dl><a href="<{url action=topc_ctl_content@getContentInfo article_id=$article.article_id}>" target="_blank"><{$article.title}></a></dl>
+                <{/foreach}>
+            </div>
+        </li>
+    </ul>
+    <ul class="top-news top-news1" style="margin-top: 0;">
+        <li class="nac">
+            <div class="news-tab">最新店铺</div>
+            <div class="news-list">
+                <{foreach from=$data.shops item=shop}>
+                <!--<dl><a href="<{url action=topc_ctl_content@getOtherContentInfo article_id=$article.article_id}>" target="_blank"><{$article.title}></a></dl>-->
+                <dl><a href="<{url action=topc_ctl_shopcenter@index shop_id=$shop.shop_id}>" target="_blank"><{$shop.shop_name}></a></dl>
+                <{/foreach}>
+            </div>
+        </li>
+        <li>
+            <div class="news-tab">信用排名</div>
+            <div class="news-list">
+                <{foreach from=$data.articles item=article}>
+                <dl><a href="" target="_blank"><{$article.title}></a></dl>
+                <{/foreach}>
+            </div>
+        </li>
+    </ul>
+    <!--<div class="top-nub">
+      <div class="top-nub-tit">数据统计</div>
+      <dt>入驻商：<span><{$data.shopCount}></span></dt>
+      <dt>会员量：<span><{$data.memberCount}></span></dt>
+      <dt>成交量：<span><{$data.tradeCount}></span></dt>
+    </div>-->
+    <script>
+        $(function () {
+            $(".top-news li").on("mouseover",function () {
+                $(this).addClass("nac").siblings().removeClass("nac");
+            });
+            $(".news-list").css("max-height","180px");
+            $(".top-news").css("height","205px");
+        })
+    </script>
+</div>
+<script>
+    var name = decodeURIComponent($.cookie('UNAME') || '');
+    if(name){
+        $("#uname_<{$widgets_id}>").html(name);
+        $("#member_<{$widgets_id}>").css('display','');
+        $("#login_<{$widgets_id}>").css('display','none');
+    }
+    else{
+        $("#login_<{$widgets_id}>").css('display','');
+        $("#member_<{$widgets_id}>").css('display','none');
+    }
+</script>

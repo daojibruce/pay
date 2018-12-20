@@ -1,0 +1,118 @@
+<div class="module">
+	<div class="floor clearfix">
+		<div class="module-hd"><i class="floor-num"><{$setting.floor_th}>F</i><{$setting.floor_name}><span><{$setting.floor_en_name}></span><a href="<{if $setting.floor_more}><{$setting.floor_more}><{else}><{/if}>">更多</a></div>
+		<div class="module-bd floor-container">
+			<div class="floor-left">
+				<div class="floor-category">
+					<ul>
+						<{foreach item=cc from=$setting.sec_cat}>
+						<li><a href="<{url action=topc_ctl_list@index k=goods n=$cc}>" target="_blank"><{$cc}></a></li>
+						<{/foreach}>
+					</ul>
+				</div>
+				<div class="swiper-container floor-slide" id="floor_slide1">
+					<div class="swiper-wrapper">
+						<{foreach item=bb from=$setting.brand}>
+						<div class="swiper-slide"><a href="<{url action=topc_ctl_list@index k=brands n=$cc}>" target="_blank"><img src="images/floor1-pic.jpg" alt=""></a></div>
+						<{/foreach}>
+					</div>
+					<div class="swiper-button-next"></div>
+					<div class="swiper-button-prev"></div>
+					<script>
+						var swiper = new Swiper('#floor_slide1', {
+							nextButton: '.swiper-button-next',
+							prevButton: '.swiper-button-prev',
+							spaceBetween: 0
+						});
+					</script>
+				</div>
+			</div>
+			<div class="floor-center">
+				<a href="">
+					<a href="<{$setting.mid_pic_link}>" href="_blank"><img src="<{$setting.mid_pic}>" alt=""></a>
+					<div class="floor-title-con">
+						<h3><{$setting.mid_pic_txt1}></h3>
+						<h3><{$setting.mid_pic_txt2}></h3>
+					</div>
+				</a>
+			</div>
+			<div class="floor-right">
+				<div class="floor-pro-group group-b">
+					<ul>
+						<li>
+							<div class="products-info">
+								<a href="<{$setting.big_pic2_link}>" target="_blank"><h4><{$setting.big_pic2_txt}></h4></a>
+								<div class="products-price"><{if $setting.big_pic2_money}>￥<{$setting.big_pic2_money}><span>起</span><{/if}></div>
+							</div>
+							<div class="products-pic">
+								<a href="<{$setting.big_pic2_link}>" target="_blank"><img src="<{$setting.big_pic2}>" data-original="<{$setting.big_pic2}>" class="imglazyload" alt="" style="display: block;"></a>
+							</div>
+						</li>
+						<li>
+							<div class="products-info">
+								<a href="<{$setting.small_pic2_link}>" target="_blank"><h4><{$setting.small_pic2_txt}></h4></a>
+								<div class="products-price"><{if $setting.small_pic2_money}>￥<{$setting.small_pic2_money}><span>起</span><{/if}></div>
+							</div>
+							<div class="products-pic">
+								<a href="<{$setting.small_pic2_link}>" target="_blank"><img src="<{$setting.small_pic2}>" data-original="<{$setting.small_pic2}>" class="imglazyload" alt="" style="display: block;"></a>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="floor-pro-group">
+					<ul>
+						<li>
+							<div class="products-pic">
+								<a href="<{$setting.three_pic_link1}>" href="_blank">
+									<img src="<{$setting.three_pic1}>" data-original="<{$setting.three_pic1}>" class="imglazyload" alt="" style="display: block;">
+								</a>
+							</div>
+							<div class="products-info">
+								<a href="<{$setting.three_pic_link1}>" href="_blank">
+									<h5><{$setting.three_pic_txt1}></h5>
+								</a>
+								<div class="products-price">
+									<{if $setting.three_pic_money1}>￥<{$setting.three_pic_money1}>
+									<span>起</span><{/if}>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="products-pic">
+								<a href="<{$setting.three_pic_link2}>" href="_blank">
+									<img src="<{$setting.three_pic2}>" data-original="<{$setting.three_pic2}>" class="imglazyload" alt="" style="display: block;">
+								</a>
+							</div>
+							<div class="products-info">
+								<a href="<{$setting.three_pic_link2}>" href="_blank">
+									<h5><{$setting.three_pic_txt2}></h5>
+								</a>
+								<div class="products-price">
+									<{if $setting.three_pic_money2}>￥<{$setting.three_pic_money2}>
+									<span>起</span><{/if}>
+								</div>
+							</div>
+						</li>
+
+						<li>
+							<div class="products-pic">
+								<a href="<{$setting.three_pic_link3}>" href="_blank">
+									<img src="<{$setting.three_pic3}>" data-original="<{$setting.three_pic3}>" class="imglazyload" alt="" style="display: block;">
+								</a>
+							</div>
+							<div class="products-info">
+								<a href="<{$setting.three_pic_link3}>" href="_blank">
+									<h5><{$setting.three_pic_txt3}></h5>
+								</a>
+								<div class="products-price">
+									<{if $setting.three_pic_money3}>￥<{$setting.three_pic_money3}>
+									<span>起</span><{/if}>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

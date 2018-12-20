@@ -1,0 +1,26 @@
+<div class="col-lg-13 box">
+	<div class="membercenter-box">
+		<div class="membercenter-box-hd">
+		  验证鉴权金额
+		</div>
+		<form action="<{url action=topc_ctl_pay_bank@savecode}>" method="post" id="ajax_form">
+			<div class="membercenter-box-bd custom-form">
+				<input type="hidden" name="AccId" value="<{$AccId}>">
+				<ul>
+					<li class="form-row">
+						<label for="" class="form-label">短信验证码：</label>
+						<span class="form-act">
+							<input type="text" class="x-input action-account-check" id="MessageCode" name="MessageCode" value="" required>
+							<i style="color:#666"> Tips: 请查看短信接收的验证码</i>
+						</span>
+					</li>
+					<li class="form-row">
+						<span class="form-act">
+							<button type="submit" class="btn btn-success" ><span>立即绑定</span></button>
+						</span>
+					</li>
+				</ul>
+			</div>
+		</form>
+	</div>
+</div>

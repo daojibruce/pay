@@ -1,0 +1,22 @@
+<div class="membercenter-box">
+   <div class="membercenter-box-hd">
+      账户充值
+   </div>
+   <div class="membercenter-box-bd" style="width: 60%; height: 200px; padding-left: 350px; padding-top: 50px;">
+      <form action="<{url action=topc_ctl_member_deposit@rechargePay}>" method="POST" >
+         <div><span style="width:100px;"><b>资金账户</b></span><span style="margin-left: 40px;">当前余额：<{$TotalBalance|cur}></span></div><br/>
+         <span>充值金额 :</span>&nbsp;&nbsp;&nbsp;
+		 <input type="text" name="amount" value="" style="width:100px;height:20px;  margin-left: 26px;" onkeyup="CheckInputIntFloat(this);"><br/><br/>
+         <input type="submit" name="recharge_submit" value="立即充值" style="cursor:pointer; width: 220px; margin-left: 20px; background: rgb(238, 105, 17) none repeat scroll 0% 0%; border-width: 0px; font-size:14px; color:white;">
+      </form>
+   </div>
+</div>
+<script>
+//验证金额
+function CheckInputIntFloat(oInput){
+	var regex=/\d{1,}\.{0,1}\d{0,2}/;
+	if('' != oInput.value.replace(regex,'')) {
+		oInput.value = oInput.value.match(regex) == null ? '' : oInput.value.match(regex);
+	}
+}
+</script>

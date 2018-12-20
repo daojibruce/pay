@@ -1,0 +1,35 @@
+<div class="top-sign" id="login_<{$widgets_id}>">
+  <div class="top-signbox">
+    <a class="top-signin" href="<{url action=topc_ctl_passport@signin}>"><{t app='topc'}>登录<{/t}></a>
+    <a class="top-signup" href="<{url action=topc_ctl_passport@signup}>"><{t app='topc'}>注册<{/t}></a>
+    <a class="top-shop" href="<{url action=topshop_ctl_register@enterAgreementPage}>"><{t app='topc'}>我要开店<{/t}></a>
+  </div>
+</div>
+<div class="top-sign" style="display: none;" id="member_<{$widgets_id}>">
+  <div class="top-user-pic">
+    <div class="top-sign-center">
+      <div class="top-user"><img src="images/user.jpg" alt=""></div>
+    </div>
+  </div>
+  <div class="top-user-show">
+    <p><span>hi,</span><a href="<{url action=topc_ctl_member@index}>" id="uname_<{$widgets_id}>"></a></p>
+    <p><span><i class="icon-medal orange"></i></span><a href="<{url action=topc_ctl_passport@logout}>"><{t app='topc'}>退出<{/t}></a></p>
+  </div>
+  <{if $data.is_seller}>
+  <a class="top-shop" href="<{url action=topshop_ctl_register@enterAgreementPage}>"><{t app='topc'}>我的店铺管理<{/t}></a>
+  <{else}>
+  <a class="top-shop" href="<{url action=topshop_ctl_register@enterAgreementPage}>"><{t app='topc'}>我要开店<{/t}></a>
+  <{/if}>
+</div>
+<script>
+    var name = decodeURIComponent($.cookie('UNAME') || '');
+    if(name){
+        $("#uname_<{$widgets_id}>").html(name);
+        $("#member_<{$widgets_id}>").css('display','');
+        $("#login_<{$widgets_id}>").css('display','none');
+    }
+    else{
+        $("#login_<{$widgets_id}>").css('display','');
+        $("#member_<{$widgets_id}>").css('display','none');
+    }
+</script>

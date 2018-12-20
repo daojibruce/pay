@@ -1,0 +1,150 @@
+<div id="goods_exshow_config" class="tableform widgetconfig">
+  <table cellspacing="0" cellpadding="0" border="0" width="100%">
+    <tr>
+      <th>版块名称：</th>
+      <td><input type="text"  name="home_catename" value="<{$setting.home_catename|default:''}>"  /></td>
+    </tr>
+    <tr>
+      <th>版块描述：</th>
+      <td><input type="text"  name="home_intro" value="<{$setting.home_intro|default:''}>"  /></td>
+    </tr>
+    <tr>
+      <th>版块链接：</th>
+      <td><input type="text"  name="home_link" value="<{$setting.home_link|default:''}>"  /></td>
+    </tr>
+    <tr>
+      <th>分组名称：</th>
+      <td>
+        <input type="text" id="home_groupname_input" value="" placeholder="输入名称后点击添加生成新类别" />
+        <input type="button" id="home_groupname_btn" value="添加" />
+      </td>
+    </tr>
+    <tr>
+      <th>选择商品：</th>
+      <td>
+        <div id="select_pop_0">
+            <div class="category_name" style="margin-top:30px;">
+                <input type="text" readonly="readonly" name="home_groupname[0]" value="<{$setting['home_groupname'][0]}>" />
+                <input type="button" class="home_deletename" value="删除" />
+            </div>
+            <{input type="object" object="item" app="sysitem" filter="disabled=0" select=checkbox multiple="true" value=$setting.home_goods.0|implode:',' textcol="title" name="home_goods[0]" breakpoint=0}>
+        </div>
+
+        <div id="select_pop_1">
+            <div class="category_name" style="margin-top:30px;">
+                <input type="text" readonly="readonly" name="home_groupname[1]" value="<{$setting['home_groupname'][1]}>" />
+                <input type="button" class="home_deletename" value="删除" />
+            </div>
+            <{input type="object" object="item" app="sysitem" filter="disabled=0" select=checkbox multiple="true" value=$setting.home_goods.1|implode:',' textcol="title" name="home_goods[1]" breakpoint=0}>
+        </div>
+
+        <div id="select_pop_2">
+            <div class="category_name" style="margin-top:30px;">
+                <input type="text" readonly="readonly" name="home_groupname[2]" value="<{$setting['home_groupname'][2]}>" />
+                <input type="button" class="home_deletename" value="删除" />
+            </div>
+            <{input type="object" object="item" app="sysitem" filter="disabled=0" select=checkbox multiple="true" value=$setting.home_goods.2|implode:',' textcol="title" name="home_goods[2]" breakpoint=0}>
+        </div>
+
+        <div id="select_pop_3">
+            <div class="category_name" style="margin-top:30px;">
+                <input type="text" readonly="readonly" name="home_groupname[3]" value="<{$setting['home_groupname'][3]}>" />
+                <input type="button" class="home_deletename" value="删除" />
+            </div>
+            <{input type="object" object="item" app="sysitem" filter="disabled=0" select=checkbox multiple="true" value=$setting.home_goods.3|implode:',' textcol="title" name="home_goods[3]" breakpoint=0}>
+        </div>
+
+        <div id="select_pop_4">
+            <div class="category_name" style="margin-top:30px;">
+                <input type="text" readonly="readonly" name="home_groupname[4]" value="<{$setting['home_groupname'][4]}>" />
+                <input type="button" class="home_deletename" value="删除" />
+            </div>
+            <{input type="object" object="item" app="sysitem" filter="disabled=0" select=checkbox multiple="true" value=$setting.home_goods.4|implode:',' textcol="title" name="home_goods[4]" breakpoint=0}>
+        </div>
+
+        <div id="select_pop_5">
+            <div class="category_name" style="margin-top:30px;">
+                <input type="text" readonly="readonly" name="home_groupname[5]" value="<{$setting['home_groupname'][5]}>" />
+                <input type="button" class="home_deletename" value="删除" />
+            </div>
+            <{input type="object" object="item" app="sysitem" filter="disabled=0" select=checkbox multiple="true" value=$setting.home_goods.5|implode:',' textcol="title" name="home_goods[5]" breakpoint=0}>
+        </div>
+
+        <div id="select_pop_6">
+            <div class="category_name" style="margin-top:30px;">
+                <input type="text" readonly="readonly" name="home_groupname[6]" value="<{$setting['home_groupname'][6]}>" />
+                <input type="button" class="home_deletename" value="删除" />
+            </div>
+            <{input type="object" object="item" app="sysitem" filter="disabled=0" select=checkbox multiple="true" value=$setting.home_goods.6|implode:',' textcol="title" name="home_goods[6]" breakpoint=0}>
+        </div>
+
+        <div id="select_pop_7">
+            <div class="category_name" style="margin-top:30px;">
+                <input type="text" readonly="readonly" name="home_groupname[7]" value="<{$setting['home_groupname'][7]}>" />
+                <input type="button" class="home_deletename" value="删除" />
+            </div>
+            <{input type="object" object="item" app="sysitem" filter="disabled=0" select=checkbox multiple="true" value=$setting.home_goods.7|implode:',' textcol="title" name="home_goods[7]" breakpoint=0}>
+        </div>
+
+        <div id="select_pop_8">
+            <div class="category_name" style="margin-top:30px;">
+                <input type="text" readonly="readonly" name="home_groupname[8]" value="<{$setting['home_groupname'][8]}>" />
+                <input type="button" class="home_deletename" value="删除" />
+            </div>
+            <{input type="object" object="item" app="sysitem" filter="disabled=0" select=checkbox multiple="true" value=$setting.home_goods.8|implode:',' textcol="title" name="home_goods[8]" breakpoint=0}>
+        </div>
+
+        <div id="select_pop_9">
+            <div class="category_name" style="margin-top:30px;">
+                <input type="text" readonly="readonly" name="home_groupname[9]" value="<{$setting['home_groupname'][9]}>" />
+                <input type="button" class="home_deletename" value="删除" />
+            </div>
+            <{input type="object" object="item" app="sysitem" filter="disabled=0" select=checkbox multiple="true" value=$setting.home_goods.9|implode:',' textcol="title" name="home_goods[9]" breakpoint=0}>
+        </div>
+      </td>
+    </tr>
+  </table>
+<script type="text/javascript">
+    var category_name_list = [];
+    var category_name_index = {};
+    var category_curr_index = 0;
+    jQuery("[readonly=\"readonly\"]").each(function(){
+        var currentGroupname = jQuery(this).val().replace(/^\s+|\s+$/g , '');
+        if('' == currentGroupname){
+            return false;
+        }
+
+        category_name_index[currentGroupname] = category_curr_index;
+        category_name_list[category_curr_index] = currentGroupname;
+        category_curr_index++;
+    });
+
+    jQuery("#home_groupname_btn").bind("click" , function(){
+        var groupname = jQuery("#home_groupname_input").val().replace(/^\s+|\s+$/g , '');
+        if(typeof(category_name_index[groupname]) != 'undefined'){
+            console.info(groupname + "已经添加过了!");
+            return false;
+        }
+
+        category_name_index[groupname] = category_curr_index;
+        category_name_list[category_curr_index] = groupname;
+
+        var select_pop_object = jQuery("#select_pop_" + category_curr_index);
+        select_pop_object.find("[name=\"home_groupname\["+ category_curr_index +"\]\"]").val(groupname);
+        category_curr_index ++;
+    });
+    
+    jQuery(".home_deletename").bind("click" , function(){
+        var category_object = jQuery(this).parent().find("[readonly=\"readonly\"]");
+        var category_name = category_object.val();
+        var category_index = category_name_index[category_name];
+
+        delete category_name_index[category_name];
+        delete category_name_list[category_index];
+        category_object.val('');
+        category_curr_index --;
+
+        console.info(category_name_list);
+    });
+</script>
+</div>

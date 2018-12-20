@@ -1,0 +1,21 @@
+<div class="membercenter-box">
+   <div class="membercenter-box-hd">
+      账户提现
+   </div>
+   <div class="membercenter-box-bd" style="width: 60%; height: 200px; padding-left: 350px; padding-top: 50px;">
+      <form action="<{url action=topc_ctl_pay_vault@withdrawals}>"  method="POST" >
+         <div><span style="width:100px;"><b>资金账户</b></span><span style="margin-left: 40px;">当前余额：<{$TotalBalance|cur}></span></div><br/>
+         提现至银行卡：
+         <{if $bankList }>
+                <select id="bankList" name="bank_car">
+                <{foreach from=$bankList item=data key=key}>
+                    <option value="<{$data.acct_id}>"> <{$data.bank_name}>[<{$data.no_acct_id}>]</option></option>
+                <{/foreach}>
+                </select>
+            <{/if}>
+         <br/><br/>
+         <span>提现金额：</span><input type="text" name="withdrawals_money" value=""  style="width: 100px; height: 20px; margin-left: 26px;"><br/><br/>
+         <input type="submit" name="withdrawals_submit" value="下一步" style="width: 220px; margin-left: 20px; background: rgb(238, 105, 17) none repeat scroll 0% 0%; border-width: 0px; font-size:14px; color:white;">
+      </form>
+   </div>
+</div>

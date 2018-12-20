@@ -1,0 +1,166 @@
+
+    <div class="tableform">
+        <div class="division" style="position:static;">
+            <h3><{t}>商品基本信息<{/t}></h3>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0"  class="shop-setting">
+                <tr>
+                    <th><{t}>所属类目<{/t}>：</th>
+                    <td><{$catInfo.lv1.cat_name}>><{$catInfo.lv2.cat_name}>><{$catInfo.lv3.cat_name}></td>
+				</tr>
+				<tr>
+                    <th><{t}>商品标题<{/t}>：</th>
+                    <td>
+                        <img src="<{$item_default_image|storager:t}>">
+                        <a href="<{url action=topc_ctl_item@index  item_id=$item_id}>" target="_blank"><{$title}></a>
+                    </td>
+				</tr>
+				<tr>
+                    <th><{t}>商品副标题<{/t}>：</th>
+                    <td>
+                    <{if $sub_title}><{$sub_title}><{else}><{$title}><{/if}></td>
+				</tr>
+                <tr>
+                    <th><{t}>商品品牌<{/t}>：</th>
+                    <td><{$brand_id|brandname}></td>
+                </tr>
+                <tr>
+                    <th><{t}>商品库存<{/t}>：</th>
+                    <td><{$store}><{$unit}></td>
+                </tr>
+                <tr>
+                    <th><{t}>商品重量<{/t}>：</th>
+                    <td><{$weight}> 千克(kg)</td>
+                </tr>
+                <tr>
+                    <th><{t}>计价单位<{/t}>：</th>
+                    <td><{$unit}></td>
+                </tr>
+                <tr>
+                    <th><{t}>库存计数<{/t}>：</th>
+                    <td>
+                    <{if $sub_stock == '0'}>付款减库存<{/if}>
+                    <{if $sub_stock == '1'}>下单减库存<{/if}></td>
+                </tr>
+                <tr>
+                    <th><{t}>发布平台<{/t}>：</th>
+                    <td>
+                        <{if $use_platform=='0' || !$use_platform}>全平台(pc+wap)
+                        <{elseif $use_platform=='1'}>pc端
+                        <{elseif $use_platform=='2'}>移动端
+                        <{/if}>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="division" style="position:static;">
+            <h3><{t}>平台展销申请信息<{/t}></h3>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0"  class="shop-setting">
+                <tr>
+                    <th><{t}>平台展销名称<{/t}>：</th>
+                    <td><{$temaiInfo['title']}></td>
+                </tr>
+                <tr>
+                    <th><{t}>审核状态<{/t}>：</th>
+                    <td class="red"><{$temaiInfo['state']|json2value:'{0:"待上架(待审核)",1:"已上架",2:"已下架",3:"审核不通过"}'}></td>
+                </tr>
+                <tr>
+                    <{if $temaiInfo['state'] == 3}>
+                    <th><{t}>驳回原因<{/t}>：</th>
+                    <td class="red"><{$temaiInfo['reason']}></td>
+                    <{/if}>
+                </tr>
+                <tr>
+                    <th><{t}>申请平台展销开始日期<{/t}>：</th>
+                    <td class="red"><{$temaiInfo['starttime']|date:'Y-m-d'}></td>
+                </tr>
+                <tr>
+                    <th><{t}>申请平台展销结束日期<{/t}>：</th>
+                    <td class="red"><{$temaiInfo['endtime']|date:'Y-m-d'}></td>
+                </tr>
+                <tr>
+                    <th><{t}>平台设定平台展销开始日期<{/t}>：</th>
+                    <td class="red"><{$temaiInfo['tm_starttime']|date:'Y-m-d'}></td>
+                </tr>
+                <tr>
+                    <th><{t}>平台设定平台展销结束日期<{/t}>：</th>
+                    <td class="red"><{$temaiInfo['tm_endtime']|date:'Y-m-d'}></td>
+                </tr>
+                <tr>
+                    <th><{t}>平台展销自定价格<{/t}>：</th>
+                    <td class="red"><{$temaiInfo['temai_price']}></td>
+                </tr>
+                <tr>
+                    <th><{t}>平台调价后价格<{/t}>：</th>
+                    <td class="red"><{$temaiInfo['price']}></td>
+                </tr>
+                <tr>
+                    <th><{t}>平台展销自定库存<{/t}>：</th>
+                    <td class="red"><{$temaiInfo['store_total']}></td>
+                </tr>
+                <tr>
+                    <th><{t}>平台设定本次库存<{/t}>：</th>
+                    <td class="red"><{$temaiInfo['store']}></td>
+                </tr>
+                <tr>
+                    <th><{t}>本次销量<{/t}>：</th>
+                    <td class="red"><{$temaiInfo['sale_num']}></td>
+                </tr>
+                <tr>
+                    <th><{t}>平台展销协议<{/t}>：</th>
+                    <td class="red">
+                        <{foreach from=$temaiInfo['agreement'] item=agreement}>
+                        <a href="<{$agreement}>" target="_blank"><{$agreement}></a>
+                        <{/foreach}>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>授权证明<{/t}>：</th>
+                    <td class="red">
+                        <{foreach from=$temaiInfo['certificate'] item=certificate}>
+                        <a href="<{$certificate}>" target="_blank"><{$certificate}></a>
+                        <{/foreach}>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>销售证明附件<{/t}>：</th>
+                    <td class="red">
+                        <{foreach from=$temaiInfo['pricecerti'] item=pricecerti}>
+                        <a href="<{$pricecerti}>" target="_blank"><{$pricecerti}></a>
+                        <{/foreach}>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="division" style="position:static;">
+            <h3><{t}>商品信息<{/t}></h3>
+            <div class="tableform">
+                <table width="100%" border="0" cellpadding="0" cellspacing="0" class="gridlist">
+                    <thead>
+                        <tr>
+                            <th><{t}>商品规格<{/t}></th>
+                            <th><{t}>商品售价<{/t}></th>
+                            <th><{t}>商品原价<{/t}></th>
+                            <th><{t}>商品成本价<{/t}></th>
+                            <th><{t}>商品库存<{/t}></th>
+                            <th><{t}>商品货号<{/t}></th>
+                            <th><{t}>条形码<{/t}></th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <{foreach from=$sku item=spec}>
+                    <tr>
+                        <th><{$spec.spec_info}></th>
+                        <th><{$spec.price|cur}></th>
+                        <th><{$spec.mkt_price|cur}></th>
+                        <th><{$spec.cost_price|cur}></th>
+                        <th><{$spec.store}></th>
+                        <th><{$spec.bn}></th>
+                        <th><{$spec.barcode}></th>
+                    </tr>
+                    <{/foreach}>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

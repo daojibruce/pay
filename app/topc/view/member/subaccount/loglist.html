@@ -1,0 +1,102 @@
+<div class="membercenter-box">
+    <div class="membercenter-box-hd membercenter-collect-hd">操作日志列表（共<{$count}>条）</div>
+
+
+    <div class="membercenter-box-bd">
+        <div class="col-lg-13 box mecter_box_xz">
+            <form class="form-horizontal" action="<{url action=topc_ctl_subaccount@showActionLog}>" method="get" role="form" data-validate-onsuccess="ajaxSuccess">
+                <div class="form-group">
+                    <div class="col-xs-5" style="margin-left:0;">
+                        <span class="mecter_box_bh">操作者：</span>
+                        <select name="user_id" class="x-input">
+                            <option value="0">请选择子账号</option>
+                            <{foreach from=$subAccount item=value key=key}>
+                            <option <{if $selectData.user_id == $key}>selected="selected"<{/if}> value="<{$key}>"><{$value}></option>
+                            <{/foreach}>
+                        </select>
+                        <input type="hidden" value="<{$filter.status}>" id="filter_status">
+                        <span class="mecter_box_bhk">操作内容：</span>
+                        <span class="mecter_box_bhk"><input class="x-input" type="text" value="<{$selectData.memo}>" placeholder="支持模糊搜索" name="memo"></span>
+                    </div>
+
+                    <div class="col-xs-2 mecter_btn btn-primary">
+                        <button type="button" id="sebtn" class="btn btn-primary btn-flat">提交</button>
+                        <button type="reset" class="btn btn-default btn-flat">重置</button>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+        <div style="width:100%; height:14px;"></div>
+        <form id="consult_form" action="" method="post">
+            <table id="xn_c_polibox" class="item-table need-table">
+                <colgroup>
+                    <col class="table-col-1">
+                    <col class="table-col-2">
+                    <col class="table-col-3">
+                    <col class="table-col-4">
+                    <col class="table-col-5">
+                    <col class="table-col-6">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <td class="xn_118_tdw2">操作时间</td>
+                        <td class="xn_118_tdw3">操作内容</td>
+                        <td class="xn_118_tdw4">操作者</td>
+                        <td class="xn_118_tdw5">IP</td>
+                        <!--<td class="xn_118_tdw6">操作</td>-->
+                    </tr>
+                </thead>
+                <tbody>
+                    <{if $loglist}>
+                    <{foreach from=$loglist item=log }>
+                    <tr>
+
+                        <td>
+                            <dl class="xn_116_pobdl">
+                                <{$log.created_time|cdate:FDATE_FTIME}>
+                            </dl>
+                        </td>
+                        <td>
+                            <{$log.memo}>
+                        </td>
+                        <td>
+                            <{$subAccount[$log.user_id]}>
+                        </td>
+                        <td>
+                            <{$log.ip}>
+                        </td>
+                        <!--<td class="col-operate"></td>-->
+                    </tr>
+                    <{/foreach}>
+                    <{else}>
+                    <tr>
+                        <td class="col-operate" colspan="4" style="text-align: center;">暂无相关数据</td>
+
+                    </tr>
+                    <{/if}>
+                </tbody>
+            </table>
+        </form>
+        <{pagers data=$pagers}>
+    </div>
+
+</div>
+<script>
+    $('#sebtn').click(function () {
+        var url = '<{url action=topc_ctl_subaccount@showActionLog}>',
+                uid = $('[name="user_id"]').val(),
+                memo = $('[name="memo"]').val(),
+                qstr = [];
+        if (uid == 0 && $.trim(memo).length == 0) {
+            //return Message.error('请输入过滤条件');
+        }
+
+        if (uid > 0)
+            qstr.push('user_id=' + uid);
+        if ($.trim(memo).length > 0)
+            qstr.push('memo=' + $.trim(memo));
+        //console.log(qstr);
+        location.href = url + (qstr.length > 0 ? '?' : '') + qstr.join('&');
+    });
+</script>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <{header app=topc}>
+  <link rel="stylesheet" href="images/index.css">
+  <link rel="stylesheet" href="images/swiper.min.css">
+</head>
+
+<body class="is-index" style="background-color: #f5f5f5;">
+<{require file="block/header.html"}>
+<!-- 主内容区 -->
+<div class="seaview" style="height: 420px;">
+  <div class="wrap-lg">
+    <div class="module">
+      <div class="row cover-content">
+        <div class="col-lg-9 index-mian">
+          <div class="slide">
+            <a href="" target="_blank"><img src="images/ban01.jpg" alt=""></a>
+          </div>
+          <div class="slide-ad">
+            <{widgets id="stl_sampleList"}>
+          </div>
+        </div>
+        <div class="col-lg-4 box cover-silder-gg">
+          <{widgets id="member2"}>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="main" class="main index" style="background-color: #f5f5f5;">
+  <{widgets id="stl_recommend"}>
+  <div class="wrap-lg">
+    <{widgets id="stl_brand"}>
+  </div>
+  <div class="wrap-lg">
+    <div class="find-floor">
+      <div class="index-title">
+        <div class="title-left">
+          <h3>资讯</h3>
+        </div>
+      </div>
+      <div class="find-main">
+        <div class="find-left">
+          <{widgets id="stl_famous"}>
+        </div>
+        <div class="find-right">
+          <ul>
+            <li>
+              <a href="" target="_blank"><img src="images/find-pic1.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="" target="_blank"><img src="images/find-pic2.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="" target="_blank"><img src="images/find-pic3.jpg" alt=""></a>
+            </li>
+            <li>
+              <a href="" target="_blank"><img src="images/find-pic4.jpg" alt=""></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <script>
+        $(function () {
+            $('.category-primary > li').each(function(e){
+                var i= (-e*42)-45;
+                $(this).css('background-position-y', i +'px');
+            });
+            $("#category_box").show();
+            $(".nav .menu a").eq(0).addClass("on");
+        })
+      </script>
+    </div>
+  </div>
+</div>
+<{require file="block/footer.html"}>
+</body>
+<script type="text/javascript">
+$(function(){
+    $("img.imglazyload").lazyload({
+        effect : "fadeIn"
+    });
+});
+</script>
+</html>

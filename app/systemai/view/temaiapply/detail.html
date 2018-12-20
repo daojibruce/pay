@@ -1,0 +1,44 @@
+
+    <div class="tableform">
+        <div class="division" style="position:static;">
+            <h3><{t}>基本信息<{/t}></h3>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0"  class="shop-setting">
+                <tr>
+                    <th><{t}>平台展销商名称<{/t}>：</th>
+                    <td><{$temaiapply['server_name']}></td>
+                </tr>
+                <tr>
+                    <th><{t}>企业税务登记号<{/t}>：</th>
+                    <td><{$temaiapply['server_cert']}></td>
+                </tr>
+                <tr>
+                    <th><{t}>平台展销商手机号码<{/t}>：</th>
+                    <td><{$temaiapply['server_mobile']}></td>
+                </tr>
+                <tr>
+                    <th><{t}>申请理由<{/t}>：</th>
+                    <td>
+                        <{$temaiapply['server_desc']}>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>上次被拒原因<{/t}>：</th>
+                    <td>
+                        <{$temaiapply['reson_refuse']}>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>初次申请时间<{/t}>：</th>
+                    <td>
+                        <{$temaiapply['createtime']|date:'Y-m-d H:i'}>
+                    </td>
+                </tr>
+                <tr>
+                    <th><{t}>最新修改时间<{/t}>：</th>
+                    <td>
+                        <{$temaiapply['modified_time']|date:'Y-m-d H:i'}>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>

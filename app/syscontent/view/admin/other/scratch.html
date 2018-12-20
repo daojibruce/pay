@@ -1,0 +1,29 @@
+<table class="table-action">
+    <tr>
+        <th><{t}>中国机床商务网文章抓取<{/t}></th>
+        <td><{button type="submit" id='start_scratch' label="开始抓取"|t:'syscontent'}></td>
+    </tr>
+</table>
+<script>
+    var finder = finderGroup['<{$env.get._finder.finder_id}>'];
+    $('start_scratch').addEvent('click', function(e) {
+        var req = new Request({
+            url: '?app=syscontent&ctl=admin_other&act=ScratchJC35',
+            method:'get' ,
+            onSuccess: function(response) {
+                var hash_res_obj = JSON.decode(response);
+
+                if (hash_res_obj.success != undefined && hash_res_obj.success != ""){
+                    try{
+                        var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                    }catch(e){}
+
+                    if(_dialogIns){
+                        _dialogIns.close();
+                        window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+                    }
+                }
+            }
+        }).send();
+    });
+</script>

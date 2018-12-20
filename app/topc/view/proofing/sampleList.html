@@ -1,0 +1,31 @@
+<div class="wrap-lg">
+    <div class="dy-need">
+        <table cellpadding="0" cellspacing="0">
+            <thead>
+            <td>发布时间</td>
+            <td>需求名称</td>
+            <td>服务撮合类型</td>
+            <td>服务撮合规格</td>
+            <td>服务撮合数量</td>
+            <td>竞标人数</td>
+            </thead>
+            <tbody>
+            <{foreach from=$samples item=sample}>
+            <tr>
+                <td><{$sample.createtime}></td>
+                <{if $is_provider}>
+                <td><a target="_blank" href="<{url action=topc_ctl_proofing@detail sample_id=$sample.sample_id}>"><{$sample.sample_name}></a></td>
+                <{else}>
+                <td><{$sample.sample_name}></td>
+                <{/if}>
+                <td><{$sample.material}></td>
+                <td><{$sample.unit}></td>
+                <td><{$sample.quantity}></td>
+                <td><{$sample.count}></td>
+            </tr>
+            <{/foreach}>
+            </tbody>
+        </table>
+        <{pagers data=$pagers}>
+    </div>
+</div>

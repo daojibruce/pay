@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <{header app=topc}>
+  <script type="text/javascript" src="images/swiper.min.js"></script>
+  <link rel="stylesheet" href="images/index.css">
+  <link rel="stylesheet" href="images/swiper.min.css">
+</head>
+
+<body class="is-index">
+<{require file="block/header.html"}>
+<!-- 主内容区 -->
+<div class="seaview bggg">
+  <div class="wrap-lg">
+      <div class="tmai">
+    <{widgets id="stl_slide"}>
+      </div>
+      <div class="twocen">
+          <{widgets id="stl_coupon1"}>
+          <{widgets id="stl_coupon2"}>
+      </div>
+  </div>
+</div>
+<div id="main" class="main index">
+  <div class="wrap-lg chanel">
+    <{widgets id="stl_recommend1"}>
+    <{widgets id="stl_recommend2"}>
+    <{widgets id="stl_recommend3"}>
+  </div>
+</div>
+<{require file="block/footer.html"}>
+</body>
+<script type="text/javascript">
+    $(function(){
+        $("img.imglazyload").lazyload({
+            effect : "fadeIn"
+        });
+    });
+</script>
+</html>

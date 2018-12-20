@@ -1,0 +1,9 @@
+<div class="find-news-tit">
+    <!--<img src="<{$data.ad_pic}>" alt="<{$data.title}>">-->
+    <div class="news-tit"><{$data.title}><a href="">更多+</a></div>
+</div>
+<dl>
+    <{foreach from=$data.articles item=article}>
+    <dd><a href="<{url action=topc_ctl_content@getContentInfo article_id=$article.article_id}>" target="_blank"><{$article.title}></a></dd>
+    <{/foreach}>
+</dl>

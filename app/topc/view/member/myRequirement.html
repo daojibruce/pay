@@ -1,0 +1,122 @@
+<div class="col-lg-13 box">
+    <div class="membercenter-box section">
+        <div class="membercenter-box-hd" style="height: 80px;">
+            <div class="membercenter-box-left" style="margin-top: 20px;">
+                <div class="proofing add-proofing"><a href="<{url action=topc_ctl_proofing@release}>">发布新需求</a></div>
+                <div class="proofing close-proofing">关闭需求</div>
+                <div class="proofing del-proofing">删除</div>
+            </div>
+            <div class="membercenter-box-right" style="margin-top: 15px;">
+                需求状态
+                <select name="status" id="proofing_status">
+                    <option value="0" <{if $req_status == '0'}>selected<{/if}>>全部</option>
+                    <option value="2" <{if $req_status == '2'}>selected<{/if}>>已完成</option>
+                    <option value="1" <{if $req_status == '1'}>selected<{/if}>>未完成</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="membercenter-box-bd">
+            <table class="proofing-table">
+                <thead>
+                    <td>发布时间</td>
+                    <td>有效期</td>
+                    <td>服务撮合产品名称</td>
+                    <td>服务类型</td>
+                    <td>状态</td>
+                    <td>操作</td>
+                </thead>
+                <tbody>
+                <{foreach from=$samples item=sample}>
+                    <tr>
+                        <td>
+                            <input type="checkbox" class="require_check" value="1">
+                            <input type="hidden" class="reuqire_id" value="<{$sample.sample_id}>">
+                            <input type="hidden" class="status" value="<{$sample.status}>">
+                            <{$sample.createtime|date:'Y/m/d'}>
+                        </td>
+                        <td> <{$sample.start_time|date:'Y/m/d'}> - <{$sample.end_time|date:'Y/m/d'}></td>
+                        <td> <{$sample.sample_name}></td>
+                        <td> <{$sample.cat_name}></td>
+                        <{if $sample.status == '0'}>
+                        <td class="proofing-no">未中标</td>
+                        <{elseif $sample.status == '3'}>
+                        <td class="proofing-ok">已关闭</td>
+                        <{else}>
+                        <td class="proofing-ok">已中标</td>
+                        <{/if}>
+                        <td>
+                            <{if $sample.status == '0'}>
+                            <{if $sample.has_offer == 1}>
+                            <a href="<{url action=topc_ctl_member@myRequirementPrice sample_id=$sample.sample_id}>" class="proofing-price">查看报价</a>
+                            <{else}>
+                            暂无报价
+                            <{/if}>
+                            <{/if}>
+                            <{if $sample.status == '1' || $sample.status == '2'}>
+                            <a href=""  class="proofing-order">查看订单详情</a>
+                            <{/if}>
+                            <{if $sample.status == '3'}>
+                            该需求已关闭
+                            <{/if}>
+                        </td>
+                    </tr>
+                <{/foreach}>
+                </tbody>
+            </table>
+            <{pagers data=$pagers}>
+        </div>
+    </div>
+</div>
+<script>
+    $('#proofing_status').on('change', function () {
+        var status = $(this).val();
+        location.href = '<{url action=topc_ctl_member@myRequirement}>'+'?status='+status;
+    });
+
+    function getChecked()
+    {
+        var data = new Array();
+        var index = 0;
+        $('.require_check').each(function () {
+            if ($(this).prop('checked')) {
+                var requirement_id = $(this).next().val();
+                if ($(this).next().next().val() != '0') {
+                    Message.error('已中标商品无法关闭或删除！');
+                    return false;
+                }
+                data[index] = requirement_id;
+                index += 1;
+            }
+        });
+        return data;
+    }
+
+    $('.close-proofing').on('click', function () {
+        var data = getChecked();
+        if (!data || data.length == 0) return false;
+        $.post('<{url action=topc_ctl_member@cancelRequirement}>',{'data' : data},function (re) {
+            if (re.status == 'error') {
+                Message.error(re.message);
+            } else {
+                Message.success('关闭成功！');
+                setTimeout('',1000);
+                location.href = '<{url action=topc_ctl_member@myRequirement}>';
+            }
+        });
+    });
+
+    $('.del-proofing').on('click', function () {
+        var data = getChecked();
+        if (!data || data.length == 0) return false;
+        $.post('<{url action=topc_ctl_member@delRequirement}>',{'data' : data},function (re) {
+            if (re.status == 'error') {
+                Message.error(re.message);
+            } else {
+                Message.success('删除成功！');
+                setTimeout('',1000);
+                location.href = '<{url action=topc_ctl_member@myRequirement}>';
+            }
+        });
+    });
+</script>

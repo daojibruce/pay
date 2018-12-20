@@ -1,0 +1,24 @@
+<!--头部导航-->
+<div id="topbar" class="topbar">
+  <div class="topbar-ad">
+    <a href=""><img src="images/topbar-ad.jpg" alt=""></a>
+  </div>
+  <script>
+      $(function () {
+          var sw = $(".topbar-ad img").width();
+          $(".topbar-ad img").css("margin-left", -sw*0.5);
+          $(".topbar-ad").animate({
+              "height":80,
+              "opacity":1
+          },500);
+      })
+  </script>
+  <div class="wrap-lg">
+    <div class="topbar-left">
+      <{widgets id="tbl"}>
+    </div>
+    <div class="topbar-right">
+      <{widgets id="tbr"}>
+    </div>
+  </div>
+</div>

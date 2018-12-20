@@ -1,0 +1,41 @@
+<div class="filter">
+
+  <div class="filter-title">
+    <span class="highlight"><{if $screen.keyword}><{$screen.keyword}> - <{/if}></span>商品筛选
+  </div>
+
+  <div class="filter-list">
+
+    <{if $screen.cat}>
+    <!-- 类目 -->
+    <{include file="topc/list/filter/cat.html"}>
+    <{/if}>
+
+    <{if $screen.brand}>
+    <!-- 品牌 -->
+    <{include file="topc/list/filter/brand.html"}>
+    <{/if}>
+
+    <{if $screen.props}>
+    <!-- 自然属性 -->
+    <{include file="topc/list/filter/props.html"}>
+    <{/if}>
+
+  </div>
+
+  <div class="search-more"></div>
+</div>
+<script>
+  $(function () {
+      var len = $(".filter-attr").length;
+      if ( len > 5 ) {
+          $(".search-more").css("display","block");
+      } else {
+          $(".filter-list").addClass("adauto");
+      };
+      $(".search-more").on("click",function () {
+          $(".filter-list").toggleClass("adauto");
+          $(this).toggleClass("adbg");
+      });
+  })
+</script>

@@ -1,0 +1,29 @@
+<desktop>
+    <permissions>
+        <!--服务撮合中心-->
+        <permission id="proofing" display='true' parent='0' workground='sysshop.workground.shoptype'>服务商列表</permission>
+        <permission id="proofing_review" display='true' parent='0' workground='sysshop.workground.shoptype'>待审核服务商列表</permission>
+        <permission id="proofing_category" display='true' parent='0' workground='sysshop.workground.shoptype'>服务类型</permission>
+        <permission id="proofing_requirement" display='true' parent='0' workground='sysshop.workground.shoptype'>服务撮合需求</permission>
+        <permission id="proofing_category_delete" display='true' parent='0' workground='sysshop.workground.shoptype'>服务类型删除</permission>
+        <permission id="proofing_category_add" display='true' parent='0' workground='sysshop.workground.shoptype'>服务类型删除</permission>
+        <permission id="proofing_category_edit" display='true' parent='0' workground='sysshop.workground.shoptype'>服务类型编辑</permission>
+        <permission id="proofing_category_save" display='true' parent='0' workground='sysshop.workground.shoptype'>服务类型保存</permission>
+        <permission id="proofing_category_update" display='true' parent='0' workground='sysshop.workground.shoptype'>新增服务类型审核</permission>
+    </permissions>
+
+    <workground name="商家" id="sysshop.workground.shoptype" controller="admin_shoptype" action="index" order='90'>
+        <menugroup name="服务撮合中心">
+            <menu controller='admin_proofing' action='index' permission='proofing' display='true' order='10'>服务商列表</menu>
+            <menu controller='admin_proofing' action='review' permission='proofing_review' display='true' order='10'>待审核服务商列表</menu>
+            <menu controller='admin_proofing' action='category' permission='proofing_category' display='true' order='10'>服务类型</menu>
+            <menu controller='admin_proofing' action='newCategoryApply' permission='proofing_category_update' display='true' order='10'>新增服务类型审核</menu>
+            <menu controller='admin_proofing' action='requirement' permission='proofing_requirement' display='true' order='10'>服务撮合需求</menu>
+            <menu controller='admin_proofing' action='categoryDelete' permission='proofing_category_delete' display='false' order='10'>服务类型删除</menu>
+            <menu controller='admin_proofing' action='categoryAdd' permission='proofing_category_add' display='false' order='10'>服务类型添加</menu>
+            <menu controller='admin_proofing' action='categoryEdit' permission='proofing_category_edit' display='false' order='10'>服务类型编辑</menu>
+            <menu controller='admin_proofing' action='categorySave' permission='proofing_category_save' display='false' order='10'>服务类型保存</menu>
+        </menugroup>
+    </workground>
+
+</desktop>

@@ -1,0 +1,7 @@
+<cronentries>
+    <cron id="systemai_tasks_stateReset">
+        <description>平台展销商品到期自动下架，库存为零自动下架</description>
+        <schedule>10 1 * * *</schedule>
+        <enabled>true</enabled>
+    </cron>
+</cronentries>

@@ -1,0 +1,25 @@
+<div class="tabs-wrap">
+  <ul>
+    <li class="tab current"><span><{t}> 企业会员注册背景图设置<{/t}></span></li>
+  </ul>
+</div>
+  <form method="post" action="?app=sysconf&ctl=admin_setting&act=bannerSet" id="whitelist">
+    <div style="text-align:right;padding:3px 30px"></div>
+    <table class="tableform" style="width:99%;">
+    <tbody>
+      <tr>
+        <th><{t}>背景图：<{/t}></th>
+        <td>
+          <{input type="image" name='company_banner' value=$company_banner width=858 height=249}>
+          <span class="notice-inline">
+            <{t}>建议图片尺寸1198px * 350px,提高用户体验，增强品牌宣传效果。<{/t}></span>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+  <div class="table-action">
+    <{button type="submit"  label=$___desktop="保存"|t:'site'}>
+  </div>
+</form>
+

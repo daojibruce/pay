@@ -1,0 +1,45 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span></button>
+            <h4 class="modal-title">选择平台分类</h4>
+        </div>
+        <div class="modal-body">
+            <{input type="category" name="item[cat_id]" shop_id=0 cat_id=$cat_id value=$new_cat_id callback="categoryCallback"}>
+            <input type="hidden" name="item[sku]">
+            <input type="hidden" name="item[spec]">
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary modal-save" <{if !$item.item_id}>disabled<{/if}>>保存</button>
+            <button type="button" class="btn btn-default modal-cancel" data-dismiss="modal">取消</button>
+        </div>
+    </div>
+</div>
+<{script src="md5.js" app="desktop"}>
+<{script app="toputil" src="jquery-catselect.js"}>
+<script>
+    var catId = $('#catDialog').next().val();
+    var catName = $('#new_brand').prev().text();
+
+    function categoryCallback (instance, option) {console.log(option);
+        $('#catDialog').find('.btn-primary').prop('disabled', option.hasChild ? true : false);
+        if (!option.hasChild) {
+            $('#catDialog').next().val(option.value);
+            $('#new_brand').prev().text(option.text);
+        }
+    }
+
+    $('#catDialog  .modal-save').on('click', function(){
+        $('#catDialog').modal('hide');
+        $('#new_brand').parent().show();
+    });
+
+    $('#catDialog  .modal-cancel').on('click', function(){
+        $('#catDialog').next().val(catId);
+        $('#new_brand').prev().text(catName);
+    });
+
+    <{if $new_cat_id}>
+    $('#new_brand').parent().show();
+    <{/if}>
+</script>

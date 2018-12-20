@@ -1,0 +1,59 @@
+<{if $not_approve}>
+您的申请已提交，请等待审核！
+<{else}>
+<{if !$nothas}>
+已经没有可以新增的服务类型了!
+<{else}>
+<{if $apply}>
+您的申请被拒绝，拒绝原因：<{$apply.reject_reason}>
+<{/if}>
+<div style="background-color: #ffffff;">
+    <form method="post" action="<{url action=topc_ctl_member_proofing@updateCategory}>" role="form" id="categoryForm" class="form-horizontal">
+        <input type="hidden" value="<{$provider_id}>" name="provider_id">
+        <{if $apply}>
+        <input type="hidden" value="<{$apply.apply_id}>" name="apply_id">
+        <{/if}>
+        <ul class="signul">
+            <li class="form-row">
+                <div class="signcl"><i style="color: red;">*</i>服务类型：</div>
+                <div class="">
+                    <{foreach from=$nothas item=category}>
+                    <input type="checkbox" value="<{$category.cat_id}>" name="cats[]" <{if in_array($category.cat_id,$apply.cat_id)}>checked<{/if}> ><{$category.cat_name}>
+                    <{/foreach}>
+                </div>
+            </li>
+            <li class="form-row">
+                <div class="signcl"><i style="color: red;">*</i>申请原因：</div>
+                <div class="signcr"><input type="text" name="reason" placeholder="请申请原因" required value="<{$apply.reason}>"> </div>
+            </li>
+            <li class="form-row">
+                <div class="signcl"><i style="color: red;">*</i>服务能力描述：</div>
+                <div class=""><textarea name="desc" placeholder="服务能力描述" required><{$apply.desc}></textarea></div>
+            </li>
+            <li class="signagre">
+                <span class="form-act">
+                    <button type="submit" id="submitCategory" class="btn btn-success btn-block"><span><span>提交申请</span></span></button>
+                </span>
+            </li>
+        </ul>
+    </form>
+</div>
+
+<script>
+    $('#submitCategory').on('click',function(){
+        var form = $('#categoryForm');
+        $.post(form.attr('action'),form.serialize(),function (rs) {
+            if (rs.error) {
+                Message.error(rs.message);
+            } else {
+                Message.success(rs.message);
+            }
+            if (rs.redirect) {
+                location.href = rs.redirect;
+            }
+        });
+        return false;
+    });
+</script>
+<{/if}>
+<{/if}>

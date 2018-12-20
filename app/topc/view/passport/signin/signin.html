@@ -1,0 +1,28 @@
+<div class="main" style="background:url('<{if $env.conf.site.site.loginlogo|storager}><{$env.conf.site.site.loginlogo|storager}><{else}><{$env.base_full_url}>/themes/luckymall/images/demo_login.jpg<{/if}>') center no-repeat;height: 440px;">
+  <div class="wrap-lg clearfix">
+    <div class="col-lg-9">&nbsp;</div>
+    <div class="col-lg-6 login">
+      <{include file='topc/passport/signin/member-signin.html'}>
+    </div>
+  </div>
+</div>
+<script>
+    $(".has-figure .input-block").focus(function () {
+        $(this).css("border-color","#4480ca");
+        $(this).next(".has-figure .input-figure").css("color","#4480ca");
+        if ($(".has-figure .input-block").val() !== "") {
+            $(this).parent().find(".icon-close").show();
+        } else {
+            $(this).parent().find(".icon-close").hide();
+        }
+    });
+    $(".has-figure .input-block").blur(function () {
+        $(this).css("border-color","darkgray");
+        $(this).next(".has-figure .input-figure").css("color","#999999");
+        $(this).parent().find(".icon-close").hide();
+    });
+    $(".icon-close").on("click",function () {
+        $(this).parent().find(".input-block").val("");
+        $(this).hide();
+    });
+</script>

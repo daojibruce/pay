@@ -1,0 +1,32 @@
+<h4><{t}>收货信息<{/t}></h4>
+<div class="form-group row">
+    <div class="col-xs-6">
+        <label class="order-form-w1"><{t}>会员用户名<{/t}>：</label><{$trade.login_account}>
+    </div>
+    <div class="col-xs-6">
+        <label class="order-form-w1"><{t}>收货人<{/t}>：</label><{$trade.receiver_name}>
+    </div>
+</div>
+<div class="form-group row">
+    <div class="col-xs-6">
+        <label class="order-form-w1"><{t}>收货人手机<{/t}>：</label><{$trade.receiver_mobile}>
+
+    </div>
+    <div class="col-xs-6">
+        <{if $trade.receiver_phone}><label class="order-form-w1"><{t}>收货人电话<{/t}>：</label><{$trade.receiver_phone}><{/if}>
+    </div>
+</div>
+<div class="form-group row">
+    <{if !$trade.ziti_addr}>
+    <div class="col-xs-6">
+        <label class="order-form-w1"><{t}>收货地区<{/t}>：</label><{$trade.receiver_state}><{$trade.receiver_city}><{$trade.receiver_district}>
+    </div>
+    <div class="col-xs-6">
+        <label class="order-form-w1"><{t}>收货地址<{/t}>：</label><{$trade.receiver_address}>
+    </div>
+    <{else}>
+    <div class="col-xs-6">
+        <label class="order-form-w1"><{t}>自提地址<{/t}>：</label><{$trade.ziti_addr}>
+    </div>
+    <{/if}>
+</div>

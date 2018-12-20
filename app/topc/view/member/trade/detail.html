@@ -1,0 +1,1031 @@
+<!--    /* custom s  zhm */   -->
+<form id="payment_form" action="<{url action=topc_ctl_paycenter@createPay}>" method="post">
+</form>
+<div class="membercenter-box payment-box new-css">
+  <div class="membercenter-box-hd">
+    <div class="membercenter-box-left">
+      <span>我的订单</span>
+    </div>
+    <div class="membercenter-box-right">
+      <span>订单编号：<{$trade.tid}></span>
+      <span class="order-status">
+        状态：
+		<{if $trade.status == "WAIT_SENDCONTRACT"}>
+		等待商家发起合同
+		<{elseif $trade.status == "REJECT_CONTRACT"}>
+		买家拒绝合同内容，等待卖家修改合同
+        <{elseif $trade.status == "WAIT_CHECK"}>
+		等待ERP审核
+        <{elseif $trade.status == "UNPASS"}>
+		ERP审核不通过
+        <{elseif $trade.status == "CANCEL_TRADE"}>
+		ERP取消订单
+		<{elseif $trade.status == "WAIT_CONFIRM"}>
+		等待买家确认合同
+        <{elseif $trade.status == "WAIT_BUYER_PAY"}>
+        <{if $trade.pay_type != "offline"}>
+        订单已生成，请及时付款
+        <{else}>
+        商家已经发货,等待您确认收货并完成支付
+        <{/if}>
+        <{elseif $trade.status == "WAIT_SELLER_SEND_GOODS" && $trade.pay_type == "online"}>
+         支付成功，请等待发货
+        <{elseif $trade.status == "WAIT_SELLER_SEND_GOODS" && ($trade.pay_type == "caroffline" || $trade.pay_type == "offline")}>
+        订单已生成,请耐心等待商家发货处理
+        <{elseif $trade.status == "WAIT_BUYER_CONFIRM_GOODS" && $trade.pay_type == "online"}>
+        已发货，请耐心等待物流配送并确认收货
+        <{elseif $trade.status == "WAIT_BUYER_CONFIRM_GOODS" && ($trade.pay_type == "caroffline" || $trade.pay_type == "offline")}>
+        已发货，请耐心等待物流配送并确认收货及付款
+        <{elseif $trade.status == "TRADE_FINISHED" || $trade.status == "WAIT_EVALUATE"}>
+        订单已完成
+        <{elseif $trade.status == "TRADE_CLOSED_BY_SYSTEM" || $trade.status == "TRADE_CLOSED"}>
+        订单已取消
+        <{/if}>
+      </span>
+    </div>
+    <!-- <div class="membercenter-box-right">
+      <{if $trade.status == "WAIT_BUYER_PAY"}>
+      <buton id="<{$trade.tid}>" class="btn btn_dialog">
+        <span><span>取消订单</span></span>
+      </button>
+      <a href="<{$trade.tid}>" class="btn btn-import  act-pay"><span><span>去付款</span></span></a>
+      <{elseif $trade.status == "WAIT_BUYER_CONFIRM_GOODS" && $trade.pay_type == "online"}>
+      <a href="javascript:void(0);" id="<{$trade.tid}>" class="btn btn-import btn-confirm">
+        <span><span>确认收货</span></span>
+      </a>
+      <{/if}>
+    </div> -->
+  </div>
+  <div class="membercenter-box-bd">
+    <div class="orderdtl-box membercenter-ordert1-unpay-hd">
+      <{if $trade.status == "WAIT_SENDCONTRACT"}>
+      <{include file="topc/member/trade/status/sendcontract.html"}>
+      <{elseif $trade.status == "WAIT_CHECK"}>
+      <{include file="topc/member/trade/status/check.html"}>
+      <{elseif $trade.status == "UNPASS"}>
+      <{include file="topc/member/trade/status/unpass.html"}>
+      <{elseif $trade.status == "CANCEL_TRADE"}>
+      <{include file="topc/member/trade/status/cancelerp.html"}>
+      <{elseif $trade.status == "WAIT_CONFIRM"}>
+      <{include file="topc/member/trade/status/unconfirm.html"}>
+      <{elseif $trade.status == "WAIT_BUYER_PAY"}>
+      <{include file="topc/member/trade/status/unpay.html"}>
+      <{elseif $trade.status == "WAIT_SELLER_SEND_GOODS"}>
+      <{include file="topc/member/trade/status/undelivery.html"}>
+      <{elseif $trade.status == "WAIT_BUYER_CONFIRM_GOODS"}>
+      <{include file="topc/member/trade/status/unreceived.html"}>
+      <{elseif $trade.status == "TRADE_FINISHED" || $trade.status == "WAIT_EVALUATE"}>
+      <{include file="topc/member/trade/status/finish.html"}>
+      <{elseif $trade.status == "TRADE_CLOSED_BY_SYSTEM" || $trade.status == "TRADE_CLOSED"}>
+      <{include file="topc/member/trade/status/cancel.html"}>
+      <{/if}>
+    </div>
+    <div class="orderdtl-box">
+      <div class="orderdtl-hd">收货人信息</div>
+      <div class="orderdtl-bd">
+        <div>收货人：<{$trade.receiver_name}></div>
+          <{if $trade.receiver_mobile}>
+        <div>联系方式：<{$trade.receiver_mobile}></div>
+          <{/if}>
+        <{if $trade.receiver_phone !=null}>
+        <div>收货人电话：<{$trade.receiver_phone}></div>
+        <{/if}>
+        <{if !$trade.ziti_addr}>
+        <div>收货地址：
+          <{$trade.receiver_state}><{$trade.receiver_city}> <{$trade.receiver_district}>&nbsp;<{$trade.receiver_address}>
+          <{/if}>
+        </div>
+      </div>
+    </div>
+    <!-- 付款信息 -->
+    <div class="orderdtl-box">
+      <div class="orderdtl-hd">付款信息 </div>
+      <div class="orderdtl-bd">
+        <table class="item-table table-orderdtl">
+          <thead>
+          <tr>
+            <td colspan="2">付款批次</td>
+            <td>款项</td>
+            <td>支付状态</td>
+            <td>支付时间</td>
+            <td>待支付时间</td>
+            <td>支付类型</td>
+            <{if $trade.pay_type == "offline" ||  $trade.elecontract.is_part_pay=="1"}>
+            <td>延长付款</td>
+            <{/if}>
+          </tr>
+          </thead>
+          <tbody>
+          <{foreach from=$payData item=item key=key}>
+          <tr>
+            <td colspan="2">
+              <{$item.times}>
+            </td>
+            <td>
+              <{$item.amount|cur}>
+            </td>
+            <td>
+              <{$item.pay_status}>
+            </td>
+            <td>
+              <{if $item.pay_status =='已支付'}>
+              <{if $item.pay_time}><{$item.pay_time|cdate:'FDATE_FTIME'}><{/if}>
+              <{else}>
+              <{$item.pay_time}>
+              <{/if}>
+            </td>
+            <td>
+              <{$item.wait_pay_time}>
+            </td>
+            <td>
+              <{if $trade.pay_type == "online"}>线上支付
+              <{elseif $trade.pay_type == "caroffline"}>线下支付
+              <{elseif $trade.pay_type == "offline"}>货到付款
+              <{/if}>
+            </td>
+            <{if $trade.pay_type == "offline" ||  $trade.elecontract.is_part_pay=="1"}>
+            <td>
+              <{if $trade.status != "TRADE_CLOSED_BY_SYSTEM" && $trade.status != "TRADE_CLOSED"}>
+              <{if $item.pay_status =='待支付'}>
+              <{if $item.times!='1' && $item.times!='2'}>
+              <{if $trade.longpay_id}>
+              <a class="click_get_longpay" tid="<{$trade.tid}>" times="<{$item.times}>" href="javascript:void(0);">查看</a>
+              <{else}>
+              <a class="click_get_longpay" tid="<{$trade.tid}>" times="<{$item.times}>" href="javascript:void(0);">申请</a>
+              <{/if}>
+              <{else}>
+              --
+              <{/if}>
+              <{else}>
+              --
+              <{/if}>
+              <{else}>
+              --
+              <{/if}>
+            </td>
+            <{/if}>
+          </tr>
+          <{/foreach}>
+          </tbody>
+        </table>
+        <!--
+        <{if $trade.pay_type == "online"}>
+          <div>支付类型：线上支付</div>
+      <{elseif $trade.pay_type == "caroffline"}>
+          <div>支付类型：线下支付</div>
+      <{/if}>
+        <div>已完成第<strong><{$trade.position}></strong>次付款</div>
+        <div>应付金额：<{$trade.payment|cur}>元</div>
+        <div>已付金额：<{$trade.payed_fee|cur}>元</div>
+        <div>待付金额：<{$trade.payment-$trade.payed_fee|cur}>元</div>
+    </div>-->
+      </div>
+      <!-- 付款信息 -->
+
+      <div class="orderdtl-box">
+        <div class="orderdtl-hd">发票信息</div>
+        <div class="orderdtl-bd">
+          <{if $trade.order_type == 'proofing' && $trade.status == 'WAIT_CONFIRM'}>
+          <dl class="dl-horizontal" style="margin-bottom: 15px;">
+            <form action="<{url action=topc_ctl_member_trade@saveInvoice}>" role="form" method="post" id="invoice_form">
+              <input type='hidden' name='tid' value="<{$trade.tid}>">
+              <dt><{t}>是否要发票<{/t}>：</dt>
+              <dd>
+                <input type="radio" class="" name="need_invoice" value="1" <{if $trade.need_invoice == '1'}>checked<{/if}> >是
+                <input type="radio" class="" name="need_invoice" value="0" <{if $trade.need_invoice != '1'}>checked<{/if}>>否
+              </dd>
+              <div class="invoice-type" hidden>
+                <dt><{t}>发票类型<{/t}>：</dt>
+                <dd>
+                  <input type="radio" class="" name="invoice_type" value="normal" <{if $trade.invoice_type == 'normal'}>checked<{/if}>>普通发票
+                  <input type="radio" class="" name="invoice_type" value="vat" <{if $trade.invoice_type == 'vat'}>checked<{/if}>>增值税发票
+                </dd>
+                <div class="invoice-normal">
+                  <dt><{t}>发票抬头<{/t}>：</dt>
+                  <dd>
+                    <input type="radio" class="" name="invoice_name" value="individual" <{if $trade.invoice_name == 'individual'}>checked<{/if}>>个人
+                    <input type="radio" class="" name="invoice_name" value="unit" <{if $trade.invoice_name == 'unit'}>checked<{/if}>>单位
+                    <input type="text" name="invoice_main" value="<{$trade.invoice_main}>">
+                  </dd>
+                  <dt><{t}>发票内容<{/t}>：</dt>
+                  <dd><{t}>由商家直接开具<{/t}></dd>
+                </div>
+                <div class="invoice-vat" hidden>
+                  <dt><{t}>公司名<{/t}>：</dt>
+                  <dd><input type="text" name="invoice_vat_main[company_name]" value="<{$trade.invoice_vat_main.company_name}>"></dd>
+                  <dt><{t}>公司登记号<{/t}>：</dt>
+                  <dd><input type="text" name="invoice_vat_main[registration_number]" value="<{$trade.invoice_vat_main.registration_number}>"></dd>
+                  <dt><{t}>公司地址<{/t}>：</dt>
+                  <dd><input type="text" name="invoice_vat_main[company_address]" value="<{$trade.invoice_vat_main.company_address}>"></dd>
+                  <dt><{t}>公司电话<{/t}>：</dt>
+                  <dd><input type="text" name="invoice_vat_main[company_phone]" value="<{$trade.invoice_vat_main.company_phone}>"></dd>
+                  <dt><{t}>银行开户名<{/t}>：</dt>
+                  <dd><input type="text" name="invoice_vat_main[bankname]" value="<{$trade.invoice_vat_main.bankname}>"></dd>
+                  <dt><{t}>银行账号<{/t}>：</dt>
+                  <dd><input type="text" name="invoice_vat_main[bankaccount]" value="<{$trade.invoice_vat_main.bankaccount}>"></dd>
+                </div>
+              </div>
+              <div><button class="btn-primary" id="invoice-submit">保存</button></div>
+            </form>
+          </dl>
+          <script>
+              $(function(){
+                  $('input[name=need_invoice]').on('click',function(){
+                      if ($(this).val() == '1') {
+                          $('.invoice-type').show();
+                      } else {
+                          $('.invoice-type').hide();
+                      }
+                  });
+
+                  $('input[name=invoice_type]').on('click',function(){
+                      if ($(this).val() == 'normal') {
+                          $('.invoice-normal').show();
+                          $('.invoice-vat').hide();
+                      } else {
+                          $('.invoice-normal').hide();
+                          $('.invoice-vat').show();
+                      }
+                  });
+                  $('#invoice-submit').on('click',function (e) {
+                      e.preventDefault();
+                      var form = $('#invoice_form');
+                      $.post(form.attr('action'),form.serialize(),function(rs){
+                          if (rs.error) {
+                              Message.error(rs.message);
+                          } else {
+                              Message.success(rs.message);
+                          }
+                      });
+                      return false;
+                  });
+
+                  <{if $trade.need_invoice == '1'}>
+                  $('.invoice-type').show();
+                  <{if $trade.invoice_type == 'normal'}>
+                  $('.invoice-normal').show();
+                  $('.invoice-vat').hide();
+                  <{else}>
+                  $('.invoice-normal').hide();
+                  $('.invoice-vat').show();
+                  <{/if}>
+                  <{/if}>
+              });
+          </script>
+          <{else}>
+          <{if !$trade.need_invoice}>
+          无发票
+          <{else}>
+          <div>发票类型：
+            <{if $trade.invoice_type=='normal'}>普通发票
+            <{elseif $trade.invoice_type=='vat'}>增值税发票
+            <{/if}>
+          </div>
+          <div>单位名称：<{if $trade.invoice_name=='individual'}>个人<{else}>单位<{/if}>(<{$trade.invoice_main}>)</div>
+          <{/if}>
+          <{if $trade.invoice_type == "vat"}>
+            <div>
+                公司名：<{$trade.invoice_vat_main.company_name}>
+            </div>
+          <div>
+              公司登记号：<{$trade.invoice_vat_main.registration_number}>
+          </div>
+
+          <div>
+              银行开户名：<{$trade.invoice_vat_main.bankname}>
+          </div>
+
+          <div>
+              银行账号：<{$trade.invoice_vat_main.bankaccount}>
+          </div>
+
+          <div>
+              公司地址：<{$trade.invoice_vat_main.company_address}>
+          </div>
+
+          <div>
+              公司电话：<{$trade.invoice_vat_main.company_phone}>
+          </div>
+          <{/if}>
+          <{/if}>
+          <!--custom e dengLy 2015.12.2 增加订单详情页面查看增值税发票显示功能-->
+
+        </div>
+      </div>
+      <{if $delivery}>
+
+      <div class="orderdtl-box" >
+        <div class="orderdtl-hd">发货信息</div>
+        <div class="orderdtl-bd">
+          <table class="item-table table-orderdtl">
+            <thead>
+            <tr>
+              <td>发货单号</td>
+              <td colspan="2">商品</td>
+              <td>物流单号</td>
+              <td>司机号码</td>
+              <td>物流公司</td>
+              <td>发货数量</td>
+              <td>发货时间</td>
+              <td>操作</td>
+            </tr>
+            </thead>
+            <tbody>
+            <{foreach from=$delivery item=item key=key}>
+            <{foreach from=$item.delivery_detail item=item1 key=key1}>
+            <tr>
+              <td>
+                <{$item.delivery_id}>
+              </td>
+              <td colspan="2">
+                <{$item1.sku_title}>
+              </td>
+              <td>
+                <{$item.logi_no}>
+              </td>
+              <td>
+                <{$item.log_num}>
+              </td>
+              <td>
+                <{$item.logi_name}>
+              </td>
+              <td>
+                <{$item1.number}>
+              </td>
+              <td>
+                <{$item.t_send|cdate:'FDATE_FTIME'}>
+              </td>
+              <td>
+                <a  class="click_get_track"  corp_code="<{$item.corp_code}>" logi_no="<{$item.logi_no}>" href="javascript:;">查看物流</a>
+              </td>
+            </tr>
+            <{/foreach}>
+            <{/foreach}>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <{/if}>
+
+      <div class="orderdtl-box">
+        <{include file="topc/member/trade/items.html"}>
+      </div>
+
+      <div class="orderdtl-box">
+        <div class="orderdtl-hd">订单备注信息</div>
+        <div class="orderdtl-bd">
+          <div>备注信息：<{$trade.trade_memo}></div>
+        </div>
+      </div>
+
+      <!-- 线下合同 edit by nie 2016-1-18-->
+      <{if $trade.trade_from != 'purchase'}>
+      <div class="orderdtl-box">
+        <div class="orderdtl-hd">合同信息</div>
+        <{if $trade.contract_id != '0' }>
+        <div class="orderdtl-bd">
+          <div><span>线下合同</span></div>
+          <{foreach from=$contract.contract_img item=img}>
+          <p><a href='<{$img.url}>' target='_blank'><{$img.title}></a></p>
+          <{/foreach}>
+        </div>
+        <{/if}>
+      </div>
+      <div id='contrate1' style="display:none;position:fixed; margin:auto;left:50%;top:50px;margin-left:-400px; width:800px; min-height:200px; background:red;" ><img style="width:100%;" id='contrate2' src=''/></div>
+      <{/if}>
+      <!-- 合同模板 edit by nie 2016-1-15-->
+      <{if $trade.status != "WAIT_SENDCONTRACT" && $trade.need_econtract == 1}>
+      <form action="<{url action=topc_ctl_member_trade@confirmEleContract}>" method="post" id='form_template' >
+        <input type='hidden' name='tid' value="<{$trade.tid}>">
+        <input type='hidden' name='user_id' value="<{$trade.elecontract.user_id}>">
+        <div class="xn_114_contract">
+          <h4 >买卖合同</h4>
+          <div class="xn_114_cont">
+            <div class="form-group row">
+              <div class="col-xs-6">
+                <label class="order-form-w1">买受人(公司名称)：</label><{if $trade.elecontract.user_name != 'undefined'}><{$trade.elecontract.user_name}><{else}><input type='text' name='user_name'><{/if}>
+              </div>
+              <div class="col-xs-6">
+                <label class="order-form-w1">出卖人(公司名称)：</label><{$company_name}>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-xs-6">
+                <label class="order-form-w1">合同编号：</label><{$trade.elecontract.tid}>
+              </div>
+              <div class="col-xs-6">
+                <label class="order-form-w1">签订及履行地点：</label><{$trade.elecontract.signed_place}>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-xs-6">
+                <label class="order-form-w1">签订方式：</label><{$trade.elecontract.signed_pattern}>
+              </div>
+              <div class="col-xs-6">
+                <label class="order-form-w1">签订时间：</label><input type='hidden' name='signed_time' value='<{$time}>'/><{$time}>
+              </div>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>一、标的物、数量、价款及交货时间</h4>
+            <table class="item-table need-table">
+              <colgroup>
+                <col class="table-col-1">
+                <col class="table-col-2">
+                <col class="table-col-3">
+                <col class="table-col-4">
+                <col class="table-col-5">
+                <col class="table-col-6">
+                <col class="table-col-7">
+                <col class="table-col-8">
+              </colgroup>
+              <thead>
+              <tr>
+                <td>标的物名称</td>
+                <!--<td>品牌</td>
+                <td>规格型号</td>
+                <td>单位</td>-->
+                <td>数量</td>
+                <td>单价(元)</td>
+                <td>原价(元)</td>
+                <td>单品调价(元)</td>
+                <td>实际支付(元)</td>
+                <td>交货时间</td>
+              </tr>
+              </thead>
+              <tbody>
+              <{foreach from=$trade.orders item=item}>
+              <tr>
+                <td><{$item.title}></td>
+                <!--<td><{$item.brand_name}></td>
+                <td><{$item.spec_nature_info}></td>
+                <td><{$item.unit}></td>-->
+                <td><{$item.num}></td>
+                <td><{$item.sku_price|cur}></td>
+                <td><{$item.total_fee|cur}></td>
+                <td><{$item.adjust_fee|cur}></td>
+                <td><{$item.payment|cur}></td>
+                <td rel="delivery_goods_time"><{$trade.delivery_goods_time}></td>
+              </tr>
+              <{/foreach}>
+              <!-- <tr>
+               <td colspan="8" class="xn_colleft" id='chinesemoney'>合计人民币金额：<{$trade.cny_payment}>（大写）</td>
+              </tr> -->
+              </tbody>
+            </table>
+            <div class="form-group row" id='money'>
+              <div class="col-xs-6">
+                <label class="order-form-w1">合计金额(大写)：</label><{$trade.cny_payment}>
+                (<{$trade.unfeePayment|cur}>元)
+                <i class="xn_i_color">(总调价金额：<{$trade.total_adjust_fee|cur}>元)</i>
+              </div>
+                <{if $trade.post_fee>0}>
+              <div class="col-xs-6">
+                <label class="order-form-w1">邮费：</label><{$trade.post_fee|cur}>
+              </div>
+                <{/if}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>二、质量标准：</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.standard|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>三、出卖人对质量负责的条件及期限：</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.terms|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>四、包装标准、包装物的供应与回收：</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.packing_pattern|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>五、随货的必备：</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.appendix|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>六、合理损耗标准及计算方法：</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.loss_standard|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>七、交货方式、地点及运费承担：</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.content|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>八、检验标准、方法及期限：</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.inspection_standard|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>九、结算方式、时间：</h4>
+            <dl class="xn_114_cjs">
+		  <span><{if $trade.elecontract.is_part_pay == '0'}>一次付款<{else}>多次付款
+			<{if $trade.elecontract.pay_type.pay_1 != 0 && isset($trade.elecontract.pay_type.pay_1)}>保证金：<{$trade.elecontract.pay_type.pay_1|cur}> <{/if}><{if $trade.elecontract.pay_type.pay_2 != 0 && isset($trade.elecontract.pay_type.pay_2)}>  收货款：<{$trade.elecontract.pay_type.pay_2|cur}><{/if}>
+			<{if $trade.elecontract.pay_type.pay_3 != 0 && isset($trade.elecontract.pay_type.pay_3)}>  收货<{$trade.elecontract.pay_type.detail_time1}><{$trade.elecontract.pay_type.pay_3|cur}><{/if}>
+			<{if $trade.elecontract.pay_type.pay_4 != 0 && isset($trade.elecontract.pay_type.pay_4)}>  收货<{$trade.elecontract.pay_type.detail_time2}><{$trade.elecontract.pay_type.pay_4|cur}><{/if}>
+			<{if $trade.elecontract.pay_type.pay_5 != 0 && isset($trade.elecontract.pay_type.pay_5)}>  收货<{$trade.elecontract.pay_type.detail_time3}><{$trade.elecontract.pay_type.pay_5|cur}><{/if}>
+		  <{/if}></span>
+              <span><{if $trade.elecontract.is_part_delivery == '0'}>一次发货<{else}>分次发货（将形成多次发货单）<{/if}></span>
+            </dl>
+
+          </div>
+          <div class="xn_114_cont">
+            <h4>十、本合同的解除条件：</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.Change_release|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>十一、违约责任：</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.breach_responsibility|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>十二、知识产权保护：</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.ipr|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>十三、合同争议的解决方式：</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.disputed|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>十四、</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.customer_service|nl2br}>
+            </div>
+          </div>
+          <div class="xn_114_cont">
+            <h4>十五、</h4>
+            <div class="xn_114_ctexa">
+              <{$trade.elecontract.effective_condition|nl2br}>
+            </div>
+          </div>
+
+          <div class="xn_114_cont">
+
+            <div class="form-group row">
+              <div class="col-xs-6">
+                <label class="order-form-w1">出卖人(公司名称)：</label><{$company_name}>
+              </div>
+              <div class="col-xs-6">
+                <label class="order-form-w1">住所：</label><{$trade.elecontract.seller_place}>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-xs-6">
+                <label class="order-form-w1">法定代表人：</label><{$trade.elecontract.seller_legal_agent}>
+              </div>
+              <div class="col-xs-6">
+                <label class="order-form-w1">委托代理人：</label><{$trade.elecontract.seller_entrusted_agent}>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-xs-6">
+                <label class="order-form-w1">传真：</label><{$trade.elecontract.seller_fax}>
+              </div>
+              <div class="col-xs-6">
+                <label class="order-form-w1">电话：</label><{$trade.elecontract.seller_phone}>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-xs-6">
+                <label class="order-form-w1"><span style="color:red;">*</span>买受人(公司名称): </label>
+                <{if $trade.elecontract.user_name != 'undefined'}><{$trade.elecontract.user_name}><{else}><input type='text' name='user_name' placeholder="必填"><{/if}>
+              </div>
+              <div class="col-xs-6">
+                <label class="order-form-w1"><span style="color:red;">*</span>住所：</label>
+                <{if $trade.status == "WAIT_CONFIRM"}><input name='user_place' type="text" placeholder="必填"><{else}><{$trade.elecontract.user_place}><{/if}>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-xs-6">
+                <label class="order-form-w1"><span style="color:red;">*</span>法定代表人：</label>
+                <{if $trade.status == "WAIT_CONFIRM"}><input name='user_legal_agent' type="text" placeholder="必填"><{else}><{$trade.elecontract.user_legal_agent}><{/if}>
+              </div>
+              <div class="col-xs-6">
+                <label class="order-form-w1"><span style="color:red;">*</span>委托代理人：</label>
+                <{if $trade.status == "WAIT_CONFIRM"}><input name='user_entrusted_agent' type="text" placeholder="必填"><{else}><{$trade.elecontract.user_entrusted_agent}><{/if}>
+              </div>
+            </div>
+            <div class="form-group row">
+              <div class="col-xs-6">
+                <label class="order-form-w1"><span style="color:red;">*</span>传真：</label>
+                <{if $trade.status == "WAIT_CONFIRM"}><input name='user_fax' type="text" placeholder="必填"><{else}><{$trade.elecontract.user_fax}><{/if}>如：010-1234567
+              </div>
+              <div class="col-xs-6">
+                <label class="order-form-w1"><span style="color:red;">*</span>电话：</label>
+                <{if $trade.elecontract.phone != ''}><{$trade.elecontract.phone}><{else}><input type='text' name='phone'><{/if}>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <{if $trade.status == "WAIT_CONFIRM"}>
+      <div class="orderdtl-bd xn_htmb_btn">
+        <div class="btn btn-success">
+          <{if $trade.pay_type == "offline" }>
+          <button id="detail_sumbit" class="divcss5">同意合同条款</button>
+          <{elseif $trade.pay_type == "online" || $trade.pay_type == "caroffline" }>
+          <button id="detail_sumbit_pay" class="divcss5">同意并付款</button>
+          <{/if}>
+        </div>
+        <div class="btn btn-success">
+          <button id="detail_reject_pay" class="divcss5">拒绝</button>
+        </div>
+      </div>
+      <{/if}>
+      <{/if}>
+      <!-- 合同模板 edit by nie 2016-1-15-->
+
+      <div class="orderdtl-box">
+        <div class="orderdtl-box-right">
+          <div class="row"><span class="col-lg-2 text-right">商品总金额</span> <em class="col-lg-2"><{$trade.total_fee|cur}></em></div>
+          <div class="row"><span class="col-lg-2 text-right">应付总金额</span> <em class="col-lg-2"><{$trade.payment|cur}></em></div>
+          <{if $trade.paymentrate!=0}>
+          <div class="row"><span class="col-lg-2 text-right">本次实付</span> <em class="col-lg-2"><{$trade.paymentrate|cur}></em></div>
+          <{/if}>
+          <{if $trade.post_fee!=0}>
+          <div class="row"><span class="col-lg-2 text-right">运费</span> <em class="col-lg-2"><{$trade.post_fee|cur}></em></div>
+          <{/if}>
+          <{if $trade.total_adjust_fee!=0}>
+          <div class="row"><span class="col-lg-2 text-right">手工调价</span> <em class="col-lg-2"><{$trade.total_adjust_fee|cur}></em></div>
+          <{/if}>
+          <!-- <{if $trade.discount_fee>0}>
+          <div class="row"><span class="col-lg-2 text-right">优惠金额</span> <em class="col-lg-2">-<{$trade.discount_fee|cur}></em></div>
+          <{/if}> -->
+          <{if $trade.status == "WAIT_EVALUATE"}>
+          <a href="<{url action=topc_ctl_member_rate@createRate tid=$trade.tid}>" target="_blank" class="btn btn-success" style="margin-left: 70px;">
+            <span>去评价</span>
+          </a>
+          <{/if}>
+          <div class="offset-lg-1 offset_lg_xzclass">
+            <!-- <{if $trade.status == "WAIT_BUYER_PAY"}> -->
+            <{if $trade.status == "WAIT_EVALUATE"}>
+            <a href="<{url action=topc_ctl_member_rate@createRate tid=$trade.tid}>" target="_blank">
+              <span>去评价</span>
+            </a>
+            <{/if}>
+            <!--  /* custom s  zhm */      -->
+            <{if $tradeitem.status == "WAIT_SENDCONTRACT" || $tradeitem.status == "WAIT_CONFIRM"}>
+            <a href="javascript:void(0);" id="<{$trade.tid}>" class="btn btn-success btn_dialog">
+              <span>取消订单</span>
+            </a>
+            <{/if}>
+            <!-- <{if $trade.contract_status!="0" && $trade.update_status=="0"}>
+            <a href="" class="act-pay act_a_xz">
+            <span class="span_xz">待上传线下合同</span>
+            </a>
+            <{else}> -->
+            <{if $trade.status == "WAIT_BUYER_PAY"}>
+            <{if $trade.pay_type == 'online' || $trade.pay_type == 'caroffline' }>
+            <a href="<{$trade.tid}>" class="btn btn-success act-pay"><span><span>付款</span></span></a>
+            <{elseif $trade.pay_type == 'offline'}>
+            <a href="javascript:void(0);" id="<{$trade.tid}>" class="btn btn-success choose_pay xn_btn_mar">
+              <span>付款</span>
+            </a>
+            <{/if}>
+
+            <{elseif $trade.status == "WAIT_BUYER_CONFIRM_GOODS" && $trade.pay_type == "online"}>
+            <div class="row">
+              <a href="javascript:void(0);" id="<{$trade.tid}>" class="btn btn-import">
+                <span>确认收货</span>
+              </a>
+            </div>
+            <{elseif $trade.status == "WAIT_BUYER_CONFIRM_GOODS" && $trade.pay_type == "caroffline"}>
+            <div class="row">
+              <!--  /* custom e  zhm */      -->
+              <a href="javascript:void(0);" id="<{$trade.tid}>" class="btn btn-import">
+                <span>确认收货</span>
+              </a>
+            </div>
+            <{elseif $trade.status == "WAIT_SELLER_SEND_GOODS"}>
+            <!--等待卖家发货  如果款项还没付完则可以继续付款-->
+            <{if $trade.payment > $trade.payed_fee}>
+            <a href="javascript:void(0);" id="<{$trade.tid}>" class="btn btn-success choose_pay xn_btn_mar">
+              <span>付款</span>
+            </a>
+            <{/if}>
+            <{/if}>
+
+            <!-- <{/if}> -->
+
+            <!-- <{/if}> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+
+    //选择付款方式
+    $('.choose_pay').click(function (e) {
+      var _this = this;
+      var dialog = new Dialog('<{url action="topc_ctl_member_trade@choosePay"}>', {
+        width: 500,
+        title:'选择付款方式',
+        async: 'ajax',
+        asyncOptions: {
+          type: 'get',
+          data: {tid: _this.id},
+          callback: function(re){
+            re.preventDefault();
+            dialog.content.find('.act-confirm').on('click', function(e){
+              $.post($("#trade-confirm").attr('action'), $("#trade-confirm").serialize(), function(rs){
+                if( rs.error ){
+                  alert(rs.message)
+                }
+                if(rs.redirect) {
+                  location.href = rs.redirect;
+                }
+              });
+            });
+          }
+        }
+      });
+    });
+    //确认电子合同订单 edit by nie 2016-1-10
+    $(function(){
+      $('#seecontent').click(function(){
+        imgurl = '<{$trade.contact_img}>';
+        $('#contrate2').attr('src',imgurl);
+        $('#contrate1').show();
+      });
+      $('#contrate1').click(function(){
+        $(this).hide();
+      });
+      function check(){
+        var flag = true;
+        // var pattern =/^(([0\+]\d{2,3}-)?(0\d{2,3})-)(\d{7,8})(-(\d{3,}))?$/;
+        var pattern = /^(0\d{2,3}-\d{7,8}(-\d{3,5}){0,1})$/;//验证带分机号或不带分机号的传真
+        var msg_arr = new Array('','','','住所','法定代表人','委托代理人','传真')
+        $('#form_template input').each(function(i){
+          if($(this).val() == ''){
+            alert('请填写完全' + msg_arr[i] + '的信息');
+            $(this).focus();
+            flag = false;
+            return flag;
+          }
+        });
+        if(flag == true){
+          if(!pattern.exec($('input[name="user_fax"]').val())){
+            alert('请按照格式填写区号+传真号！');
+            $('input[name="user_fax"]').val('');
+            $('input[name="user_fax"]').focus();
+            flag = false;
+            return flag;
+          }
+        }
+        return flag;
+      }
+
+      //同意并付款
+      $('#detail_sumbit_pay').click(function(e){
+        if(!confirm('你确定 同意并付款吗？')) return false;
+
+        $(this).prop("disabled", true);
+        if(check()){
+          $.post($('#form_template').action,$('#form_template').serialize(), function(rs){
+            if( rs.error ){
+              alert(rs.message);
+            }
+            if(rs.success) {
+
+              alert(rs.message);
+              $.get(rs.redirect, {}, function (ee) {
+                if(rs.error) {
+                  alert(rs.message);
+                }
+                if(ee.redirect) {
+                  location.href = ee.redirect;
+                }
+              });
+            }
+          });
+        }
+        setTimeout(function(){$('#detail_sumbit_pay').prop("disabled", false);}, 800);
+      });
+
+      //同意不付款
+      $('#detail_sumbit').click(function(e){
+        if(!confirm('你确定同意合同内容吗？')) return false;
+
+        $(this).prop("disabled", true);
+        if(check()){
+          $.post($('#form_template').action,$('#form_template').serialize(), function(rs){
+            if( rs.error ){
+              alert(rs.message);
+            }
+            if(rs.success) {
+              alert(rs.message);
+              location.href = rs.redirect;
+              /* return;
+               alert(rs.message);
+               $.get(rs.redirect, {}, function (ee) {
+               console.log(ee);
+               if(rs.error) {
+               alert(rs.message);
+               }
+               if(ee.redirect) {
+
+               }
+               });*/
+            }
+          });
+        }
+        setTimeout(function(){$('#detail_sumbit').prop("disabled", false);}, 800);
+      });
+
+      //拒绝
+      $('#detail_reject_pay').click(function () {
+        if(!confirm('你确定 拒绝吗？')) return false;
+
+        $(this).prop("disabled", true);
+        var form_data = {'tid' : '<{$trade.tid}>'};
+        $.post('<{url action=topc_ctl_member_trade@rejectEleContract}>', form_data, function (d) {
+          alert(d.message);
+          if(d.success) {
+            location.href = d.redirect;
+          }
+        });
+      });
+
+      //支付按钮事件
+      $(".act-pay").on('click',function(e){
+        e.preventDefault();
+        $.post($("#payment_form").attr('action'), {tid: $(this).attr('href'), merge: false}, function(rs){
+          if(rs.error) {
+            alert(rs.message);
+          }
+          if(rs.redirect) {
+            location.href = rs.redirect;
+          }
+        })
+      })
+
+      //订单取消
+      $('.btn_dialog').click(function (e) {
+        var _this = this;
+        var dialog = new Dialog('<{url action="topc_ctl_member_trade@ajaxCancelTrade"}>', {
+          width: 500,
+          title:'订单取消',
+          async: 'ajax',
+          asyncOptions: {
+            type: 'get',
+            data: {tid: _this.id},
+            callback: function(){
+              $('#cancel_reason_select').change(function(e) {
+                if(this.value == 'other') {
+                  $('#other').show().find('textarea')[0].required = true;
+                }
+                else {
+                  $('#other').hide().find('textarea')[0].required = false;
+                }
+              });
+              dialog.content.find('.act-cancel').on('click', function(e){
+                dialog.hide();
+              });
+            }
+          }
+        });
+      });
+
+      //定单确认收货事件
+      $('.btn-import').click(function (e) {
+
+
+        var _this = this;
+        var dialog = new Dialog('<{url action="topc_ctl_member_trade@ajaxConfirmTrade"}>', {
+          width: 500,
+          title:'订单确认收货',
+          async: 'ajax',
+          asyncOptions: {
+            type: 'get',
+            data: {tid: _this.id},
+            callback: function(re){
+              re.preventDefault();
+              dialog.content.find('.act-confirm').on('click', function(e){
+                $.post($("#trade-confirm").attr('action'), $("#trade-confirm").serialize(), function(rs){
+                  if( rs.error ){
+                    alert(rs.message)
+                  }
+                  if(rs.redirect) {
+                    location.href = rs.redirect;
+                  }
+                });
+              });
+            }
+          }
+        });
+      });
+
+      $('#click_get_track').click(function(e){
+        /* alert(123);*/
+        $('#logistics').html("加载中...");
+        $.post('<{url action=topc_ctl_member_trade@ajaxGetTrack}>',{'logi_no':'<{$logi.logi_no}>','corp_code':'<{$logi.corp_code}>'},function(rs){
+          if(rs.error){
+            return alert(rs.message);
+          }
+          $('#logistics').html(rs);
+        });
+      });
+
+      $('.click_get_track').click(function (e) {
+        var logi_no = $(this).attr('logi_no');
+        var corp_code = $(this).attr('corp_code');
+        var dialog = new Dialog('<{url action="topc_ctl_member_trade@ajaxGetTrack"}>', {
+          width: 500,
+          title:'查看物流信息',
+          async: 'ajax',
+          asyncOptions: {
+            type: 'post',
+            data: {logi_no: logi_no,corp_code:corp_code},
+            callback: function(re){
+
+            }
+          }
+        });
+      });
+
+      $('.click_get_progress').click(function (e) {
+        var oid = $(this).attr('oid');
+        var tid = $(this).attr('id');
+        var dialog = new Dialog('<{url action="topc_ctl_member_trade@getProgress"}>', {
+          width: 500,
+          title:'查看生产进度',
+          async: 'ajax',
+          asyncOptions: {
+            type: 'get',
+            data: {oid: oid},
+            callback: function(re){
+
+            }
+          }
+        });
+      });
+
+      $('.click_get_longpay').click(function (e) {
+        var tid = $(this).attr('tid');
+        var times = $(this).attr('times');
+        var dialog = new Dialog('<{url action="topc_ctl_member_trade@longPay"}>', {
+          width: 500,
+          title:'延长付款申请',
+          async: 'ajax',
+          asyncOptions: {
+            type: 'get',
+            data: {tid: tid,times:times},
+            callback: function(re){
+
+            }
+          }
+        });
+      });
+
+      $(".orderdtl-box.membercenter-ordert1-unpay-hd").css("padding",0);
+        $(".status-bar2").css("margin","0 20px");
+        $(".status-bar2 .bg").css("width",170);
+        $(".status-bar2 .first .bg").css("width",100);
+        $(".status-bar2 .last .bg").css("width",100);
+        $(".orderdtl-hd").css("font-weight","normal");
+        $(".col-xs-6").css("margin-left",0);
+        $(".text-red").css("color","#da251a");
+        $("textarea").css("width",600);
+        $(".orderdtl-box .row").css("margin-bottom",0);
+        $(".xn_114_ctexa").css({
+            "padding":"5px 20px",
+            "font-size":"14px"
+        });
+        /*$(".btn-success").css({
+            "width":"100px",
+            "margin-left":"20px",
+            "margin-right":"20px"
+        });*/
+        $(".btn-success").eq(0).css("margin-left","300px");
+        $(".btn-success button").css({
+            "border":"none",
+            "outline":"none",
+            "background-color":"transparent",
+            "color":"#ffffff"
+        });
+        $(".orderdtl-box").css("padding-bottom","10px");
+
+    });
+  </script>

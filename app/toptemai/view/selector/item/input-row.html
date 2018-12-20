@@ -1,0 +1,127 @@
+<{if $ac=='show'}>
+<table wdith="100%" class="table table-primary table-hover table-goods">
+  <tr>
+    <td width="60%">商品名称</td>
+    <td width="20">商品价格</td>
+  </tr>
+  <{foreach from=$_input.itemsList item=item key=key}>
+  <tr date-itemid="<{$item.item_id}>">
+    <td>
+      <input type="hidden" name="item_id[]" value="<{$item.item_id}>" />
+      <div class="goods">
+        <a href="<{url action=topc_ctl_item@index item_id=$item.item_id}>" target="_blank">
+          <{if $item.image_default_id}>
+          <img src="<{$item.image_default_id|storager:'s'}>">
+          <{else}>
+          <img src="<{$image_default_id.S.default_image}>">
+          <{/if}>
+
+          <{foreach from=$_input._textcol item=_key}>
+            <{if $_key=='price'}>
+            <{else}>
+            <span><{$item[$_key]|cut:120}></span>
+            <{/if}>
+          <{/foreach}>
+        </a>
+      </div>
+    </td>
+    <td>
+       <{foreach from=$_input._textcol item=_key}>
+          <{if $_key=='price'}>
+          <span><{$item[$_key]|cur}></span>
+          <{/if}>
+       <{/foreach}>
+    </td>
+  </tr>
+  <{/foreach}>
+</table>
+<{else}>
+<table width="100%" class="table table-primary table-hover table-goods">
+  <tr>
+      <th>编号</th><th>商品名称</th><th>商品品牌</th><th>商品规格</th><th>商品价格</th><th>商品原价</th><th>申请库存</th><th>有效期</th><td>&nbsp;</td>
+  </tr>
+  <{foreach from=$_input.itemsList item=item key=key}>
+      <{assign var=skuList value=$item.sku}>
+      <{assign var=skuCount value=$skuList|@count}>
+      <{foreach from=$skuList item=skuItem key=skuKey name=skuForeach}>
+        <tr date-itemid="<{$item.item_id}>">
+          <{if $env.foreach.skuForeach.first}>
+            <td width="50" rowspan="<{$skuCount}>">
+              <input type="hidden" name="tmitem_id[<{$item.item_id}>][item_id]" value="<{$item.item_id}>" />
+              <span><{$item.item_id}></span></td>
+            <td width="200" rowspan="<{$skuCount}>">
+              <a href="<{url action=topc_ctl_item@index item_id=$item.item_id}>" target="_blank">
+                <img src="<{$item.image_default_id|default:$image_default_id.S.default_image|storager:'s'}>" alt="">
+                <span><{$item.title|cut:120}></span>
+              </a>
+            </td>
+            <td width="100" rowspan="<{$skuCount}>"><span><{$item.brand_name|cut:120}></span></td>
+          <{/if}>
+            <td width="100">
+              <input type="hidden" name="tmitem_sku[<{$item.item_id}>][<{$skuItem.sku_id}>][sku_id]" value="<{$skuItem.sku_id}>" />
+              <span><{$skuItem.spec_code|default:'无规格'}></span>
+            </td>
+            <td width="60">
+              <span><input type="text" name="tmitem_sku[<{$item.item_id}>][<{$skuItem.sku_id}>][price]" value="<{$skuItem.price}>" /></span>
+            </td>
+            <td width="60"><span><input type="text" name="tmitem_sku[<{$item.item_id}>][<{$skuItem.sku_id}>][mkt_price]" value="<{$skuItem.mkt_price}>" /></span></td>
+            <td width="60"><span><input type="text" name="tmitem_sku[<{$item.item_id}>][<{$skuItem.sku_id}>][store]" value="<{$skuItem.store}>" /></span></td>
+            <td width="200">
+              <div class="date-picker" id="start">
+                <div class="input-group input-group-sm">
+                  <div class="input-group-addon">
+                    <i class="fa fa-calendar"></i>
+                  </div>
+                  <input type="text" class="form-control pull-right reservation" name="tmitem_sku[<{$item.item_id}>][<{$skuItem.sku_id}>][expiry]" id="expiry" value="">
+                </div>
+              </div>
+            </td>
+            <{if $_input.view}>
+                <td>
+                  <{include file=$_input.view}>
+                </td>
+            <{/if}>
+            <{if $_input.extends}>
+                <input type="hidden" name="<{$_input.extends.0.item_name}>[<{$item.item_id}>][item_id]" value="<{$item.item_id}>" />
+                <{foreach from=$_input.extends item=extends_row}>
+                    <td>
+                      <{include file='toptemai/selector/item/input-row-extends.html'}>
+                    </td>
+                <{/foreach}>
+            <{/if}>
+            <td><a class="item-del" href="#">删除</a></td>
+        </tr>
+      <{/foreach}>
+  <{/foreach}>
+</table>
+<{/if}>
+
+<!-- Modal -->
+<div class="modal fade" id="show_sku_madal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-skuids="">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+    </div>
+  </div>
+</div>
+
+<script>
+  $('.item-del').click(function(e) {
+    e.preventDefault();
+    $(this).parents('tr').remove();
+  });
+  $('.show-sku').click(function(event) {
+    var url =  $(this).data('remote');
+    $('#show_sku_madal .modal-content').load(url);
+  });
+
+  $('#show_sku_madal').on('show.bs.modal',function(event){
+    _this = event.relatedTarget;
+    var thisSku = $($($(_this).parents('tr')).find('input[name="item_sku[]"]')).val();
+    $('#show_sku_madal').data('skuids',thisSku);
+  });
+
+  $('.reservation').daterangepicker({
+    format: 'YYYY/MM/DD',
+    opens: 'right'
+  });
+</script>

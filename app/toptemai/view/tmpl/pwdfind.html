@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+        <{include file="toptemai/common/head.html"}>
+    </head>
+    <body class="signup-skin-blue">
+        <div class="alert alert-error message in" role="alert" id="messagebox" style="display:none;"></div>
+        <{include file="toptemai/common/topbar.html"}>
+        <div class="signup-logo-panel">
+            <{*<div class="logo" ><{$toptemai.contentTitle}></div> *}>
+            <div class="logo">
+                <img  src="<{$logo|storager}>">
+                <span><{$toptemai.contentTitle}></span>
+            </div>
+        </div>
+        <div class="form-box-wrap">
+            <{include file=$toptemai.view}>
+        </div>
+    </body>
+</html>

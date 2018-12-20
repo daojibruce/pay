@@ -1,0 +1,112 @@
+
+<div class="col-lg-13 box" style="margin-left:2px;">
+    <div class="membercenter-box">
+        <div class="membercenter-box-hd">
+            子账户管理
+        </div>
+        <a href="<{url action=topc_ctl_subaccount@subAccountEdit }>" class="btn btn-simple btn-flat" style='margin:10px 0 0 10px;'>
+            <span>添加子帐号</span>
+        </a>
+        
+        <table class=" item-table need-table" style="margin:10px;width:98%">
+            <colgroup>
+                <col class="col-md-2">
+                <col class="col-md-2">
+                <!--<col class="col-md-2">-->
+                <col class="col-md-3">
+                <col class="col-md-1">
+                <col class="col-md-2">
+            </colgroup>
+            <thead>
+                <tr>
+                    <td width="24%">登录账号</td>
+                    <td>姓名</td>
+                    <td>启用</td>
+                    <td>权限列表</td>
+                    <td>操作日志</td>
+                    <td>操作</td>
+                </tr>
+            </thead>
+            <{if $subInfo}>
+            <tbody>
+                <{foreach from=$subInfo item=item}>
+                <tr>
+                    <td><{$item.login_account}></td>
+                    <td><{$item.name}></td>
+                    <td><{if $item.disabled}>否<{else}>是<{/if}></td>
+                    <td><{$item.roles}></td>
+                    <td><a href="<{url action=topc_ctl_subaccount@showActionLog user_id=$item.userId}>" target="_blank">查看</a></td>
+                    <td>
+                        <a href="<{url action=topc_ctl_subaccount@subAccountEdit user_id=$item.userId}>">编辑</a>&nbsp;&nbsp;
+                        <a href="<{url action=topc_ctl_subaccount@subAccountPassword user_id=$item.userId}>" data-user-id="<{$item.userId}>" name="modify_password">修改密码</a>&nbsp;&nbsp;
+                        <a href="<{url action=topc_ctl_subaccount@subAccountUpdate user_id=$item.userId disabled=$item.disabled}>" class="remove text-danger" >
+                            <{if $item.disabled}>启用<{else}>禁用<{/if}>
+                        </a>
+                    </td>
+                </tr>
+                <{/foreach}>
+            </tbody>
+            <{else}>
+            <tbody id="none_cat">
+                <tr class="none-information">
+                    <td colspan="6"><p class="text-muted well no-shadow text-center">暂无数据</p></td>
+                </tr>
+            </tbody>
+            <{/if}>
+        </table>
+
+        
+
+
+    </div>
+</div>
+<script>
+
+/*
+    $('[name=modify_password]').click(function (e) {
+       $('#user_id').val($(this).data('user-id'));
+        var dialog = new Dialog('#modifyAccountShopPwd', {
+            width: 500,
+            height: 270,
+            title: '修改子账号密码'
+        });
+    });
+    
+*/
+
+
+    function ajaxSubmit(e) {
+        var form = e.target;
+        e.preventDefault();
+        $.post(form.action, $(form).serialize(), function (rs) {
+            if (rs.error) {
+                $('#messagebox').message(rs.message);
+                return;
+            }
+            if (rs.success) {
+                $('#messagebox').message(rs.message, 'success');
+            }
+            if (rs.redirect) {
+                location.href = rs.redirect;
+            }
+        });
+    }
+
+
+    $('.remove').on('click', function (e) {
+        e.preventDefault();
+        if (confirm('确定禁用该账号吗？')) {
+            var href = $(this).attr('href');
+            $.get(href, function (rs) {
+                Message.success(rs.message);
+                if (rs.redirect) {
+                    setTimeout(function () {
+                        location.href = rs.redirect;
+                    }, 800);
+                }
+
+            });
+        }
+    });
+
+</script>

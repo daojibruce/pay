@@ -1,0 +1,71 @@
+<div class="tableform"  id="sysproofing_review">
+    <div class="division">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0">
+            <tbody>
+            <tr>
+                <th><em class="red">服务商信息</em></th>
+            </tr>
+            <tr>
+                <th><{t}>用户登录名：<{/t}></th>
+                <td><{$provider.user_name}></td>
+            </tr>
+            <tr>
+                <th><{t}>企业名称：<{/t}></th>
+                <td><{$provider.provider_name}></td>
+            </tr>
+            <tr>
+                <th><{t}>企业证件：<{/t}></th>
+                <td><{$provider.provider_cert}></td>
+            </tr>
+            <tr>
+                <th><{t}>服务类型：<{/t}></th>
+                <td>
+                    <ul>
+                        <{foreach from=$provider.cats item=cat}>
+                        <li><{$cat.cat_name}></li>
+                        <{/foreach}>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th><{t}>服务撮合设备图片：<{/t}></th>
+                <td>
+                    <ul>
+                        <{foreach from=$provider.sb_img item=img}>
+                        <li><a href="<{$img}>" target="_blank"><img src="<{$img}>" alt="" width="100px" height="100px"></a></li>
+                        <{/foreach}>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th><{t}>服务撮合样品图片：<{/t}></th>
+                <td>
+                    <ul>
+                        <{foreach from=$provider.yp_img item=img}>
+                        <li><a href="<{$img}>" target="_blank"><img src="<{$img}>" alt="" width="100px" height="100px"></a></li>
+                        <{/foreach}>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <th><{t}>联系人手机号：<{/t}></th>
+                <td><{$provider.provider_mobile}></td>
+            </tr>
+            <tr>
+                <th><{t}>服务撮合能力描述：<{/t}></th>
+                <td><{$provider.provider_desc}></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <table cellspacing="0" cellpadding="0" class="table-action">
+        <tbody>
+        <tr valign="middle">
+            <td>
+                <{button label="关  闭"|t:'content' class="btn-secondary" type="button" isclosedialogbtn="1"}>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

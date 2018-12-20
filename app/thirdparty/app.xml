@@ -1,0 +1,12 @@
+<app>
+    <name>第三方服务商管理平台</name>
+    <type>thirdparty</type>
+    <description>第三方服务商管理功能</description>
+    <author>
+        <name>shopex开发团队</name>
+        <email>dev@shopex.cn</email>
+        <url>http://www.shopex.cn</url>
+    </author>
+    <version>0.1</version>
+    <license>shopex license</license>
+</app>

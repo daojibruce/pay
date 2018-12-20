@@ -1,0 +1,68 @@
+<h3><{t}>文章信息<{/t}></h3>
+<div id="x-g-basic" class="goods-detail">
+    <div class="tableform">
+        <form action="?app=syscontent&ctl=admin_other&act=saveOther" method="post" name="aEditor" id="aEditor">
+            <div class="division">
+                <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                        <th><em><font color="red">*</font></em><{t}>文章标题：<{/t}></th>
+                        <td>
+                            <{input type="text" id="article_title" name="article[title]" required="true" vtype='required' value=$article.title }>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><em><font color="red">*</font></em><{t}>文章作者：<{/t}></th>
+                        <td>
+                            <{input type="text" id="article_author" name="article[author]" required="true" vtype='required' value=$article.author }>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><em><font color="red">*</font></em><{t}>文章来源url：<{/t}></th>
+                        <td>
+                            <{input type="text" id="article_url" name="article[url]" required="true" vtype='required' value=$article.url }>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><em><font color="red">*</font></em><{t}>文章内容:<{/t}></th>
+                        <td>
+                            <{input type=html name='article[content]' value=$article.content}>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="table-action">
+                <{button type="submit" id='brand-form-submit' label="保存"|t:'syscontent'}>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+
+    (function(){
+        var _form = $('aEditor');
+        var btn =$('brand-form-submit');
+        var finder = finderGroup['<{$env.get._finder.finder_id}>'];
+
+        _form.store('target',{
+            onSuccess:function(response){
+                var hash_res_obj = JSON.decode(response);
+
+                if (hash_res_obj.success != undefined && hash_res_obj.success != ""){
+                    try{
+                        var _dialogIns = btn.getParent('.dialog').retrieve('instance');
+                    }catch(e){}
+
+                    if(_dialogIns){
+                        _dialogIns.close();
+                        window.finderGroup['<{$env.get._finder.finder_id}>'].refresh();
+                    }
+                }
+            }
+        });
+
+        btn.addEvent('click',function(){
+            _form.fireEvent('submit',{stop:$empty});
+        });
+
+    })();
+</script>

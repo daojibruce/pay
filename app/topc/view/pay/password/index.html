@@ -1,0 +1,90 @@
+<{css app="topshop" src="switchable/easy-responsive-tabs.css"}>
+<{script app="topshop" src="switchable/easyResponsiveTabs.js"}>
+
+<{if $bankList }>
+<div class="membercenter-box">
+	<div class="membercenter-box-hd">
+	  支付密码
+	</div>
+	<div class="htmleaf-container">
+		<div class="membercenter-box-bd">
+        <div class="row">
+          <div class="col-lg-8 membercenter-userinfo">
+            <ul>
+              <li class="form-row">
+                <label class="form-label" for="for_CustName">请选择银行卡：</label>
+                <span class="form-act">
+                  <select id="bankList">
+					<{foreach from=$bankList item=data key=key}>
+						<option value="<{$data.acct_id}>"> [<{$data.bank_name}> - <{$data.no_acct_id}>]</option></option>
+					<{/foreach}>
+					</select>
+                </span>
+              </li>
+			 </ul>
+          </div>
+        </div>
+				
+		<div id="container">
+			<div id="parentHorizontalTab">
+				<ul class="resp-tabs-list hor_1">
+					<li value="S">设置支付密码</li>
+					<li value="C">修改支付密码</li>
+					<li value="R">重置支付密码</li>
+					<li value="M">修改手机号</li>
+				</ul>
+				<div class="">
+					<div>
+						<iframe id="set"  frameborder='no' src="" width="100%" height="500px;"></iframe>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        var acct_id = $("#bankList option:selected").val();
+        $('#set').attr('src', '<{url action=topc_ctl_pay_password@iset}>?acct_id=' + acct_id+"&type=S");
+
+        $('#parentHorizontalTab').easyResponsiveTabs({
+            type: 'default', //Types: default, vertical, accordion
+            width: 'auto', //auto or any width like 600px
+            fit: true, // 100% fit in a container
+            tabidentify: 'hor_1', // The tab groups identifier
+            activate: function(event) { // Callback function if tab is switched
+                var $tab = $(this);
+                var $info = $('#nested-tabInfo');
+                var $name = $('span', $info);
+                $name.text($tab.text());
+                $info.show();
+            }
+        });
+
+        $('#parentHorizontalTab li').click(function(e){
+            e.preventDefault();
+            var type = $(this).attr('value');
+
+            if(typeof(type)  == "undefined"){
+                type='S';
+            }
+            window.open('<{url action=topc_ctl_pay_password@iset}>?acct_id=' + acct_id+"&type="+type);
+
+            $('#set').attr('src', '<{url action=topc_ctl_pay_password@iset}>?acct_id=' + acct_id+"&type="+type);
+            return false;
+        });
+
+        $('#bankList').change(function(){
+            var acct_id = $("#bankList option:selected").val();
+            var type = $("#parentHorizontalTab li").attr('value');
+            $('#set').attr('src', '<{url action=topc_ctl_pay_password@iset}>?acct_id=' + acct_id+"&type="+type);
+            return false;
+        });
+    });
+</script>
+<{else}>
+    <script>
+        alert('请先绑定银行卡');
+        window.location="<{url action=topc_ctl_pay_bank@bindBankCard}>";
+    </script>
+<{/if}>

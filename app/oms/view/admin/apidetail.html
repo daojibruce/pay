@@ -1,0 +1,32 @@
+<h3 class="head-title"><{t}>日志详情<{/t}></h3>
+<div class="tableform">
+    <div class="division">
+        <table width="100%" cellspacing="0" cellpadding="0" border="0" >
+            <tbody>
+                <{if $apilog.msg_id}>
+                <tr>
+                    <th>msg_id：</th>
+                    <td><{$apilog.msg_id}></td>
+                </tr>
+                <{/if}>
+                <tr>
+                    <th>log_no：</th>
+                    <td><{$apilog.log_no}></td>
+                </tr>
+                <tr>
+                    <th><{t}>行为数据:<{/t}></th>
+                    <td>
+                        <{if $apilog.send_api_name}><{t}>方法：<{/t}><{$apilog.send_api_name}><br/><{/if}>
+                        参数：<br/><{$apilog.send_api_params}>
+                    </td>
+                </tr>
+                <tr>
+                    <th ><{t}>返回：<{/t}></th>
+                    <td>
+                        <{$apilog.msg}>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

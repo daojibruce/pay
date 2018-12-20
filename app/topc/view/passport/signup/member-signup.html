@@ -1,0 +1,72 @@
+<div id="main" class="main">
+    <div class="wrap-lg">
+        <div class="sign-main">
+            <div class="sign-l">
+                <label id="personage_id" style="margin-top: 250px;">
+                    <input type="checkbox" value="personage" >
+                    <span>我是个人买家</span>
+                    <a style="display:none;" href="<{url action=topc_ctl_passport@selfsignup}>"></a>
+                </label>
+                <br>
+                <label id="company_id">
+                    <input type="checkbox" value="company" >
+                    <span>我是企业买家</span>
+                    <a style="display:none;" href="<{url action=topc_ctl_passport@companysignup}>"></a>
+                </label>
+            </div>
+            <div class="sign-r">
+                <label id="shop_id" style="margin-top: 250px;">
+                    <input type="checkbox" value="personage" >
+                    <span>我是供应商</span>
+                    <a style="display:none;" href="<{url action=topshop_ctl_passport@signup}>"></a>
+                </label>
+            </div>
+        </div>
+        <div class="sign-agree">
+            <a><input  id="agree_id"  type="button" value="确定"></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function(){
+        var oPerson=$('#personage_id');
+        var oComp=$('#company_id');
+        var oShop=$('#shop_id');
+
+        function state(obj){
+            obj.attr("checked",false);
+        }
+
+        oComp.click(function(){
+            state(oPerson.children("input"));
+            state(oShop.children("input"));
+        });
+        oPerson.click(function(){
+            state(oComp.children("input"));
+            state(oShop.children("input"));
+        });
+        oShop.click(function(){
+            state(oComp.children("input"));
+            state(oPerson.children("input"));
+        });
+
+        $("#agree_id").click(function(){
+            if (oComp.children("input").is(':checked')) {
+                console.log($(this));
+                $(this).parent().attr("href",oComp.children("a").attr("href"));
+            }else if (oPerson.children("input").is(':checked')) {
+                $(this).parent().attr("href",oPerson.children("a").attr("href"));
+            }else if (oShop.children("input").is(':checked')) {
+                $(this).parent().attr("href",oShop.children("a").attr("href"));
+            }else{
+                Message.error('请选择注册方式.');
+            };
+        });
+
+        $(".main").css("padding-top",0);
+        $(".form-control").css("width","100%");
+
+    })
+
+</script>
